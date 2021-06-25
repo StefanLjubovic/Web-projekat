@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container rounded border border-white" bg-white>
         <div class="picture">
             <img class="rounded" v-bind:src="restaurant.logo">
         </div>
@@ -8,8 +8,8 @@
             <p>{{restaurant.location}}</p>
         </div>
         <div class="grade">
-            <h3 class="star"><i class="bi bi-star"></i></h3>
-            <h4>{{restaurant.grade}}</h4>
+            <h3 class="star"><i class="bi bi-star-fill text-warning"></i></h3>
+            <h4 class="text-warning">{{restaurant.grade}}</h4>
         </div>
     </div>
 </template>
@@ -20,6 +20,7 @@ export default {
     props:{
         restaurant: Object
     },
+    emits:['login-user']
 }
 </script>
 
@@ -30,7 +31,6 @@ export default {
         display: grid;
         grid-template-columns:100px 1fr 50px ;
         gap: 10px;
-        background: #f4f4f4;
         margin-top:10px;
     }
     .details{

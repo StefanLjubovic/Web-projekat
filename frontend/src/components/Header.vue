@@ -1,17 +1,27 @@
 <template>
     <header class="page-header">
         <div class="logo">
-           <a href="#"><img src="../assets/logo_transparent.png"></a>
+           <a href="#" @click="retrunToHomePage"><img src="../assets/logo_transparent.png"></a>
         </div>
-        <div class="logIn"><LoginButton/></div>
+        <div class="logIn"><LoginButton @login-user="$emit('login-user')"/></div>
     </header>
 </template>
 <script>
     import LoginButton from '@/components/LoginButton.vue';
     export default {
+    watch:{
+    '$route'(to,from){
+    }
+    },
     components: {
         LoginButton
     },
+    emits:['login-user'],
+    methods:{
+        retrunToHomePage(){
+            this.$router.push({ path: '/' });
+        }
+    }
     }
 </script>
 <style scoped>

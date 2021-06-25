@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <Header/>
+    <Header @login-user="loginUser"/>
     <div class="parent">
     <SearchBar class="search"/>
-    <Restaurants :restaurants="restaurants" class="restaurants"/>
+    <Restaurants :restaurants="restaurants"/>
     </div>
   </div>
 </template>
@@ -20,7 +20,22 @@ export default {
   },
   data(){
     return {
-      restaurants: []
+      restaurants: [],
+    }
+  },
+  methods:{
+    loginUser(){
+      this.$router.push({ path: '/login' });
+    }
+  },
+  emits:['filter-changed'],
+
+  computed:{
+    filteredRestaurants: function(){
+      this.restaurants.filter((restaurant)=>{
+        console.log('aaa');
+        return restaurant.name.match(this.search) ;
+      });
     }
   },
       created(){
