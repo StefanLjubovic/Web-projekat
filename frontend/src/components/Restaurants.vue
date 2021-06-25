@@ -1,7 +1,7 @@
 <template>
     <div class="restaurant-list">
         <div  :key="restaurant.name" v-for="restaurant in restaurants">
-            <Restaurant :restaurant="restaurant"/>
+            <Restaurant @restaurant-info="$emit('restaurant-info',restaurant.name)" :restaurant="restaurant"/>
         </div>
     </div>
 </template>

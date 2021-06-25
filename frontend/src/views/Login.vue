@@ -1,7 +1,9 @@
 <template>
     <div>
         <Header/>
+        <div class="login-container">
         <LoginElement class="login"/>
+        </div>
     </div>
 </template>
 
@@ -21,3 +23,14 @@ export default {
   
 }
 </script>
+
+<style scoped>
+
+.login-container {
+	/* padding-top: 10px; */
+    background-color: #D7E2F8;
+	/* width: 80%; */
+	/* margin: auto; */
+	/* overflow: auto; */
+}
+</style>

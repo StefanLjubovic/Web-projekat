@@ -49,7 +49,7 @@ export default {
 		background-color: #767aaa;
 		border-radius: 100px;
 		padding: 0px 11px;
-		height: 34px;
+		height: 39px;
 		align-items: center;
 		box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 	}

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" @click="$emit('restaurant-info',restaurant.name)">
         <div class="picture" v-if="restaurant.logo" >
             <img class="rounded-image" :src="getImgUrl(restaurant.logo)" v-bind:alt="restaurant.logo">
         </div>
@@ -30,6 +30,7 @@ export default {
             }
         }
     },
+    emits:['restaurant-info'],
     methods:{
         getImgUrl(pic) {
             return require('../assets/'+pic)

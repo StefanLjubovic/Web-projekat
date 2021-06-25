@@ -1,9 +1,9 @@
 <template >
 	<div class="home">
-		<Header />
+		<Header @login-user="loginUser"/>
 		<div class="home-container" >
 			<SearchBar  @search="filterRestaurants"/>
-			<Restaurants :restaurants="restaurants" class="restaurants" />
+			<Restaurants @restaurant-info="goToRestaurant" :restaurants="restaurants" class="restaurants" />
 		</div>
 	</div>
 </template>
@@ -83,12 +83,23 @@ export default {
 	data() {
 		return {
 			restaurants: [],
+			restaurant:{}
 		};
 	},
 	methods:{
 		filterRestaurants(text){
 			this.restaurants = allRestaurants.filter(e => e.name.toLowerCase().includes(text.toLowerCase()));
-		}
+		},
+		loginUser(){
+      		this.$router.push({ path: '/login' });
+    	},
+		goToRestaurant(name){
+			this.restaurants.forEach((value,index)=>{
+				if(value.name===name)
+					this.restaurant=value;
+			});
+			
+		},
 	},
 	created() {
 		this.restaurants = allRestaurants;

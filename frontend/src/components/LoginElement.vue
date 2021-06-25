@@ -30,10 +30,10 @@
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					Don't have an account?<a href="#">Sign Up</a>
+					Don't have an account?<a href="#" class="link-danger" @click="signUpUser">Sign Up</a>
 				</div>
 				<div class="d-flex justify-content-center">
-					<a href="#">Forgot your password?</a>
+					<a href="#" class="link-danger">Forgot your password?</a>
 				</div>
 			</div>
 		</div>
@@ -61,7 +61,10 @@ export default ({
                 password: this.password
             }
             this.$emit('login-user',newUser)
-        }
+        },
+		signUpUser(){
+			this.$router.push({ path: '/register' });
+		}
     }
 })
 </script>
