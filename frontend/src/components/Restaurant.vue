@@ -1,15 +1,20 @@
 <template>
     <div class="container">
-        <div class="picture">
-            <img class="rounded" v-bind:src="restaurant.logo">
+        <div class="picture" v-if="restaurant.logo" >
+            <img class="rounded-image" :src="getImgUrl(restaurant.logo)" v-bind:alt="restaurant.logo">
         </div>
-        <div class="details">
+        <div class="restaurant-info">
             <h3>{{restaurant.name}}</h3>
-            <p>{{restaurant.location}}</p>
+            <label for="desctiption">{{restaurant.description}}</label>
         </div>
-        <div class="grade">
-            <h3 class="star"><i class="bi bi-star"></i></h3>
-            <h4>{{restaurant.grade}}</h4>
+        <div class="restaurant-details">
+            <div class="restaurant-location">
+                <p>📍:  {{restaurant.location}}</p>
+            </div>
+            <div class="grade">
+                <i class="fas fa-star" style="color: #FAE480"></i>
+                <label>{{restaurant.grade}}</label>
+            </div>
         </div>
     </div>
 </template>
@@ -18,36 +23,75 @@
 export default {
     name: 'Restaurant',
     props:{
-        restaurant: Object
+        restaurant: {
+            type: Object,
+            default: {
+                logo: ''
+            }
+        }
     },
+    methods:{
+        getImgUrl(pic) {
+            return require('../assets/'+pic)
+        }
+    }
 }
 </script>
 
 <style scoped>
     div.container{
-        width:50vw ;
-        height:10vh ;
-        display: grid;
-        grid-template-columns:100px 1fr 50px ;
-        gap: 10px;
-        background: #f4f4f4;
         margin-top:10px;
+        color: #42405F;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        padding: 17px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        min-width: 800px;
+        width: 80%;
     }
-    .details{
-        margin-left: 20px;
-        display: grid;
-       grid-template-rows: 1fr 1fr;
+    .picture{
+        width: 200px;
+    }
+    .restaurant-info{
+        flex: 1;
+        padding: 0px 10px;
+        height: 100%;
+    }
+    .restaurant-info > label{
+        color: #8F8FA1;
+        font-weight: 500;
+        font-size: 14px;
+    }
 
+    .restaurant-details{
+        display: flex;
+        flex-direction: column;
+        /* background-color: red; */
+        /* justify-content: flex-end; */
+        text-align: right;
+    }
+    .restaurant-location{
+        flex: 1;
+        color: #8F8FA1;
+        font-weight: 600;
     }
     .grade{
-        display: grid;
-       grid-template-rows: 1fr 1fr;
+         display: flex;
+         flex-direction: row;
+         align-items: center;
+         justify-content: flex-end;
     }
-    .rounded{
-        width: 95%;
+    .grade > label {
+        margin-bottom: unset;
+        margin-left: 5px;
+        color: #8F8FA1;
+        font-weight: 600;
+    }
+    .rounded-image{
+        width: 100%;
         height: auto;
-    }
-    .star{
-        margin-top:10px;
+        border-radius: 10px;
     }
 </style>

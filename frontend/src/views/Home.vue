@@ -1,67 +1,131 @@
-<template>
-  <div class="home">
-    <Header/>
-    <div class="parent">
-    <SearchBar class="search"/>
-    <Restaurants :restaurants="restaurants" class="restaurants"/>
-    </div>
-  </div>
+<template >
+	<div class="home">
+		<Header />
+		<div class="home-container" >
+			<SearchBar  @search="filterRestaurants"/>
+			<Restaurants :restaurants="restaurants" class="restaurants" />
+		</div>
+	</div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Header from '@/components/Header.vue'
-import Restaurants from '@/components/Restaurants.vue'
-import SearchBar from '@/components/SearchBar.vue'
+import Header from "@/components/Header.vue";
+import Restaurants from "@/components/Restaurants.vue";
+import SearchBar from "@/components/SearchBar.vue";
+
+const allRestaurants = [
+		{
+			name: "Front",
+			description: "Chinese restaurant with saul",
+			type: "chinese",
+			status: true,
+			logo: 'petrus.jpg',
+			location: "Sutjeska 3",
+			grade: "4.3",
+		},
+		{
+			name: "Petrus",
+			description: "Modern restaurant in the city center",
+			type: "barbecue",
+			status: false,
+			logo: 'petrus.jpg',
+			location: "Bulevar 4",
+			grade: "4.7",
+		},
+		{
+			name: "Petrus",
+			description: "Modern restaurant in the city center",
+			type: "barbecue",
+			status: false,
+			logo: 'petrus.jpg',
+			location: "Bulevar 4",
+			grade: "4.7",
+		},{
+			name: "Petrus",
+			description: "Modern restaurant in the city center",
+			type: "barbecue",
+			status: false,
+			logo: 'petrus.jpg',
+			location: "Bulevar 4",
+			grade: "4.7",
+		},{
+			name: "Petrus",
+			description: "Modern restaurant in the city center",
+			type: "barbecue",
+			status: false,
+			logo: 'petrus.jpg',
+			location: "Bulevar 4",
+			grade: "4.7",
+		},{
+			name: "Petrus",
+			description: "Modern restaurant in the city center",
+			type: "barbecue",
+			status: false,
+			logo: 'petrus.jpg',
+			location: "Bulevar 4",
+			grade: "4.7",
+		},{
+			name: "Petrus",
+			description: "Modern restaurant in the city center",
+			type: "barbecue",
+			status: false,
+			logo: 'petrus.jpg',
+			location: "Bulevar 4",
+			grade: "4.7",
+		},
+	]
+
 export default {
-  watch:{
-    '$route'(to,from){
-    }
-  },
-  data(){
-    return {
-      restaurants: []
-    }
-  },
-      created(){
-        this.restaurants=[
-        {
-            name: "Front",
-            type: "chinese",
-            status: true,
-            logo: '../assets/front.jfif',
-            location: "Sutjeska 3",
-            grade: '4.3'
-        },
-        {
-            name: "Petrus",
-            type: "barbecue",
-            status: false,
-            logo: '../assets/petrus.jpg',
-            location: "Bulevar 4",
-            grade:'4.7'
-        }
-        ]
-    },
-  
-  name: 'Home',
-  components: {
-    Header,
-    Restaurants,
-    SearchBar
-  }
-}
+	watch: {
+		$route(to, from) {},
+	},
+	data() {
+		return {
+			restaurants: [],
+		};
+	},
+	methods:{
+		filterRestaurants(text){
+			this.restaurants = allRestaurants.filter(e => e.name.toLowerCase().includes(text.toLowerCase()));
+		}
+	},
+	created() {
+		this.restaurants = allRestaurants;
+	},
+
+	name: "Home",
+	components: {
+		Header,
+		Restaurants,
+		SearchBar,
+	},
+};
 </script>
 
 <style scoped>
-  .parent{
-    margin-top: 50px;
-    position:relative;
-  }
-  .search{
-    position:absolute;
-    top: -25%;
-    left: 54%;
-  }
-  
+.home-container {
+	/* padding-top: 10px; */
+	position: relative;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	/* width: 80%; */
+	/* margin: auto; */
+	/* overflow: auto; */
+}
+.home{
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	/* max-height: 100vh; */
+	position: relative;
+	background-color: #D7E2F8;
+	/* overflow: hidden; */
+}
+.restaurants{
+	height: 100%;
+	overflow: auto;
+}
+
 </style>
