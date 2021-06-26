@@ -1,8 +1,22 @@
 <template>
 <div class="app">
+    <Header />
     <router-view/>
 </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import Header from "@/components/Header.vue";
+
+
+export default {
+	name: "App",
+	components: {
+		Header,
+	},
+};
+</script>
 <style>
     .app{
         font-family: 'Quicksand', sans-serif;   
