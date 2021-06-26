@@ -1,6 +1,6 @@
 <template >
 	<div class="home">
-		<Header @login-user="loginUser"/>
+		<!-- <Header @login-user="loginUser"/> -->
 		<div class="home-container" >
 			<SearchBar  @search="filterRestaurants"/>
 			<Restaurants @restaurant-info="goToRestaurant" :restaurants="restaurants" class="restaurants" />

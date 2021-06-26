@@ -22,7 +22,8 @@ export default {
     methods:{
         retrunToHomePage(){
             this.$router.push({ path: '/' });
-        }
+        },
+        openLogin(){}
     }
 };
 </script>

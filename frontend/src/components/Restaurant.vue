@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @click="$emit('restaurant-info',restaurant.name)">
+    <div class="container" @click="openRestaurant()">
         <div class="picture" v-if="restaurant.logo" >
             <img class="rounded-image" :src="getImgUrl(restaurant.logo)" v-bind:alt="restaurant.logo">
         </div>
@@ -34,6 +34,9 @@ export default {
     methods:{
         getImgUrl(pic) {
             return require('../assets/'+pic)
+        },
+        openRestaurant() {
+            this.$router.push({ path: '/restaurant' });
         }
     }
 }
@@ -51,6 +54,10 @@ export default {
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
         min-width: 800px;
         width: 80%;
+        cursor: pointer;
+    }
+    .container:hover{
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
     }
     .picture{
         width: 200px;
