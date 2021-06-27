@@ -13,7 +13,7 @@
 import Header from "@/components/Header.vue";
 import Restaurants from "@/components/Restaurants.vue";
 import SearchBar from "@/components/SearchBar.vue";
-
+import UserOptions from "@/components/UserOptions.vue";
 const allRestaurants = [
 		{
 			name: "Front",
@@ -110,6 +110,7 @@ export default {
 		Header,
 		Restaurants,
 		SearchBar,
+		UserOptions,
 	},
 };
 </script>

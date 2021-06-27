@@ -8,14 +8,22 @@
           <p for="">Start a day with us</p>
         </div>
       </div>
+<<<<<<< HEAD
       <div class="logIn"><LoginButton @login-user="openLogin"/></div>
+=======
+      <div class="logIn"><LoginButton @show-options="$emit('show-options')" @login-user="$emit('login-user')"/></div>
+>>>>>>> develop
     </div>
   </header>
   <LoginModal v-if="showLoginModal" @close="closeLogin"/>
 </template>
 <script>
 import LoginButton from "@/components/LoginButton.vue";
+<<<<<<< HEAD
 import LoginModal from "@/components/Login/LoginModal.vue"
+=======
+import UserOptions from "@/components/UserOptions.vue";
+>>>>>>> develop
 export default {
   data(){
     return{
@@ -28,13 +36,18 @@ export default {
     },
   components: {
     LoginButton,
+<<<<<<< HEAD
     LoginModal
+=======
+    UserOptions
+>>>>>>> develop
   },
-  emits:['login-user'],
+  emits:['login-user','show-options'],
     methods:{
         retrunToHomePage(){
             this.$router.push({ path: '/' });
         },
+<<<<<<< HEAD
         openLogin(){
           this.showLoginModal = true;
           document.getElementById('appContainer').style.overflow = 'hidden';
@@ -44,6 +57,11 @@ export default {
           this.showLoginModal = false;
           document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset';
+=======
+        openLogin(){},
+        test(){
+          console.log('aaa');
+>>>>>>> develop
         }
     }
 };

@@ -75,14 +75,11 @@ export default {
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
         color: #1F1F43;
     }
-
     .navigator-clip i{
         color: #FAE480;
     }
-
     .selected i {
         color: #83CDF5;
         text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
     }
-
 </style>

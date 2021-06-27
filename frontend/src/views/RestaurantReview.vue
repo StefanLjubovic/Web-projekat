@@ -44,7 +44,6 @@ export default {
 		},
 		changeView(view){
 			this.selectedView = view;
-			console.log(`Changing view into ${view}`);
 		}
 	},
 	created() {
