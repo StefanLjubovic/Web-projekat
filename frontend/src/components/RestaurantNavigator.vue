@@ -22,14 +22,16 @@ export default {
             selectedState: 'reviews'
         })
     },
-    setup() { 
-        
-    },
+    props:['selectedView'],
     methods:{
         selectState(state){
             this.selectedState = state;
             this.$emit("change-view",state)
         }
+    },
+    mounted(){
+        console.log(`Selected View ${this.selectedView}`);
+        this.selectedState = this.selectedView;
     }
 }
 </script>

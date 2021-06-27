@@ -2,7 +2,7 @@
 	<div class="home">
 		<!-- <Header @login-user="loginUser"/> -->
 		<RestaurantInfo />
-		<RestaurantNavigator @change-view="changeView" />
+		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" />
 		<RestaurantInformations v-if="selectedView == 'informations'"/>
 		<RestaurantReviews v-if="selectedView == 'reviews'"/>
 		<RestaurantItems v-if="selectedView == 'items'"/>
@@ -25,7 +25,7 @@ export default {
 		return {
 			restaurants: [],
 			restaurant:{},
-			selectedView: 'reviews'
+			selectedView: 'items'
 		};
 	},
 	methods:{
