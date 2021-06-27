@@ -2,14 +2,13 @@
 	<div class="home">
 		<!-- <Header @login-user="loginUser"/> -->
 		<RestaurantInfo />
-		<RestaurantNavigator @change-view="changeView" />
+		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" />
 		<RestaurantInformations v-if="selectedView == 'informations'"/>
 		<RestaurantReviews v-if="selectedView == 'reviews'"/>
 		<RestaurantItems v-if="selectedView == 'items'"/>
 	</div>
 </template>
 <script>
-// @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Restaurants from "@/components/Restaurants.vue";
 import SearchBar from "@/components/SearchBar.vue";
@@ -26,7 +25,7 @@ export default {
 		return {
 			restaurants: [],
 			restaurant:{},
-			selectedView: 'reviews'
+			selectedView: 'items'
 		};
 	},
 	methods:{
@@ -68,9 +67,9 @@ export default {
 
 <style scoped>
     .home{
-		padding: 10px 0;
+		padding-top: 10px;
 		/* flex: 1; */
-		min-height: calc(100% - 140px);
+		min-height: calc(100% - 70px);
 		background-color: #D7E2F8;
     }
 </style>
