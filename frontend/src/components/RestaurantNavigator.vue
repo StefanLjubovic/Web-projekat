@@ -7,7 +7,7 @@
             <span>🍔 Items</span>
         </div>
         <div class="navigator-clip" v-bind:class="{ selected: selectedState=='reviews' }" @click="selectState('reviews')">
-            <span><i class="fas fa-star" style="color: #FAE480"></i> Reviews</span>
+            <span><i class="fas fa-star"></i> Reviews</span>
         </div>
         <div class="navigator-clip" v-bind:class="{ selected: selectedState=='informations' }" @click="selectState('informations')">
             <span>📍 Location</span>
@@ -61,6 +61,7 @@ export default {
         text-align: center;
         color: #8F8FA1;
         font-weight: 500;
+        transition: padding-top 0.3s;
     }
     .navigator-clip:hover{
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
@@ -73,8 +74,13 @@ export default {
         color: #1F1F43;
     }
 
+    .navigator-clip i{
+        color: #FAE480;
+    }
+
     .selected i {
-        color: #1F1F43;
+        color: #83CDF5;
+        text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
     }
 
 </style>
