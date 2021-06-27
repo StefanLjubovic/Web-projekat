@@ -69,7 +69,7 @@ export default {
     .home{
 		padding-top: 10px;
 		/* flex: 1; */
-		min-height: calc(100% - 140px);
+		min-height: calc(100% - 70px);
 		background-color: #D7E2F8;
     }
 </style>
