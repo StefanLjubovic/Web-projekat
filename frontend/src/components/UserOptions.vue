@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" @click="$emit('user-container-click')">
         <div class="profile-btn margin">
             <button class="btn btn-light">
             <div  v-if="user.logo == ''">
@@ -44,12 +44,14 @@ export default {
             return require('../assets/'+pic)
         },
         createRestaurant(){
+            this.$emit('create-restaurant');
             this.$router.push({ path: '/create-estaurant' });
         }
     },
     created() {
 		this.user = User;
 	},
+    emits:['create-restaurant']
 }
 </script>
 

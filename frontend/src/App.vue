@@ -1,7 +1,7 @@
 <template>
-<div class="app">
+<div class="app" @click="hideOptions">
     <Header @login-user="loginUser" @show-options="showOptions"/>
-    <UserOptions class="options" v-bind:class="{ clicked: !show }"/>
+    <UserOptions class="options" @create-restaurant="hideDialog" @user-container-click="userContainerClick" v-bind:class="{ clicked: !show }"/>
     <router-view/>
 </div>
 </template>
@@ -16,6 +16,7 @@ export default {
     data(){
         return{
             show:false,
+            buttonClick:false,
         }
     },
 	components: {
@@ -25,9 +26,20 @@ export default {
     methods:{
         loginUser(){
       		this.$router.push({ path: '/login' });
-    	},
+    	},userContainerClick(){
+            this.buttonClick=true;
+        },
         showOptions(){
+            this.buttonClick=true;
             this.show=!this.show;
+        },
+        hideOptions(){
+            if(!this.buttonClick)
+                this.show=false;
+            this.buttonClick=false;
+        },
+        hideDialog(){
+            this.show=false;
         }
     }
 };

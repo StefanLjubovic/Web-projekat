@@ -5,60 +5,47 @@
                     <div class="col-md-9 register-right">
                         <div class="logo-div" v-if="logo == ''">
                             <button class="img-btn"><i class="far fa-images fa-3x"></i></button>
-                            <button class="small-img-btn" @click="uploadPhoto"><i class="fas fa-camera"></i></button>
+                            <button class="small-img-btn" @click="onPickFile"><i class="fas fa-camera"></i></button>
+                            <input type="file" @change="uploadPhoto" accept="image/*" style="display:none" ref="fileInput"/>
                         </div>
                         <div class="logo-div" v-if="logo != ''">
-                            <img class="rounded-image" :src="getImgUrl(user.logo)" v-bind:alt="user.logo">
+                            <img class="rounded-image img-btn" :src="logo">
+                            <button class="small-img-btn" @click="onPickFile"><i class="fas fa-camera"></i></button>
+                            <input type="file" @change="uploadPhoto" accept="image/*" style="display:none" ref="fileInput"/>
                         </div>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <h3 class="register-heading">Apply as a Employee</h3>
+                                <h3 class="register-heading">Register restaurant</h3>
                                 <div class="row register-form">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="First Name *" value="" />
+                                            <input type="text" class="form-control" placeholder="Name*" v-model="name"/>
+                                            <div class="alert alert-danger" v-if="nameError" role="alert">
+                                                 Field must not be empty!
+                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Last Name *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" placeholder="Password *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control"  placeholder="Confirm Password *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="maxl">
-                                                <label class="radio inline"> 
-                                                    <input type="radio" name="gender" value="male" checked>
-                                                    <span> Male </span> 
-                                                </label>
-                                                <label class="radio inline"> 
-                                                    <input type="radio" name="gender" value="female">
-                                                    <span>Female </span> 
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Your Email *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Your Phone *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control">
-                                                <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
-                                                <option>What is your Birthdate?</option>
-                                                <option>What is Your old Phone Number</option>
-                                                <option>What is your Pet Name?</option>
+                                            <select name="cars" id="type"  class="form-control" v-model="type">
+                                            <option value="volvo">Italian🍕</option>
+                                            <option value="saab">Chinese🥡</option>
+                                            <option value="mercedes">Barbeque🍖</option>
+                                            <option value="audi">Similarly🍗</option>
                                             </select>
                                         </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Enter Your Answer *" value="" />
+                                            <input type="email" class="form-control" placeholder="Location *" v-model="location" />
                                         </div>
-                                        <input type="submit" class="btnRegister"  value="Register"/>
+                                         <div class="form-group">
+                                            <select name="manager" class="form-control" v-model="manager">
+                                            <option v-bind:key="manager.firstname" v-for="manager in managers">
+                                                {{manager.firstname}} {{manager.lastname}}
+                                            </option>
+                                            </select>
+                                        </div>
+                                        <input type="submit" class="btnRegister" @click="saveRestaurant"  value="Register"/>
                                     </div>
                                 </div>
                             </div>
@@ -74,15 +61,57 @@
 export default {
     data(){
         return{
-            logo: ''
+            logo: '',
+            nameError: false,
+            name: '',
+            manager: {},
+            type: 'Italian',
+            location: '',
+            managers:[
+                {
+                    firstname:'Pera',
+                    lastname:'Peric',
+                },
+                                {
+                    firstname:'Pera',
+                    lastname:'Peric',
+                },
+
+                {
+                    firstname:'Pera',
+                    lastname:'Peric',
+                },
+
+                {
+                    firstname:'Pera',
+                    lastname:'Peric',
+                }
+
+            
+            ]
         }
     },
     methods:{
         getImgUrl(pic) {
             return require('../assets/'+pic)
         },
-        uploadPhoto(){
-            
+        uploadPhoto(event){
+            const files=event.target.files
+            const fileReader=new FileReader()
+            fileReader.addEventListener('load',()=>{
+                this.logo=fileReader.result
+            })
+            console.log(files[0])
+            fileReader.readAsDataURL(files[0])
+        },
+        onPickFile(){
+            this.$refs.fileInput.click()
+        },
+        saveRestaurant(event){
+            event.preventDefault()
+            this.nameError=false
+            if(this.name=='')this.nameError=true
+            if(this.nameError) return
         }
     }
 }
@@ -151,6 +180,14 @@ export default {
     width: 100px;
     height: 100px;
     right: 0;
+}
+.icon{
+    position: absolute;
+     right: 15px;
+    bottom: 16px;
+    z-index: 2;
+    pointer-events:none;
+    cursor: pointer;
 }
 .small-img-btn{
     position: absolute;
