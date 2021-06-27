@@ -3,8 +3,8 @@
 		<h3>Items</h3>
 	</div>
 	<div class="items-list">
-		<div :key="item.name" v-for="item in items">
-			<div class="item">
+		<div :key="index" v-for="(item, index) in items">
+			<div class="item" @click="openItem(item)">
 				<div class="item-image-container">
 					<img class="item-image" :src="getImage(item)" alt="" />
 				</div>
@@ -22,9 +22,11 @@
 			</div>
 		</div>
 	</div>
+    <RestaurantItemModal v-if="showModal" v-bind:item="selectedItem" @closeModal="closeModal" />
 </template>
 <script>
 import moment from 'moment';
+import RestaurantItemModal from './RestaurantItemModal.vue';
 export default {
 	data() {
 		return {
@@ -41,8 +43,11 @@ export default {
 					image: 'https://cdn.donesi.rs/cdn-cgi/image/w=800,h=450,fit=cover,q=100,f=auto/restaurants/1200/popular_item/0000000096598?c=6ca20e7751415c84fc6c003e1528fada',
 				},
 			],
+            showModal: false,
+            selectedItem: {}
 		};
 	},
+    components:{RestaurantItemModal},
 	methods: {
 		getImage(review) {
 			console.log(review.image);
@@ -53,7 +58,14 @@ export default {
 				return moment(value).format('DD.MM.YYYY.');
 			}
 		},
-	},
+        openItem(item){
+            this.selectedItem = item;
+            this.showModal = true;
+        },closeModal(){
+            this.selectedItem = {};
+            this.showModal = false;
+        }
+	}
 };
 </script>
 

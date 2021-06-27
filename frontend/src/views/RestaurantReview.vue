@@ -9,7 +9,6 @@
 	</div>
 </template>
 <script>
-// @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Restaurants from "@/components/Restaurants.vue";
 import SearchBar from "@/components/SearchBar.vue";
@@ -68,7 +67,7 @@ export default {
 
 <style scoped>
     .home{
-		padding: 10px 0;
+		padding-top: 10px;
 		/* flex: 1; */
 		min-height: calc(100% - 140px);
 		background-color: #D7E2F8;
