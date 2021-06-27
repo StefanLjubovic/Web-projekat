@@ -1,5 +1,4 @@
 <template>
-    <button class="btn btn-danger">aaa</button>
     <button type="button" class="btn btn-primary" @click="$emit('login-user')">Log in</button>
 </template>
 

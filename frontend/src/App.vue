@@ -1,5 +1,5 @@
 <template>
-<div class="app">
+<div class="app" id="appContainer">
     <Header />
     <router-view/>
 </div>
@@ -38,4 +38,5 @@ export default {
         color: white;
         opacity: 0.5; /* Firefox */
     }
+
 </style>
