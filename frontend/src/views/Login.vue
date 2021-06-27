@@ -1,6 +1,5 @@
 <template>
     <div>
-        <Header/>
         <div class="login-container">
         <LoginElement class="login"/>
         </div>

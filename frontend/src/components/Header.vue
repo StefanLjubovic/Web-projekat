@@ -4,12 +4,13 @@
       <div class="logo">
         <a href="#" @click="retrunToHomePage"><img src="../assets/logo_transparent.png" /></a>
       </div>
-      <div class="logIn"><LoginButton @login-user="$emit('login-user')"/></div>
+      <div class="logIn"><LoginButton @show-options="$emit('show-options')" @login-user="$emit('login-user')"/></div>
     </div>
   </header>
 </template>
 <script>
 import LoginButton from "@/components/LoginButton.vue";
+import UserOptions from "@/components/UserOptions.vue";
 export default {
    watch:{
     '$route'(to,from){
@@ -17,13 +18,17 @@ export default {
     },
   components: {
     LoginButton,
+    UserOptions
   },
-  emits:['login-user'],
+  emits:['login-user','show-options'],
     methods:{
         retrunToHomePage(){
             this.$router.push({ path: '/' });
         },
-        openLogin(){}
+        openLogin(){},
+        test(){
+          console.log('aaa');
+        }
     }
 };
 </script>
