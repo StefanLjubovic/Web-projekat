@@ -16,7 +16,7 @@
             </button>
         </div>
             <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn"><span class="btn-components">Create restaurant<i class="fas fa-plus icon"></i></span></button>
+           <button type="button" class="btn btn-light btn"><span class="btn-components" @click="createRestaurant">Register restaurant<i class="fas fa-plus icon"></i></span></button>
            </div>
        <div class="btn-div margin">
            <button type="button" class="btn btn-light btn"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
@@ -31,7 +31,9 @@
                 logo: '',
                }
 export default {
-
+    watch: {
+		$route(to, from) {},
+	},
     data(){
         return{
             user: {},
@@ -41,6 +43,9 @@ export default {
         getImgUrl(pic) {
             return require('../assets/'+pic)
         },
+        createRestaurant(){
+            this.$router.push({ path: '/create-estaurant' });
+        }
     },
     created() {
 		this.user = User;
