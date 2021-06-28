@@ -4,6 +4,8 @@ import Login from '../views/Login.vue'
 import Register from '../views/RegisterUser.vue'
 import RestaurantReview from '../views/RestaurantReview.vue'
 import CreateRestaurant from '../views/CreateRestaurant.vue'
+import EditProfile from '../views/EditProfile.vue'
+import ListOfAllUsers from '../views/ListOfAllUsers.vue'
 const routes = [
   {
     path: '/',
@@ -29,6 +31,16 @@ const routes = [
     path: '/create-restaurant',
     name: 'CreateRestaurant',
     component: CreateRestaurant
+  },
+  {
+    path: '/profile',
+    name: 'EditProfile',
+    component: EditProfile
+  },
+  {
+    path: '/user-list',
+    name: 'ListOfAllUsers',
+    component: ListOfAllUsers
   }
 ]
 

@@ -2,6 +2,7 @@ package server;
 
 import restaurant.RestaurantController;
 import restaurant.RestaurantDao;
+import user.UserController;
 import user.UserDao;
 import util.Path;
 
@@ -20,5 +21,6 @@ public class Server {
 
         get(Path.Web.INDEX, RestaurantController.getAllRestaurants);
         post(Path.Web.REGISTER_RESTUARANT, RestaurantController.createRestaurant);
+        get(Path.Web.GET_AVAILABLE_MANAGERS, UserController.getAvailableManagers);
     }
 }

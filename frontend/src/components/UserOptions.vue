@@ -1,7 +1,7 @@
 <template>
     <div class="container" @click="$emit('user-container-click')">
         <div class="profile-btn margin">
-            <button class="btn btn-light">
+            <button class="btn btn-light" @click="$emit('edit-profile')">
             <div  v-if="user.logo == ''">
                 <i class="far fa-user user-icon fa-2x"></i>
                 
@@ -17,6 +17,9 @@
         </div>
             <div class="btn-div margin">
            <button type="button" class="btn btn-light btn"><span class="btn-components" @click="createRestaurant">Register restaurant<i class="fas fa-plus icon"></i></span></button>
+           </div>
+           <div class="btn-div margin">
+           <button type="button" class="btn btn-light btn"><span class="btn-components" @click="allUsers">All users<i class="fas fa-users icon"></i></span></button>
            </div>
        <div class="btn-div margin">
            <button type="button" class="btn btn-light btn"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
@@ -46,12 +49,16 @@ export default {
         createRestaurant(){
             this.$emit('create-restaurant');
             this.$router.push({ path: '/create-restaurant' });
+        },
+        allUsers(){
+            this.$router.push({ path: '/user-list' });
+            this.$emit('all-users');
         }
     },
     created() {
 		this.user = User;
 	},
-    emits:['create-restaurant']
+    emits:['create-restaurant','edit-profile','all-users']
 }
 </script>
 
