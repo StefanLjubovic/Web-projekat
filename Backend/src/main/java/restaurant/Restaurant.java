@@ -11,6 +11,14 @@ public class Restaurant {
     private String logo;
     private List<Item> items;
 
+    public Restaurant(String id, String name, String type, String status, Location location) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.status = status;
+        this.location = location;
+    }
+
     public String getId() {
         return id;
     }

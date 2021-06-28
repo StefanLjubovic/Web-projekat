@@ -1,6 +1,9 @@
 import static spark.Spark.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import restaurant.Location;
+import restaurant.Restaurant;
+import restaurant.RestaurantRepository;
 import user.User;
 import user.UserRepository;
 import user.UserRoles;

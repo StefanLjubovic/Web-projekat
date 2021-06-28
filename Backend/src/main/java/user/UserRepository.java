@@ -19,7 +19,6 @@ public class UserRepository {
 
     public void Serialize(List<User> users){
         Gson gson=new Gson();
-        Path currentRelativePath = Paths.get("");
         try {
             FileWriter fileWriter=new FileWriter(filePath);
             String json=gson.toJson(users);
