@@ -19,12 +19,14 @@
                                 <div class="row register-form">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Name*" v-model="name"/>
+                                            <label for="nameInput">Name:</label>
+                                            <input type="text" class="form-control" id="nameInput" placeholder="Name*" v-model="name"/>
                                             <div class="alert alert-danger" v-if="nameError" role="alert">
                                                  Field must not be empty!
                                              </div>
                                         </div>
                                         <div class="form-group">
+                                            <label for="type">Restaurant type:</label>
                                             <select name="cars" id="type"  class="form-control" v-model="type">
                                             <option value="volvo">Italian🍕</option>
                                             <option value="saab">Chinese🥡</option>
@@ -36,10 +38,12 @@
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Location *" v-model="location" />
+                                            <label for="location">Location:</label>
+                                            <input type="email" class="form-control" id="location" placeholder="Location *" v-model="location" />
                                         </div>
                                          <div class="form-group">
-                                            <select name="manager" class="form-control" v-model="manager">
+                                            <label for="manager">Manager:</label>
+                                            <select name="manager" id="manager" class="form-control" v-model="manager">
                                             <option v-bind:key="manager.firstname" v-for="manager in managers">
                                                 {{manager.firstname}} {{manager.lastname}}
                                             </option>
@@ -121,6 +125,12 @@ export default {
 .register{
     padding: 3%;
 
+}
+.form-group > label {
+	color: white;
+	margin-bottom: unset;
+    font-size: 20px;
+    
 }
 .register-left{
     text-align: center;

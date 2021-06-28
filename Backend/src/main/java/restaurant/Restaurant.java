@@ -6,12 +6,12 @@ public class Restaurant {
     private String id;
     private String name;
     private String type;
-    private String status;
+    private boolean status;
     private Location location;
     private String logo;
     private List<Item> items;
 
-    public Restaurant(String id, String name, String type, String status, Location location) {
+    public Restaurant(String id, String name, String type, boolean status, Location location) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -43,11 +43,11 @@ public class Restaurant {
         this.type = type;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

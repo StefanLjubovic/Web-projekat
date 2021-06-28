@@ -104,7 +104,6 @@ export default {
 	created() {
 		this.restaurants = allRestaurants;
 	},
-
 	name: "Home",
 	components: {
 		Header,

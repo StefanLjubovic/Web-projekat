@@ -45,7 +45,7 @@ export default {
         },
         createRestaurant(){
             this.$emit('create-restaurant');
-            this.$router.push({ path: '/create-estaurant' });
+            this.$router.push({ path: '/create-restaurant' });
         }
     },
     created() {
