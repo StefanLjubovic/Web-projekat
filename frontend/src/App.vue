@@ -70,8 +70,8 @@ export default {
     .options{
         position: absolute;
         right: 20px;
-        z-index: 2;
-        top: 100px;
+        z-index: 12;
+        top: 60px;
     }
     .clicked{
         display: none;
