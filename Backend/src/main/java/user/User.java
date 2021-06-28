@@ -18,6 +18,18 @@ public class User{
     private UserRoles role;
     private Integer restaurantId;
     private String cartId;
+
+    public User(String id, String firstName, String lastName, String username, String password, String gender, Integer dateOfBirth, UserRoles role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.role = role;
+    }
+
     private BuyerType type;
 
     public String getId() {
