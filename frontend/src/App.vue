@@ -43,6 +43,7 @@ export default {
             this.show=false;
         },
         editProfile(){
+            this.show=false;
             this.$router.push({ path: '/profile' });
         }
     }

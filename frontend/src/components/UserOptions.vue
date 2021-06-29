@@ -16,10 +16,13 @@
             </button>
         </div>
             <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn"><span class="btn-components" @click="createRestaurant">Register restaurant<i class="fas fa-plus icon"></i></span></button>
+           <button type="button" class="btn btn-light btn"  @click="createRestaurant"><span class="btn-components">Register restaurant<i class="fas fa-plus icon"></i></span></button>
+           </div>
+            <div class="btn-div margin">
+           <button type="button" class="btn btn-light btn" @click="managersRestaurant"><span class="btn-components">My restaurant<i class="fas fa-utensils icon"></i></span></button>
            </div>
            <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn"><span class="btn-components" @click="allUsers">All users<i class="fas fa-users icon"></i></span></button>
+           <button type="button" class="btn btn-light btn" @click="allUsers"><span class="btn-components">All users<i class="fas fa-users icon"></i></span></button>
            </div>
        <div class="btn-div margin">
            <button type="button" class="btn btn-light btn"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
@@ -53,12 +56,16 @@ export default {
         allUsers(){
             this.$router.push({ path: '/user-list' });
             this.$emit('all-users');
+        },
+        managersRestaurant(){
+             this.$emit('create-restaurant');
+            this.$router.push({ path: '/restaurant' });
         }
     },
     created() {
 		this.user = User;
 	},
-    emits:['create-restaurant','edit-profile','all-users']
+    emits:['create-restaurant','edit-profile','all-users','user-container-click']
 }
 </script>
 
@@ -76,7 +83,7 @@ export default {
 .btn-div{
  width: 100vw;
  position: relative;
- height: 100px;
+ height: 30px;
  left: 50%;
 }
 .icon{

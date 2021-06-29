@@ -43,11 +43,21 @@
                                         </div>
                                          <div class="form-group">
                                             <label for="manager">Manager:</label>
+                                            <div v-if="managers.length">
                                             <select name="manager" id="manager" class="form-control" v-model="manager">
                                             <option v-bind:key="manager.firstname" v-for="manager in managers">
                                                 {{manager.firstname}} {{manager.lastname}}
                                             </option>
                                             </select>
+                                            </div>
+                                            <div class="form-row" v-else>
+                                              <div class="col">
+                                                <label class="text-light margin">None available</label>
+                                              </div>
+                                              <div class="col">
+                                                <button type="button" class="btn btn-warning" @click="registerManager">Register one</button>
+                                              </div>
+                                            </div>
                                         </div>
                                         <input type="submit" class="btnRegister" @click="saveRestaurant"  value="Register"/>
                                     </div>
@@ -58,10 +68,12 @@
                 </div>
 
             </div>
+            <LoginModal :form-type="formType" v-if="showLoginModal" @close="closeLogin"/>
 </div>
 </template>
 
 <script>
+import LoginModal from "@/components/Login/LoginModal.vue"
 export default {
     data(){
         return{
@@ -72,27 +84,9 @@ export default {
             type: 'Italian',
             location: '',
             managers:[
-                {
-                    firstname:'Pera',
-                    lastname:'Peric',
-                },
-                                {
-                    firstname:'Pera',
-                    lastname:'Peric',
-                },
-
-                {
-                    firstname:'Pera',
-                    lastname:'Peric',
-                },
-
-                {
-                    firstname:'Pera',
-                    lastname:'Peric',
-                }
-
-            
-            ]
+            ],
+            showLoginModal: false,
+            formType: 'register'
         }
     },
     methods:{
@@ -116,7 +110,20 @@ export default {
             this.nameError=false
             if(this.name=='')this.nameError=true
             if(this.nameError) return
+        },
+        registerManager(){
+            this.showLoginModal = true;
+          document.getElementById('appContainer').style.overflow = 'hidden';
+          document.getElementById('appContainer').style.height = '100vh';
+        },
+        closeLogin(){
+          this.showLoginModal = false;
+          document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset';
         }
+    },
+    components:{
+        LoginModal
     }
 }
 </script>
@@ -181,6 +188,10 @@ export default {
     font-weight: lighter;
     padding: 12%;
     margin-top: -9%;
+}
+.margin{
+    margin-top: 5px;
+    font-size: 20px;
 }
 .img-btn{
     border-radius: 50%;

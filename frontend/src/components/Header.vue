@@ -11,7 +11,7 @@
       <div class="logIn"><LoginButton @show-options="$emit('show-options')" @login-user="openLogin"/></div>
     </div>
   </header>
-  <LoginModal v-if="showLoginModal" @close="closeLogin"/>
+  <LoginModal :form-type="formType" v-if="showLoginModal" @close="closeLogin"/>
 </template>
 <script>
 import LoginButton from "@/components/LoginButton.vue";
@@ -20,7 +20,8 @@ import LoginModal from "@/components/Login/LoginModal.vue"
 export default {
   data(){
     return{
-      showLoginModal: false
+      showLoginModal: false,
+      formType:'login'
     }
   },
    watch:{

@@ -134,7 +134,7 @@ export default {
 			if (this.password == '') this.passwordError = true;
 			if (this.name == '') this.nameError = true;
 			if (this.surname == '') this.surnameError = true;
-			var dateRegex = /^\d{2}[.//]\d{2}[.//]\d{4}$/;
+			var dateRegex = /^\d{2}[.]\d{2}[.]\d{4}[.]$/;
 			if (!this.dateOfBirth.match(dateRegex)) this.dateError = true;
 			if (this.userError || this.passwordError || this.nameError || this.surnameError || this.dateError) return;
 

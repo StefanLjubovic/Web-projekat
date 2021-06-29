@@ -11,5 +11,3 @@ Vue.use(TileLayer)
 Vue.use(OsmSource)
 Vue.use(Geoloc)
 createApp(App).use(router).mount('#app')
-
-const bus=new Vue();
