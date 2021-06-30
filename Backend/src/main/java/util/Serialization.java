@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Serialization<T> {
+
     public void save(String location,List<T> entities){
         Gson gson=new Gson();
         try {
@@ -26,16 +27,16 @@ public class Serialization<T> {
             }
     }
 
-    public List<T> load(String location){
-        Gson gson=new Gson();
-        ArrayList<T> loadedEntities = new ArrayList<>();
+    protected String preLoad(String location){
+
+        ArrayList<T> loadedEntities = new ArrayList<T>();
+        String json = null;
         try {
-            String json = new String(Files.readAllBytes(Paths.get(location)));
-            Type listType=new TypeToken<ArrayList<User>>(){}.getType();
-            loadedEntities=gson.fromJson(json,listType);
+            System.out.println(Paths.get(location));
+            json = new String(Files.readAllBytes(Paths.get(location)));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return loadedEntities;
+        return json;
     }
 }

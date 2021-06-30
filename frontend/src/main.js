@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import VModal from 'vue-js-modal'
+import VTooltip from 'v-tooltip'
 
 Vue.use(VModal)
 import { Map, TileLayer, OsmSource, Geoloc } from 'vuelayers'

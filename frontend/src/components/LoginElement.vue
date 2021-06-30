@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import Server from "@/server/server"
 export default {
   data() {
     return {
@@ -81,11 +82,14 @@ export default {
         alert("Plese insert username");
         return;
       }
-      const newUser = {
+      const loginUser = {
         username: this.username,
         password: this.password,
       };
-      this.$emit("login-user", newUser);
+      Server.login(loginUser).then(resp => {
+        console.log(resp);
+      })
+      // this.$emit("login-user", newUser);
     },
     signUpUser() {
       this.$emit("changeState", "register");
