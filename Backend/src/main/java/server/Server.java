@@ -33,12 +33,7 @@ public class Server {
         get(Path.Web.RESTAURANT, RestaurantController.getAllRestaurants);
         get(Path.Web.GET_AVAILABLE_MANAGERS, UserController.getAvailableManagers);
 
-        after((Filter) (request, response) -> {
-            response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Allow-Methods", "GET,PUT,POST ,DELETE");
-            response.header("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
-//            response.header("Content-Encoding", "gzip");
-        });
+        
 //        after((request, response) -> response.type("application/json"));
     }
 
