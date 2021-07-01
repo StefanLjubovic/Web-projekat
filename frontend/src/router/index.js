@@ -7,6 +7,8 @@ import CreateRestaurant from '../views/CreateRestaurant.vue'
 import EditProfile from '../views/EditProfile.vue'
 import ListOfAllUsers from '../views/ListOfAllUsers.vue'
 import AdvancedSearch from '../views/AdvancedSearch.vue'
+import CreateArticle from '../views/CreateArticle.vue'
+import ManagerViewOfCustomers from '../views/ManagerViewOfCustomers.vue'
 const routes = [
   {
     path: '/',
@@ -47,6 +49,16 @@ const routes = [
     path: '/advanced-search',
     name: 'AdvancedSearch',
     component: AdvancedSearch
+  },
+  {
+    path: '/create-article',
+    name: 'CreateArticle',
+    component: CreateArticle
+  },
+  {
+    path: '/view-customers',
+    name: 'ManagerViewOfCustomers',
+    component: ManagerViewOfCustomers
   }
 ]
 

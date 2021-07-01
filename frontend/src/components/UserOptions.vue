@@ -24,6 +24,12 @@
            <div class="btn-div margin">
            <button type="button" class="btn btn-light btn" @click="allUsers"><span class="btn-components">All users<i class="fas fa-users icon"></i></span></button>
            </div>
+            <div class="btn-div margin">
+           <button type="button" class="btn btn-light btn" @click="createArticle"><span class="btn-components">Add article<i class="fas fa-plus icon"></i></span></button>
+           </div>
+           <div class="btn-div margin">
+           <button type="button" class="btn btn-light btn" @click="viewCustomers"><span class="btn-components">View customers<i class="fas fa-user-friends icon"></i></span></button>
+           </div>
        <div class="btn-div margin">
            <button type="button" class="btn btn-light btn"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
            </div>
@@ -60,6 +66,14 @@ export default {
         managersRestaurant(){
              this.$emit('create-restaurant');
             this.$router.push({ path: '/restaurant' });
+        },
+        createArticle(){
+             this.$emit('create-restaurant');
+             this.$router.push({ path: '/create-article' });
+        },
+        viewCustomers(){
+            this.$emit('create-restaurant');
+             this.$router.push({ path: '/view-customers' });
         }
     },
     created() {
@@ -78,6 +92,7 @@ export default {
   width: 400px;
   height: 400px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  background-color: #5E639B;
 }
 
 .btn-div{
@@ -94,6 +109,8 @@ export default {
 }
 .btn{
     width:360px;
+    background-color: #FDDF6D;
+    color: #5E639B;
 }
 .rounded-image{
         width: 100%;
@@ -107,6 +124,7 @@ export default {
     margin-bottom:20px ;
     margin-top:10px ;
     float: left;
+    color: #5E639B;
 }
 .user-info{
     margin-right: 100px;
