@@ -7,11 +7,15 @@
   >
     Log in
   </button>
-  <span>
+  <span class="profile-dropdown" v-if="userExists">
+    <i class="fas fa-user" style="color: #fddf6d"></i>
+    <span class="user-profile-name">
+      {{user.firstName}} {{user.lastName}}
+    </span>
     <button
       class="btn btn-warning "
       @click="$emit('show-options')"
-      v-if="userExists"
+      
     >
       <i class="fas fa-angle-down"></i>
     </button>
@@ -88,5 +92,16 @@ button.btn-warning {
   height: 70px;
   line-height: 70px;
   font-size: 1.3rem;
+}
+.profile-dropdown{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.user-profile-name{
+  color: #fddf6d;
+  font-weight: 500;
+  margin-left: 5px;
+  margin-right: 10px;
 }
 </style>
