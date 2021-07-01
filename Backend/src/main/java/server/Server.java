@@ -23,6 +23,7 @@ public class Server {
         restaurantDAO = new RestaurantDao();
         userDao = new UserDao();
 
+
         before((Filter) (request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
             response.header("Access-Control-Allow-Methods", "PUT,GET,POST,DELETE");
@@ -30,8 +31,10 @@ public class Server {
 //            response.header("Content-Encoding", "gzip");
         });
         post(Path.Web.LOGIN, UserController.Login); //Login
+
         get(Path.Web.RESTAURANT, RestaurantController.getAllRestaurants);
         get(Path.Web.GET_AVAILABLE_MANAGERS, UserController.getAvailableManagers);
+        post(Path.Web.CREATE_USER, UserController.createUser);
 
         
 //        after((request, response) -> response.type("application/json"));

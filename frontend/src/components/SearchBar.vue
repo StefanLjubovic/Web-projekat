@@ -10,18 +10,21 @@
 		v-on:input="searchHandler"
 		aria-describedby="search-addon"
 		/>
+		<button type="button" class="btn" v-if="advanced" @click="advancedSearch">Advanced search</button>
   </div>
 </template>
 
 <script>
-// let searchTimeout = null;
 export default {
   data: () => {
 	return {
 	  userName: "",
 	  searchTimeout: null,
+	  advanced: false,
 	};
   },
+  emits:['advanced-search'],
+  props:['advancedFilter'],
   methods: {
 	searchHandler() {
 	  if (!this.searchTimeout) {
@@ -32,7 +35,15 @@ export default {
 		this.$emit("search", this.userName);
 	  }, 700);
 	},
+	advancedSearch(){
+		this.$router.push({ path: '/advanced-search' });
+	}
   },
+  mounted(){
+        if(this.advancedFilter !=null){
+			  this.advanced=this.advancedFilter;
+		  }
+    },
 };
 </script>
 
@@ -62,5 +73,13 @@ export default {
 	.search-input:focus{
 		outline: unset
 	}
+	.btn{
+        width: 150px;
+        background-color: #FDDF6D;
+        color: #42405F;
+        font-weight: 500;
+        border: unset;
+		border-radius: 100px;
+    }
 
 </style>
