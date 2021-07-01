@@ -71,8 +71,8 @@ import Server from "@/server/server"
 export default {
   data() {
     return {
-      username: "",
-      password: "",
+      username: "Pera",
+      password: "123",
     };
   },
   methods: {
@@ -95,6 +95,15 @@ export default {
       this.$emit("changeState", "register");
     },
   },
+  mounted(){
+    const loginUser = {
+        username: this.username,
+        password: this.password,
+      };
+      Server.login(loginUser).then(resp => {
+        console.log(resp);
+      })
+  }
 };
 </script>
 
