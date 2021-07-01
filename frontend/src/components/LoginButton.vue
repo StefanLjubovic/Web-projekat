@@ -1,13 +1,26 @@
 <template>
-    <button type="button" class="btn btn-primary" @click="$emit('login-user')">Log in</button>
+    <button type="button" class="btn btn-primary" @click="$emit('login-user')" v-if="!userExists">Log in</button>
     <span>
-    <button class="btn btn-warning btn-circle btn-circle-sm m-1" @click="$emit('show-options')" ><i class="fas fa-angle-down"></i></button>
+    <button class="btn btn-warning btn-circle btn-circle-sm m-1" @click="$emit('show-options')" v-if="userExists"><i class="fas fa-angle-down"></i></button>
     </span>
 </template>
 
 <script>
+
 export default {
-  emits:['login-user','show-options']
+  emits:['login-user','show-options'],
+  computed: {
+    user(){
+      console.log('Getting user');
+      return this.$store.getters.getUser;
+    },
+    userExists(){
+        return !!this.user.firstName;
+      }
+  },
+  methods:{
+    
+  }
 }
 </script>
 

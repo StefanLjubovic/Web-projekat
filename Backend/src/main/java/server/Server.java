@@ -23,21 +23,22 @@ public class Server {
         restaurantDAO = new RestaurantDao();
         userDao = new UserDao();
 
-
-//        post(Path.Web.LOGIN, UserController.Login); //Login
-        post("/login", (req, resp) -> {
-            return "Ide gas";
+        before((Filter) (request, response) -> {
+            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Allow-Methods", "PUT,GET,POST,DELETE");
+            response.header("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
+//            response.header("Content-Encoding", "gzip");
         });
-
+        post(Path.Web.LOGIN, UserController.Login); //Login
         get(Path.Web.RESTAURANT, RestaurantController.getAllRestaurants);
         get(Path.Web.GET_AVAILABLE_MANAGERS, UserController.getAvailableManagers);
 
-        after((Filter) (request, response) -> {
-            response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Allow-Methods", "GET,PUT,POST ,DELETE");
-            response.header("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
-            response.header("Content-Encoding", "gzip");
-        });
+//        after((Filter) (request, response) -> {
+//            response.header("Access-Control-Allow-Origin", "*");
+//            response.header("Access-Control-Allow-Methods", "GET,PUT,POST ,DELETE");
+//            response.header("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
+////            response.header("Content-Encoding", "gzip");
+//        });
 //        after((request, response) -> response.type("application/json"));
     }
 
