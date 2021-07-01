@@ -92,10 +92,9 @@ export default {
         if(resp.success){
           const data = resp.data;
           const user = JSON.parse(data['user'])
-          console.log("USer:", user)
-          // console.log("Store",this.$store);
-          // this.setUser(user)
+          const token = localStorage.setItem("token", token);
           store.commit("setUser", user);
+          this.$emit('close')
         }
       })
       // this.$emit("login-user", newUser);
