@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @click="$emit('user-container-click')">
+    <div class="container" @click="$emit('hideDialog')">
         <div class="profile-btn margin">
             <button class="btn btn-light" @click="$emit('edit-profile')">
             <div  v-if="user.logo == ''">
@@ -25,7 +25,7 @@
            <button type="button" class="btn btn-light btn" @click="allUsers"><span class="btn-components">All users<i class="fas fa-users icon"></i></span></button>
            </div>
        <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
+           <button type="button" class="btn btn-light btn" @click="signout"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
            </div>
     </div>
 </template>
@@ -50,22 +50,26 @@ export default {
             return !!pic ? require('../assets/'+pic) : ""
         },
         createRestaurant(){
-            this.$emit('create-restaurant');
+            this.$emit('hideDialog');
             this.$router.push({ path: '/create-restaurant' });
         },
         allUsers(){
             this.$router.push({ path: '/user-list' });
-            this.$emit('all-users');
+            this.$emit('hideDialog');
         },
         managersRestaurant(){
-             this.$emit('create-restaurant');
+             this.$emit('hideDialog');
             this.$router.push({ path: '/restaurant' });
+        },
+        signout(){
+            this.$store.commit("setUser", {});
+            this.$emit('hideDialog')
         }
     },
     created() {
-		this.user = User;
+		// this.user = User;
 	},
-    emits:['create-restaurant','edit-profile','all-users','user-container-click']
+    emits:['create-restaurant','edit-profile','all-users','hideDialog']
 }
 </script>
 

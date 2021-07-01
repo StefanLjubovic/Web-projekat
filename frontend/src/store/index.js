@@ -10,7 +10,7 @@ export default createStore({
     setUser(state, payload) {
       console.log('Setting user');
       state.user = payload;
-    }
+    },
   },
   actions: {
     //asyncronous
