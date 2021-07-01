@@ -25,12 +25,13 @@ public class Server {
 
 
 //        post(Path.Web.LOGIN, UserController.Login); //Login
-        post("/login", (req, resp) -> {
-            return "Ide gas";
-        });
+       // post("/login", (req, resp) -> {
+       //     return "Ide gas";
+       // });
 
         get(Path.Web.RESTAURANT, RestaurantController.getAllRestaurants);
         get(Path.Web.GET_AVAILABLE_MANAGERS, UserController.getAvailableManagers);
+        post(Path.Web.CREATE_USER, UserController.createUser);
 
         after((Filter) (request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");

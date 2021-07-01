@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import Server from '@/server/server'
 export default {
 	watch: {
 		$route(to, from) {},
@@ -145,8 +146,14 @@ export default {
 				surname: this.surname,
 				gender: this.gender,
 				dateOfBirth: this.dateOfBirth,
+				userType: this.userType
 			};
-			console.log(newUser);
+				Server.register(newUser).then(resp=>{
+				if(resp.success){
+					console.log(resp.data);
+				}
+				console.log('register');
+			})
 		},
 		loginPage() {
 			this.$emit('changeState', 'login');
