@@ -10,11 +10,13 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
     private List<User> users;
     private String filePath="src/main/java/user/User.json";
     private UserSerialization userSerialization=new UserSerialization();
+    public UserDao(){
+        users = userSerialization.load(filePath);
+    }
     @Override
     public Boolean create(User obj) {
         if(objectExists(obj))
             return false;
-        users=getAll();
         users.add(obj);
         userSerialization.save(filePath,users);
         return true;
@@ -22,13 +24,11 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
 
     @Override
     public List<User> getAll() {
-        users=userSerialization.load(filePath);
         return users;
     }
 
     @Override
     public User getOne(String id) {
-        users=getAll();
         for (User user: users) {
             if(user.getId().equals(id))
                 return user;
@@ -38,7 +38,6 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
 
     @Override
     public Boolean delete(String id) {
-        users=getAll();
         int index = -1;
         for (int i = 0; i < users.size(); i++){
             if(users.get(i).getId().equals(id)){
@@ -56,7 +55,6 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
 
     @Override
     public Boolean objectExists(User object) {
-        users=getAll();
         for (User user:users) {
             if(user.getId().equals(object.getId()))
                 return true;

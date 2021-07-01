@@ -1,13 +1,13 @@
 <template>
     <button type="button" class="btn btn-primary" @click="$emit('login-user')">Log in</button>
     <span>
-    <button class="btn btn-warning btn-circle btn-circle-sm m-1" @click="$emit('show-options')"><i class="fas fa-angle-down"></i></button>
+    <button class="btn btn-warning btn-circle btn-circle-sm m-1" @click="$emit('show-options')" ><i class="fas fa-angle-down"></i></button>
     </span>
 </template>
 
 <script>
 export default {
-    emits:['login-user','show-options']
+  emits:['login-user','show-options']
 }
 </script>
 

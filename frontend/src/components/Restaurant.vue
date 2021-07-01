@@ -9,7 +9,7 @@
         </div>
         <div class="restaurant-details">
             <div class="restaurant-location">
-                <p>📍:  {{restaurant.location}}</p>
+                <p>📍:  {{restaurant.location.address}}</p>
             </div>
             <div class="grade">
                 <i class="fas fa-star" style="color: #FAE480"></i>

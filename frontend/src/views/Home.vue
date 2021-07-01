@@ -14,6 +14,7 @@ import Header from "@/components/Header.vue";
 import Restaurants from "@/components/Restaurants.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import UserOptions from "@/components/UserOptions.vue";
+import Server from '@/server/server'
 const allRestaurants = [
 		{
 			name: "Front",
@@ -75,7 +76,6 @@ const allRestaurants = [
 			grade: "4.7",
 		},
 	]
-
 export default {
 	watch: {
 		$route(to, from) {},
@@ -101,8 +101,15 @@ export default {
 			
 		},
 	},
-	created() {
-		this.restaurants = allRestaurants;
+	async created() {
+		// this.restaurants = allRestaurants;
+		Server.getAllRestaurants().then(resp => {
+			console.log("Resp", resp.data);
+			if(resp.success){
+				this.restaurants = resp.data;
+				console.log(this.restaurants);
+			}
+		})
 	},
 	name: "Home",
 	components: {
