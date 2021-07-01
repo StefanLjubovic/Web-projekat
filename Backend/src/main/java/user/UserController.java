@@ -41,15 +41,15 @@ public class UserController  {
             String loginToken = UUID.randomUUID().toString();
             loginTrack.put(loginToken, user.getId());
             model.put("loginToken", loginToken);
-            model.put("user", user);
-            res.body(gson.toJson(model));
+            model.put("user", gson.toJson(user));
+            res.body("Ide gas");
             res.status(200);
         }else{
             model.put("errorMessage", "User doesn't exist or email/password is not correct");
             res.body(gson.toJson(model));
             res.status(400);
         }
-        return res;
+        return gson.toJson(model);
     };
 
     public static User authorize(String username, String password){

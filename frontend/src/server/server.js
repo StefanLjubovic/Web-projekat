@@ -12,6 +12,7 @@ server.getAllRestaurants = () => {
         method: "GET",
         headers: {
             "Content-Type": 'application/json;charset=UTF-8',
+            "Accept": 'application/json',
         },
         url: `${baseUrl}/restaurants/`,
     };
@@ -22,13 +23,11 @@ server.getAllRestaurants = () => {
 
 server.login = (data) => {
     const options = {
-        method: "post",
-        headers: {
-            "Content-Type": 'application/json;charset=UTF-8',
-        },
+        method: "POST",
         url: `${baseUrl}/login`,
         data: data
     };
+    
     return axios(options)
         .then(response => handleSuccess(response))
         .catch(error => handelError(error));

@@ -2,7 +2,7 @@
 
 <div class="app" @click="hideOptions" id="appContainer">
     <Header @login-user="loginUser" @show-options="showOptions"/>
-    <UserOptions class="options" @all-users="hideDialog" @create-restaurant="hideDialog" @user-container-click="userContainerClick" @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
+    <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
     <router-view/>
 </div>
 </template>

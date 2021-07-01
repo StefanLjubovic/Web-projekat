@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @click="$emit('user-container-click')">
+    <div class="container" @click="$emit('hideDialog')">
         <div class="profile-btn margin">
             <button class="btn btn-light" @click="$emit('edit-profile')">
             <div  v-if="user.logo == ''">
@@ -7,10 +7,10 @@
                 
             </div>
             <div  v-if="user.logo != ''">
-                <img class="rounded-image" :src="getImgUrl(user.logo)" v-bind:alt="user.logo">                
+                <img class="rounded-image" :src="getImgUrl(user?.logo)" v-bind:alt="user.logo">                
             </div>
             <div  class="user-info">
-            <h3>{{user.name}} {{user.surname}}</h3>
+            <h3>{{user.firstName}} {{user.lastName}}</h3>
             <p class="info">Profile info</p>
             </div>
             </button>
@@ -25,7 +25,7 @@
            <button type="button" class="btn btn-light btn" @click="allUsers"><span class="btn-components">All users<i class="fas fa-users icon"></i></span></button>
            </div>
        <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
+           <button type="button" class="btn btn-light btn" @click="signout"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
            </div>
     </div>
 </template>
@@ -40,43 +40,47 @@ export default {
     watch: {
 		$route(to, from) {},
 	},
-    data(){
-        return{
-            user: {},
+    computed:{
+        user(){
+            return this.$store.getters.getUser;
         }
     },
     methods:{
         getImgUrl(pic) {
-            return require('../assets/'+pic)
+            return !!pic ? require('../assets/'+pic) : ""
         },
         createRestaurant(){
-            this.$emit('create-restaurant');
+            this.$emit('hideDialog');
             this.$router.push({ path: '/create-restaurant' });
         },
         allUsers(){
             this.$router.push({ path: '/user-list' });
-            this.$emit('all-users');
+            this.$emit('hideDialog');
         },
         managersRestaurant(){
-             this.$emit('create-restaurant');
+             this.$emit('hideDialog');
             this.$router.push({ path: '/restaurant' });
+        },
+        signout(){
+            this.$store.commit("setUser", {});
+            this.$emit('hideDialog')
         }
     },
     created() {
-		this.user = User;
+		// this.user = User;
 	},
-    emits:['create-restaurant','edit-profile','all-users','user-container-click']
+    emits:['create-restaurant','edit-profile','all-users','hideDialog']
 }
 </script>
 
 <style scoped>
 .container {
-  background: #ffffff;
+  background: #FDDF6D;
   color: #999999;
   border-radius: 8px;
   padding: 10px 20px;
   width: 400px;
-  height: 400px;
+  /* height: 400px; */
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
