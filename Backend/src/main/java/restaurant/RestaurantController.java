@@ -10,10 +10,10 @@ import static server.Server.restaurantDAO;
 
 public class RestaurantController {
 
+
     private static Gson gson=new Gson();
 
     public static Route getAllRestaurants = (Request req,Response res) -> {
-        System.out.println("Ovde sam");
         List<Restaurant> restaurants = restaurantDAO.GetAllRestaurants();
         res.type("application/json");
         return gson.toJson(restaurants);
@@ -23,5 +23,15 @@ public class RestaurantController {
       String restaurantJson = req.body();
       Restaurant restaurant = gson.fromJson(restaurantJson,Restaurant.class);
       return restaurantDAO.SaveRestaurant(restaurant);
+    };
+
+    public static Route getSingleRestaurant = (Request req, Response res) -> {
+        res.type("application/json");
+        Restaurant restaurant = restaurantDAO.getOne(req.queryParams("id"));
+        res.status(200);
+        if(restaurant == null){
+            res.status(400);
+        }
+        return gson.toJson(restaurant);
     };
 }
