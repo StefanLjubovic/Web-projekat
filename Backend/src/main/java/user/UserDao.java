@@ -13,6 +13,8 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
     public UserDao(){
         users = userSerialization.load(filePath);
     }
+
+
     @Override
     public Boolean create(User obj) {
         if(objectExists(obj))

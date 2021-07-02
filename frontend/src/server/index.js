@@ -43,6 +43,16 @@ server.getRestaurantById = (id) => {
         .catch(error => handelError(error));
 }
 
+server.getUserByToken = (token) => {
+    const options = {
+        method: "GET",
+        url: `${baseUrl}/userByToken?token=${token}`,
+    };
+    return axios(options)
+        .then(response => handleSuccess(response))
+        .catch(error => handelError(error));
+}
+
 function handelError(error) {
     console.log('Error');
     return { success: false, data: error };

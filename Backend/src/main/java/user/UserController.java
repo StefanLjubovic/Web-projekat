@@ -16,6 +16,7 @@ import static server.Server.userDao;
 import java.util.UUID;
 public class UserController  {
 
+
     private static Gson gson=new Gson();
     private static Map<String, String> loginTrack = new HashMap<>();
 
@@ -30,10 +31,9 @@ public class UserController  {
     }
 
     public static Route Login = (Request req, Response res)-> {
-        System.out.println("Login begins");
+
         Map<String, Object> model = new HashMap<>();
         String yourObjectStr = "" + req.body();
-        System.out.println(yourObjectStr);
         Gson gson = new GsonBuilder().create();
         LoginRequest requestData = gson.fromJson(yourObjectStr , LoginRequest.class);
         User user = authorize(requestData.username, requestData.password);
@@ -46,6 +46,27 @@ public class UserController  {
             res.status(200);
         }else{
             model.put("errorMessage", "User doesn't exist or email/password is not correct");
+            res.body(gson.toJson(model));
+            res.status(400);
+        }
+        return gson.toJson(model);
+    };
+
+
+    public static Route getUserByToken = (Request req, Response res) -> {
+        Map<String, Object> model = new HashMap<>();
+        String token = req.queryParams("token");
+        System.out.println("Searching for user: "+token);
+        if(loginTrack.containsKey(token)){
+            String userId = loginTrack.get(token);
+            User user = userDao.getOne(userId);
+            String loginToken = UUID.randomUUID().toString();
+            loginTrack.put(loginToken, user.getId());
+            model.put("loginToken", loginToken);
+            model.put("user", gson.toJson(user));
+            res.status(200);
+        }else{
+            model.put("errorMessage", "Invalid user token");
             res.body(gson.toJson(model));
             res.status(400);
         }

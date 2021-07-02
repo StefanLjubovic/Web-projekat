@@ -54,6 +54,7 @@ export default {
             ]
         }
     },
+    props:["restaurant"],
     methods:{
         getImage(review){
             console.log(review.image);
