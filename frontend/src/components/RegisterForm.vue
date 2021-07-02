@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import Server from '@/server/server'
+import Server from '@/server'
 export default {
 	watch: {
 		$route(to, from) {},
