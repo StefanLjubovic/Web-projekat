@@ -14,7 +14,7 @@ import Header from "@/components/Header.vue";
 import Restaurants from "@/components/Restaurants.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import UserOptions from "@/components/UserOptions.vue";
-import Server from '@/server/server'
+import Server from '@/server'
 const allRestaurants = [
 		{
 			name: "Front",

@@ -31,6 +31,18 @@ server.login = (data) => {
         .then(response => handleSuccess(response))
         .catch(error => handelError(error));
 };
+
+
+server.getRestaurantById = (id) => {
+    const options = {
+        method: "GET",
+        url: `${baseUrl}/restaurantById?id=${id}`,
+    };
+    return axios(options)
+        .then(response => handleSuccess(response))
+        .catch(error => handelError(error));
+}
+
 function handelError(error) {
     console.log('Error');
     return { success: false, data: error };
