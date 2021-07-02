@@ -47,6 +47,7 @@ export default {
             selectedItem: {}
 		};
 	},
+	props:["restaurant"],
     components:{RestaurantItemModal},
 	methods: {
 		getImage(review) {

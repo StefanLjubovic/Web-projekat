@@ -36,7 +36,7 @@ export default {
             return require('../assets/'+pic)
         },
         openRestaurant() {
-            this.$router.push({ path: '/restaurant' });
+            this.$router.push({ name: 'Restaurant',params: { id: this.restaurant.id } });
         }
     }
 }

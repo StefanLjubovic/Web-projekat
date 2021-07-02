@@ -2,7 +2,7 @@
 <div class="container">
     <div class="restaurant-card">
         <div class="restaurant-image-container">
-            <img class="rounded-image" :src="getImage(restaurant.logo)" v-bind:alt="restaurant.logo">
+            <img class="rounded-image" :src="getImage(restaurant?.logo)" v-bind:alt="restaurant.logo">
         </div>
         <div class="restaurant-info-container">
             <div class="restaurant-info-header">
@@ -13,12 +13,12 @@
         </div>
          <div class="restaurant-details">
             <div class="restaurant-location">
-                <p>📍:  {{restaurant.location}}</p>
+                <p>📍:  {{restaurant?.location?.address}}</p>
             </div>
             <div class="restaurant-status">
                 {{getRestaurantStatus()}}
             </div>
-            <div class="grade">
+            <div class="grade"> 
                 <i class="fas fa-star" style="color: #FAE480"></i>
                 <label>{{restaurant.grade}}</label>
             </div>
@@ -34,20 +34,21 @@ export default {
             restaurant: {}
         })
     },
+    props:['restaurant'],
     created() {
-        this.restaurant = {
-			name: "Petrus",
-			description: "Modern restaurant in the city center",
-			type: "barbecue",
-			status: false,
-			logo: 'petrus.jpg',
-			location: "Bulevar 4",
-			grade: "4.7",
-		}
+        // this.restaurant = {
+		// 	name: "Petrus",
+		// 	description: "Modern restaurant in the city center",
+		// 	type: "barbecue",
+		// 	status: false,
+		// 	logo: 'petrus.jpg',
+		// 	location: "Bulevar 4",
+		// 	grade: "4.7",
+		// }
     },
     methods:{
         getImage(img) {
-            return require('../assets/'+img)
+            return !!img ? require('../assets/'+img) : ""
         },
         getRestaurantType(type){
             let retValue = type;

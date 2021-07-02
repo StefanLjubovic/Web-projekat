@@ -11,7 +11,8 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import UserOptions from "@/components/UserOptions.vue";
-
+import { mapMutations, mapGetters } from "vuex";
+import Server from './server'
 export default {
 	name: "App",
     data(){
@@ -45,6 +46,21 @@ export default {
         editProfile(){
             this.show=false;
             this.$router.push({ path: '/profile' });
+        },
+        ...mapMutations({ setUser: "setUser" })
+    },
+    async mounted(){
+        const token = localStorage.getItem("token");
+        if(!!token){
+            const resp = await Server.getUserByToken(token);
+            if(resp.success){
+                const data = resp.data;
+                const user = JSON.parse(data['user'])
+                const token = data['loginToken']
+                localStorage.setItem("token", token);
+                // setUser(user);
+                this.$store.commit("setUser", user)
+            }
         }
     }
 };

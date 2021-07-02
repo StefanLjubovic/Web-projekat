@@ -1,14 +1,15 @@
 <template >
 	<div class="home">
 		<!-- <Header @login-user="loginUser"/> -->
-		<RestaurantInfo />
+		<RestaurantInfo :restaurant="restaurant"/>
 		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" />
-		<RestaurantInformations v-if="selectedView == 'informations'"/>
-		<RestaurantReviews v-if="selectedView == 'reviews'"/>
-		<RestaurantItems v-if="selectedView == 'items'"/>
+		<RestaurantLocation v-if="selectedView == 'informations'" :restaurant="restaurant"/>
+		<RestaurantReviews v-if="selectedView == 'reviews'" :restaurant="restaurant" />
+		<RestaurantItems v-if="selectedView == 'items'" :restaurant="restaurant"/>
 	</div>
 </template>
 <script>
+import Server from "@/server";
 import Header from "@/components/Header.vue";
 import Restaurants from "@/components/Restaurants.vue";
 import SearchBar from "@/components/SearchBar.vue";
@@ -17,7 +18,7 @@ import RestaurantNavigator from '@/components/RestaurantNavigator.vue'
 
 import RestaurantItems from '@/components/RestaurantViews/RestaurantItems.vue'
 import RestaurantReviews from '@/components/RestaurantViews/RestaurantReviews.vue'
-import RestaurantInformations from '@/components/RestaurantViews/RestaurantInformations.vue'
+import RestaurantLocation from '@/components/RestaurantViews/RestaurantLocation.vue'
 
 export default {
 	
@@ -29,25 +30,20 @@ export default {
 		};
 	},
 	methods:{
-		filterRestaurants(text){
-			this.restaurants = allRestaurants.filter(e => e.name.toLowerCase().includes(text.toLowerCase()));
-		},
-		loginUser(){
-      		this.$router.push({ path: '/login' });
-    	},
-		goToRestaurant(name){
-			this.restaurants.forEach((value,index)=>{
-				if(value.name===name)
-					this.restaurant=value;
-			});
-			
-		},
 		changeView(view){
 			this.selectedView = view;
 		}
 	},
 	created() {
 		// this.restaurants = allRestaurants;
+		const id = this.$route.params.id;
+		console.log(id);
+		Server.getRestaurantById(id).then(resp => {
+			if(resp.success){
+				this.restaurant = resp.data;
+				console.log(this.restaurant)
+			}
+		})
 	},
 
 	name: "RestaurantReview",
@@ -59,7 +55,7 @@ export default {
 		RestaurantNavigator,
 		RestaurantItems,
 		RestaurantReviews,
-		RestaurantInformations
+		RestaurantLocation
 	},
 };
 </script>

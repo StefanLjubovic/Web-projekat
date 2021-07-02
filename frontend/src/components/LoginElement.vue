@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import Server from "@/server/server";
+import Server from "@/server";
 import { mapMutations, mapGetters } from "vuex";
 import store from '../store/index'
 export default {
@@ -92,7 +92,8 @@ export default {
         if(resp.success){
           const data = resp.data;
           const user = JSON.parse(data['user'])
-          const token = localStorage.setItem("token", token);
+          const token = data['loginToken']
+          localStorage.setItem("token", token);
           store.commit("setUser", user);
           this.$emit('close')
         }

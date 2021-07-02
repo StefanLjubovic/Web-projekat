@@ -9,6 +9,9 @@ public class Path {
         @Getter public static final String LOGIN = "/login";
         @Getter public static final String RESTAURANT="/restaurants/";
         @Getter public static final String GET_AVAILABLE_MANAGERS="/restaurants/managers";
+        @Getter public static final String GET_SINGLE_RESTAURANT = "/restaurantById";
+        @Getter public static final String GET_USER_BY_TOKEN = "/userByToken";
+
         @Getter public static final String CREATE_USER="/register";
     }
     public static class Storage{
