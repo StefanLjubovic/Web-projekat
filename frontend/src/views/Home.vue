@@ -2,7 +2,7 @@
 	<div class="home">
 		<!-- <Header @login-user="loginUser"/> -->
 		<div class="home-container" >
-			<SearchBar  @search="filterRestaurants"/>
+			<SearchBar :advanced-filter="advancedFilter" @advanced-search="advancedSearch"  @search="filterRestaurants"/>
 			<Restaurants @restaurant-info="goToRestaurant" :restaurants="restaurants" class="restaurants" />
 		</div>
 	</div>
@@ -83,7 +83,8 @@ export default {
 	data() {
 		return {
 			restaurants: [],
-			restaurant:{}
+			restaurant:{},
+			advancedFilter:true,
 		};
 	},
 	methods:{
@@ -100,6 +101,9 @@ export default {
 			});
 			
 		},
+		advancedSearch(){
+			this.$router.push({ path: '/advanced-search' });
+		}
 	},
 	async created() {
 		// this.restaurants = allRestaurants;
@@ -136,6 +140,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	
 	/* max-height: 100vh; */
 	position: relative;
 	background-color: #D7E2F8;

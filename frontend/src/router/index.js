@@ -6,6 +6,7 @@ import RestaurantReview from '../views/RestaurantReview.vue'
 import CreateRestaurant from '../views/CreateRestaurant.vue'
 import EditProfile from '../views/EditProfile.vue'
 import ListOfAllUsers from '../views/ListOfAllUsers.vue'
+import AdvancedSearch from '../views/AdvancedSearch.vue'
 const routes = [
   {
     path: '/',
@@ -41,6 +42,11 @@ const routes = [
     path: '/user-list',
     name: 'ListOfAllUsers',
     component: ListOfAllUsers
+  },
+  {
+    path: '/advanced-search',
+    name: 'AdvancedSearch',
+    component: AdvancedSearch
   }
 ]
 

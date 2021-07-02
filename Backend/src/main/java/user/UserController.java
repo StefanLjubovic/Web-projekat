@@ -88,4 +88,18 @@ public class UserController  {
         return null;
     }
 
+    public static Route createUser=(Request req,Response res)->{
+        String yourObjectStr = "" + req.body();
+        System.out.println("aaaaa");
+        System.out.println(yourObjectStr);
+        Gson gson = new GsonBuilder().create();
+        User user = gson.fromJson(yourObjectStr , User.class);
+        String uniqueID = UUID.randomUUID().toString();
+        user.setId(uniqueID);
+        if(authorize(user.getUsername(),user.getPassword())==null){
+            userDao.create(user);
+        }
+        return gson.toJson(user);
+    };
+
 }
