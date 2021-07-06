@@ -12,6 +12,7 @@ server.getAllRestaurants = () => {
         method: "GET",
         headers: {
             "Content-Type": 'application/json;charset=UTF-8',
+            "Accept": 'application/json',
         },
         url: `${baseUrl}/restaurants/`,
     };
@@ -22,17 +23,37 @@ server.getAllRestaurants = () => {
 
 server.login = (data) => {
     const options = {
-        method: "post",
-        headers: {
-            "Content-Type": 'application/json;charset=UTF-8',
-        },
+        method: "POST",
         url: `${baseUrl}/login`,
         data: data
     };
+    
     return axios(options)
         .then(response => handleSuccess(response))
         .catch(error => handelError(error));
 };
+
+
+server.getRestaurantById = (id) => {
+    const options = {
+        method: "GET",
+        url: `${baseUrl}/restaurantById?id=${id}`,
+    };
+    return axios(options)
+        .then(response => handleSuccess(response))
+        .catch(error => handelError(error));
+}
+
+server.getUserByToken = (token) => {
+    const options = {
+        method: "GET",
+        url: `${baseUrl}/userByToken?token=${token}`,
+    };
+    return axios(options)
+        .then(response => handleSuccess(response))
+        .catch(error => handelError(error));
+
+}
 
 server.register=(data)=>{
     const options={

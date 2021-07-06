@@ -2,7 +2,7 @@
 
 <div class="app" @click="hideOptions" id="appContainer">
     <Header @login-user="loginUser" @show-options="showOptions"/>
-    <UserOptions class="options" @all-users="hideDialog" @create-restaurant="hideDialog" @user-container-click="userContainerClick" @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
+    <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
     <router-view/>
 </div>
 </template>
@@ -11,7 +11,8 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import UserOptions from "@/components/UserOptions.vue";
-
+import { mapMutations, mapGetters } from "vuex";
+import Server from './server'
 export default {
 	name: "App",
     data(){
@@ -45,6 +46,21 @@ export default {
         editProfile(){
             this.show=false;
             this.$router.push({ path: '/profile' });
+        },
+        ...mapMutations({ setUser: "setUser" })
+    },
+    async mounted(){
+        const token = localStorage.getItem("token");
+        if(!!token){
+            const resp = await Server.getUserByToken(token);
+            if(resp.success){
+                const data = resp.data;
+                const user = JSON.parse(data['user'])
+                const token = data['loginToken']
+                localStorage.setItem("token", token);
+                // setUser(user);
+                this.$store.commit("setUser", user)
+            }
         }
     }
 };

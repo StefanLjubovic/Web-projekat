@@ -41,6 +41,7 @@ public class RestaurantDao implements ModelDao<Restaurant> {
 
     @Override
     public Restaurant getOne(String id) {
+        System.out.println("Search for "+id);
         for (Restaurant restaurant: restaurants) {
             if(restaurant.getId().equals(id))
                 return restaurant;
@@ -50,17 +51,12 @@ public class RestaurantDao implements ModelDao<Restaurant> {
 
     @Override
     public Boolean delete(String id) {
-        int index = -1;
         for (int i = 0; i < restaurants.size(); i++){
             if(restaurants.get(i).getId().equals(id)){
-                index = i;
-                break;
+                restaurants.remove(i);
+                restaurantSerialization.save(filePath,restaurants);
+                return true;
             }
-        }
-        if(index != -1){
-            restaurants.remove(index);
-            restaurantSerialization.save(filePath,restaurants);
-            return true;
         }
         return false;
     }

@@ -67,12 +67,14 @@
 </template>
 
 <script>
-import Server from "@/server/server"
+import Server from "@/server";
+import { mapMutations, mapGetters } from "vuex";
+import store from '../store/index'
 export default {
   data() {
     return {
-      username: "Pera",
-      password: "123",
+      username: "pera",
+      password: "111",
     };
   },
   methods: {
@@ -87,22 +89,30 @@ export default {
         password: this.password,
       };
       Server.login(loginUser).then(resp => {
-        console.log(resp);
+        if(resp.success){
+          const data = resp.data;
+          const user = JSON.parse(data['user'])
+          const token = data['loginToken']
+          localStorage.setItem("token", token);
+          store.commit("setUser", user);
+          this.$emit('close')
+        }
       })
       // this.$emit("login-user", newUser);
     },
     signUpUser() {
       this.$emit("changeState", "register");
     },
+    ...mapMutations({ setUser: "setUser" })
   },
   mounted(){
-    const loginUser = {
-        username: this.username,
-        password: this.password,
-      };
-      Server.login(loginUser).then(resp => {
-        console.log(resp);
-      })
+    // const loginUser = {
+    //     username: this.username,
+    //     password: this.password,
+    //   };
+    //   Server.login(loginUser).then(resp => {
+    //     console.log(resp);
+    //   })
   }
 };
 </script>
