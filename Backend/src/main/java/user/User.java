@@ -14,7 +14,7 @@ public class User{
     private String username;
     private String password;
     private String gender;
-    private Integer dateOfBirth;
+    private double dateOfBirth;
     private UserRoles role;
     private Integer restaurantId;
     private String cartId;
@@ -99,11 +99,11 @@ public class User{
         this.gender = gender;
     }
 
-    public Integer getDateOfBirth() {
+    public double getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Integer dateOfBirth) {
+    public void setDateOfBirth(double dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

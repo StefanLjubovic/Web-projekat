@@ -98,6 +98,21 @@ server.updateUser=(data)=>{
     .catch(error=>handleError(error));
 }
 
+server.updatePassword=(data)=>{
+    const options={
+        method: "put",
+        headers:{
+            "Content-Type": 'application/json;charset=UTF-8',
+            "Accept": 'application/json',
+        },
+        url: `${baseUrl}/editProfile/updatePassword`,
+        data: data
+    };
+    return axios(options)
+    .then(response=>handleSuccess(response))
+    .catch(error=>handleError(error));
+}
+
 server.getAllManagers=()=>{
     const options={
         mehod: "get",

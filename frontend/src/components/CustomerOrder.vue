@@ -1,15 +1,18 @@
 <template>
-    <div class="container">
+    <div class="container" @click="write">
         <div class="picture">
-            <i class="far fa-user" rounded-image></i>
+            <i class="far fa-user fa-5x" rounded-image></i>
         </div>
         <div class="restaurant-info">
-            <h3>{{user.name}} {{user.surname}}</h3>
-            <label for="desctiption" v-for="item in user.items" :key="item">{{item}}</label>
+            <h3>Customer: {{user.name}} {{user.surname}}</h3>
+            <label for="desctiption">Ordered food:&nbsp;</label>
+            <label for="desctiption" v-for="item in user.items" :key="item">{{item.item}},&nbsp;</label><br>
+            <label for="descripiton">Date of order📆: <b>{{user.date}}</b> </label>
         </div>
         <div class="restaurant-details">
             <div class="restaurant-location">
-                <p>Quantity📍:  {{user.items.length}}</p>
+                <p>Ordered items📍:  {{user.items.length}}</p>
+                <p>Price💸: {{price}}</p>
             </div>
         </div>
     </div>
@@ -20,7 +23,25 @@ export default {
     name: 'CustomerOrder',
      props:{
         user: Object,
+        filters: Array
     },
+    data(){
+        return{
+            price: 0
+        }
+    },
+    methods:{
+        write(){
+            console.log(this.filters);
+        }
+    },
+    created(){
+        for(var i=0;i<this.user.items.length;i++){
+            console.log(this.user.items[i]);
+            this.price+=parseInt(this.user.items[i].price);
+        }
+        console.log(this.price)
+    }
 }
 </script>
 

@@ -4,7 +4,7 @@
           <div class="modal-wrapper">
             <div class="modal-item-container">
                 <LoginElement v-if="state == 'login'"    @changeState="changeState" @close="close"/>
-                <RegisterForm v-if="state == 'register'" @changeState="changeState" @close="close"/>
+                <RegisterForm v-if="state == 'register'" @closeForm="close" @changeState="changeState" @close="close"/>
             </div>  
           </div>
         </div>

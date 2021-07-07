@@ -7,8 +7,8 @@
                     <h4 class="text-right text-light">Profile Settings</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" v-model="user.name"></div>
-                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" v-model="user.lastname" placeholder="surname"></div>
+                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" v-model="user.firstName"></div>
+                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" v-model="user.lastName" placeholder="surname"></div>
                     <div class="alert alert-danger form-control name-alert" v-if="nameError" role="alert">
 					    Field must not be empty!
 				    </div>
@@ -17,15 +17,11 @@
 				    </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Email Address</label><input type="text" class="form-control" placeholder="email address"  v-model="user.email"></div>
-                    <div class="alert alert-danger form-control alert-form" v-if="emailError" role="alert">
-					    Field must not be empty!
-				    </div>
-                    <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="username" v-model="user.username"></div>
+                    <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="username" v-model="user.username" readonly></div>
                     <div class="alert alert-danger form-control alert-form" v-if="usernameError" role="alert">
 					    Field must not be empty!
 				    </div>
-                     <div class="col-md-12"><label class="labels">Date of birth</label><input type="text" class="form-control" placeholder="dd.mm.yyyy" v-model="user.date"></div>
+                     <div class="col-md-12"><label class="labels">Date of birth</label><input type="text" class="form-control" placeholder="dd.mm.yyyy" v-model="dateDisplay"></div>
                       <div class="alert alert-danger form-control alert-form" v-if="dateError" role="alert">
 					    Wrong date format!
 				    </div>
@@ -49,18 +45,13 @@
 </template>
 
 <script>
+import { create } from 'ol/transform';
+import moment from 'moment';
+import Server from '@/server'
 export default {
     data(){
         return{
             user:{
-                name: 'Pera',
-                lastname:'Peric',
-                username: 'pera',
-                email:'pera@gmail.com',
-                gender:'Male',
-                password:'123',
-                date:'11.05.1997'
-
             },
             password:'',
             passwordError:false,
@@ -68,15 +59,25 @@ export default {
             nameError:false,
             surnameError:false,
             usernameError:false,
-            emailError:false
+            dateDisplay: ''
         }
     },
     methods:{
         changePassword(){
             this.passwordError=false;
             console.log(this.password)
-            if (this.password.length< 8) this.passwordError = true;
+            if (this.password.length< 8 || this.password !=this.user.password) this.passwordError = true;
 			if (this.passwordError) return;
+            const loginUser={
+                username: this.user.username,
+                password: this.password
+            }
+            Server.updatePassword(loginUser).then(resp=>{
+			    if(resp.success){
+				    console.log('this.restaurants');
+			    }
+            });
+
         },
         changeUserInfo(){
             this.emailError=false;
@@ -85,15 +86,29 @@ export default {
             this.surnameError=false;
             this.usernameError=false;
             this.dateError=false;
-            var dateRegex = /^\d{2}[.]\d{2}[.]\d{4}$/;
-            if(this.user.name=="") this.nameError=true;
-            if(this.user.lastname=="") this.surnameError=true;
+            var dateRegex = /^\d{2}[.]\d{2}[.]\d{4}[.]$/;
+            if(this.user.firstName=="") this.nameError=true;
+            if(this.user.lastName=="") this.surnameError=true;
             if(this.user.username=="") this.usernameError=true;
-            if(this.user.email=="") this.emailError=true;
-			if (!this.user.date.match(dateRegex)) this.dateError = true;
-            if (this.dateError || this.surnameError || this.nameError || this.usernameError || this.emailError) return;
+			if (!this.dateDisplay.match(dateRegex)) this.dateError = true;
+            if (this.dateError || this.surnameError || this.nameError || this.usernameError) return;
+            var splittedDate=this.dateDisplay.split('.');
+            var date=[splittedDate[1],splittedDate[0],splittedDate[2]].join('/');
+            var dateObject=new Date(date);
+            this.user.dateOfBirth=dateObject.getTime();
+            Server.updateUser(this.user).then(resp=>{
+			    if(resp.success){
+				    console.log('this.restaurants');
+			    }
+          });
         }
+    },
+    async created() {
+        this.user=this.$store.getters.getUser;
+        this.user.dateOfBirth=new Date(this.user.dateOfBirth);
+        this.dateDisplay=moment(String(this.user.dateOfBirth)).format('DD.MM.YYYY.')
     }
+
 }
 </script>
 

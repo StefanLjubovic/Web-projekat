@@ -1,7 +1,7 @@
 <template>
     <div class="restaurant-list">
         <div  :key="user" v-for="user in users">
-            <CustomerOrder :user="user"/>
+            <CustomerOrder @applyFilters="apply" :user="user"/>
         </div>
     </div>
 </template>
@@ -10,24 +10,22 @@
 <script>
     import CustomerOrder from './CustomerOrder'
 export default {
-    name: 'CustomerOrders',
     data(){
         return {
             search: ''
         }
     },
+    methods:{
+        apply(filters){
+            console.log(filters);
+        }
+    },
     created(){
-       // EventBus.$on('filter-changed',(search)=>{
-        //    console.log(search);
-       // });
     },
     props:{
         users: Array,
     },
     name: 'CustomerOrders',
-    props:{
-        user: Array,
-    },
     components:{
         CustomerOrder
     },

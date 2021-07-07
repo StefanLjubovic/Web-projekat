@@ -1,5 +1,6 @@
 package server;
 
+import grade.GradeDao;
 import restaurant.RestaurantController;
 import restaurant.RestaurantDao;
 import spark.Filter;
@@ -17,12 +18,13 @@ public class Server {
 
     public static UserDao userDao;
     public static RestaurantDao restaurantDAO;
+    public static GradeDao gradeDao;
 
     public static void main(String[] args) {
         port(8080);
         restaurantDAO = new RestaurantDao();
         userDao = new UserDao();
-
+        gradeDao=new GradeDao();
 
         before((Filter) (request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
@@ -40,6 +42,7 @@ public class Server {
         post(Path.Web.REGISTER_RESTAURANT, RestaurantController.createRestaurant);
         put(Path.Web.UPDATE_USER, UserController.updateUser);
         get(Path.Web.GET_ALL_USERS,UserController.getAllUsers);
+        put(Path.Web.UPDATE_PASSWORD,UserController.changePassword);
 //        after((request, response) -> response.type("application/json"));
     }
 

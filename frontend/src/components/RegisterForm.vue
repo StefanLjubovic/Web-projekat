@@ -102,6 +102,8 @@
 
 <script>
 import Server from '@/server'
+import { mapMutations, mapGetters } from "vuex";
+import store from '../store/index'
 export default {
 	watch: {
 		$route(to, from) {},
@@ -138,7 +140,10 @@ export default {
 			var dateRegex = /^\d{2}[.]\d{2}[.]\d{4}[.]$/;
 			if (!this.dateOfBirth.match(dateRegex)) this.dateError = true;
 			if (this.userError || this.passwordError || this.nameError || this.surnameError || this.dateError) return;
-
+			var splittedDate=this.dateOfBirth.split('.');
+            var date=[splittedDate[1],splittedDate[0],splittedDate[2]].join('/');
+            var dateObject=new Date(date);
+            this.dateOfBirth=dateObject.getTime();
 			const newUser = {
 				firstName: this.name,
 				lastName: this.surname,
@@ -150,9 +155,21 @@ export default {
 			};
 				Server.register(newUser).then(resp=>{
 				if(resp.success){
-					console.log(resp.data);
+					const loginUser={
+						username: newUser.username,
+						password: newUser.password
+					}
+					Server.login(loginUser).then(resp => {
+        				if(resp.success){
+          					const data = resp.data;
+          					const user = JSON.parse(data['user'])
+          					const token = data['loginToken']
+          					localStorage.setItem("token", token);
+          					store.commit("setUser", user);
+          					this.$emit('close')
+        			}
+      		})
 				}
-				console.log('register');
 			})
 		},
 		loginPage() {

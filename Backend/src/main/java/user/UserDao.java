@@ -1,9 +1,14 @@
 package user;
 
+import order.Order;
+import order.OrderDao;
 import util.ModelDao;
 import util.Serialization;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -85,5 +90,45 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
         users.set(index,user);
         userSerialization.save(filePath,users);
         return true;
+    }
+
+    public User getByUsername(String username) {
+        for (User user: users) {
+            if(user.getUsername().equals(username))
+                return user;
+        }
+        return null;
+    }
+
+    public List<User> getAllSuspiciousUsers(){
+        List<User> retval=new ArrayList<>();
+        for (User user:users) {
+            if (suspicious(user)) {
+                retval.add(user);
+            }
+        }
+        return retval;
+    }
+
+    private boolean suspicious(User user) {
+        OrderDao orderDao=new OrderDao();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -1);
+        Date result = cal.getTime();
+        List<Order> orders=orderDao.getAll();
+        long count=orders.stream()
+                .filter(o-> o.getBuyerId().equals(user.getUsername()) && compare(o.getDate(),result) && !o.isDelivered())
+                .count();
+        if(count>=5)
+            return true;
+        return false;
+    }
+
+    private boolean compare(Date date, Date result) {
+        if(date.after(result))
+            return true;
+        if(date.equals(result))
+            return true;
+        return false;
     }
 }

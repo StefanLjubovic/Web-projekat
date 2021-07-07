@@ -52,6 +52,14 @@ public class UserController  {
         return gson.toJson(model);
     };
 
+    public static Route changePassword=(Request req,Response res)->{
+        String yourObjectStr = "" + req.body();
+        Gson gson = new GsonBuilder().create();
+        LoginRequest requestData = gson.fromJson(yourObjectStr , LoginRequest.class);
+        User user=userDao.getByUsername(requestData.username);
+        user.setPassword(requestData.password);
+        return userDao.update(user);
+    };
 
     public static Route getUserByToken = (Request req, Response res) -> {
         Map<String, Object> model = new HashMap<>();
