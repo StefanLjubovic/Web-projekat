@@ -14,7 +14,7 @@
     "moment": "^2.29.1",
     "ol": "^5.3.3",
     "save": "^2.4.0",
-    "v-tooltip": "https://github.com/paulshen/v-tooltip.git#vue3",
+    "v-tooltip": "git+https://github.com/paulshen/v-tooltip.git#vue3",
     "vue": "^3.0.0",
     "vue-chartjs": "^3.5.1",
     "vue-js-modal": "*",

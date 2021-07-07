@@ -140,13 +140,13 @@ export default {
 			if (this.userError || this.passwordError || this.nameError || this.surnameError || this.dateError) return;
 
 			const newUser = {
+				firstName: this.name,
+				lastName: this.surname,
 				username: this.username,
 				password: this.password,
-				name: this.name,
-				surname: this.surname,
 				gender: this.gender,
 				dateOfBirth: this.dateOfBirth,
-				userType: this.userType
+				role: this.userType
 			};
 				Server.register(newUser).then(resp=>{
 				if(resp.success){

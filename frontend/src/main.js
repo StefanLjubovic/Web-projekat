@@ -8,6 +8,9 @@ import store from './store'
 import router from './router'
 import { Map, TileLayer, OsmSource, Geoloc } from 'vuelayers'
 import 'vuelayers/lib/style.css' // needs css-loader
+import VTooltip from 'v-tooltip'
+
+Vue.use(VTooltip)
 
 Vue.use(VModal)
 Vue.use(Map)

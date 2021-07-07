@@ -11,8 +11,10 @@ public class Path {
         @Getter public static final String GET_AVAILABLE_MANAGERS="/restaurants/managers";
         @Getter public static final String GET_SINGLE_RESTAURANT = "/restaurantById";
         @Getter public static final String GET_USER_BY_TOKEN = "/userByToken";
-
+        @Getter public static final String REGISTER_RESTAURANT="/restaurants/register";
         @Getter public static final String CREATE_USER="/register";
+        @Getter public static final String UPDATE_USER="/userList/update";
+        @Getter public static final String GET_ALL_USERS="/userList";
     }
     public static class Storage{
         @Getter public static final String Restaurant = "src/main/java/restaurant/Restaurant.json";

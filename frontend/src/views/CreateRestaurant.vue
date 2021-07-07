@@ -46,7 +46,7 @@
                                             <div v-if="managers.length">
                                             <select name="manager" id="manager" class="form-control" v-model="manager">
                                             <option v-bind:key="manager.firstname" v-for="manager in managers">
-                                                {{manager.firstname}} {{manager.lastname}}
+                                                {{manager.firstName}} {{manager.lastName}}
                                             </option>
                                             </select>
                                             </div>
@@ -74,6 +74,7 @@
 
 <script>
 import LoginModal from "@/components/Login/LoginModal.vue"
+import Server from '@/server'
 export default {
     data(){
         return{
@@ -122,6 +123,14 @@ export default {
           document.getElementById('appContainer').style.height = 'unset';
         }
     },
+    async created() {
+        Server.getAllManagers().then(resp=>{
+            console.log("Resp", resp.data);
+            if(resp.success){
+				this.managers = resp.data;
+			}
+        })
+	},
     components:{
         LoginModal
     }

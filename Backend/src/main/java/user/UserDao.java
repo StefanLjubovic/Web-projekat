@@ -3,7 +3,9 @@ package user;
 import util.ModelDao;
 import util.Serialization;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class UserDao extends Serialization<User> implements ModelDao<User> {
@@ -65,9 +67,23 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
     }
     public List<User> getAvailableManagers(){
         users=getAll();
+        List<User> retVal=new ArrayList<>();
         users.stream()
-                .filter(u->u.getType().equals(UserRoles.Manager) && u.getRestaurantId()==null);
-        return users;
+                .filter(u->u.getRole().equals(UserRoles.Manager) && u.getRestaurantId()==null)
+                .forEach(u->retVal.add(u));
+        return retVal;
     }
-
+    public boolean update(User user){
+        users=getAll();
+        int index=-1;
+        for(User u:users){
+            if(user.getUsername().equals(u.getUsername())) {
+                index=users.indexOf(u);
+                break;
+            }
+        }
+        users.set(index,user);
+        userSerialization.save(filePath,users);
+        return true;
+    }
 }

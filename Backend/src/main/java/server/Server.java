@@ -37,6 +37,9 @@ public class Server {
         get(Path.Web.GET_AVAILABLE_MANAGERS, UserController.getAvailableManagers);
         get(Path.Web.GET_SINGLE_RESTAURANT, RestaurantController.getSingleRestaurant);
         post(Path.Web.CREATE_USER, UserController.createUser);
+        post(Path.Web.REGISTER_RESTAURANT, RestaurantController.createRestaurant);
+        put(Path.Web.UPDATE_USER, UserController.updateUser);
+        get(Path.Web.GET_ALL_USERS,UserController.getAllUsers);
 //        after((request, response) -> response.type("application/json"));
     }
 
