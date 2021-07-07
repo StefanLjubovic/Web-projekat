@@ -18,7 +18,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12"><label class="labels">Email Address</label><input type="text" class="form-control" placeholder="email address"  v-model="user.email"></div>
-                    <div class="alert alert-danger form-control alert-form" v-if="emailError" role="alert">
+                    <div class ="alert alert-danger form-control alert-form" v-if="emailError" role="alert">
 					    Field must not be empty!
 				    </div>
                     <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="username" v-model="user.username"></div>
