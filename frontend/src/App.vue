@@ -58,7 +58,6 @@ export default {
                 const user = JSON.parse(data['user'])
                 const token = data['loginToken']
                 localStorage.setItem("token", token);
-                // setUser(user);
                 this.$store.commit("setUser", user)
             }
         }
