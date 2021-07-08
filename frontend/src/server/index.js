@@ -23,7 +23,7 @@ server.getAllRestaurants = () => {
         .catch(error => handleError(error));
 };
 server.getImage = (image) => {
-    return `${baseUrl}/${image}`
+    return !!image ? `${baseUrl}/${image}` : ''
 };
 
 server.login = (data) => {

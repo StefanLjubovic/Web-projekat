@@ -45,6 +45,7 @@ public class UserController  {
             res.body("Ide gas");
             res.status(200);
         }else{
+            System.out.println("User doesn't exist or email/password is not correct");
             model.put("errorMessage", "User doesn't exist or email/password is not correct");
             res.body(gson.toJson(model));
             res.status(400);
@@ -95,10 +96,11 @@ public class UserController  {
     public static User authorize(String username, String password){
         username = username.toLowerCase(Locale.ROOT);
         List<User> users = userDao.getAll();
-        System.out.println(users.get(0).getClass());
+
         for (User user: users) {
             String _username = user.getUsername();
             if(_username.equals(username)){
+                System.out.println("Username is valid! " + user.getPassword());
                 if(user.getPassword().equals(password)){
                     return user;
                 }

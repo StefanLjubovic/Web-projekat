@@ -6,7 +6,7 @@
 		</span>
 	</div>
 	<div class="items-list">
-		<div :key="index" v-for="(item, index) in restaurant.items">
+		<div :key="index" v-for="(item, index) in restaurant?.items">
 			<div class="item" @click="openItem(item)">
 				<div class="item-image-container">
 					<img class="item-image" :src="getImage(item)" alt="" />
@@ -62,7 +62,14 @@ export default {
             selectedItem: {}
 		};
 	},
-	props:["restaurant"],
+	props:{
+		restaurant:{
+			type: Object,
+			default: {
+                items: []
+            }
+		}
+	},
     components:{RestaurantItemModal,EditItemModal},
 	methods: {
 		getImage(review) {
