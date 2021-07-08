@@ -21,6 +21,15 @@ import { Attribution } from 'ol/control';
 import 'ol/control';
 import LayerGroup from 'ol/layer/Group';
 
+var iconStyle = new Style({
+	image: new Icon({
+		anchor: [0.5, 62],
+        // scale: 0.1,
+		anchorXUnits: 'fraction',
+		anchorYUnits: 'pixels',
+		src: require('../assets/location-pin.png'),
+	}),
+});
 const initLayer = new TileLayer({
 	source: new OSM({
 		url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -28,18 +37,8 @@ const initLayer = new TileLayer({
 		maxZoom: 18,
 	}),
 });
-var iconStyle = new Style({
-	image: new Icon({
-		anchor: [0.5, 62],
-        // scale: 0.1,
-		anchorXUnits: 'fraction',
-		anchorYUnits: 'pixels',
-		src: require('../../assets/location-pin.png'),
-	}),
-});
 
 const createPoint = (points) => {
-	console.log("Points: ",points);
     var iconFeature = new Feature({
 		geometry: new Point(points),
 		name: 'Null Island',
@@ -54,26 +53,47 @@ const createPoint = (points) => {
 	});
     return layer
 }
+let previusLayer = null;
+const initMap = (_this) => {
+	var target = _this.$refs['map-root'];
+	var attribution = new Attribution({
+		collapsible: false,
+	});
+    const layer = createPoint(fromLonLat([19.845013, 45.255068]))
+    previusLayer = layer;
+    const map = new Map({
+        controls: [attribution],
+        target: target,
+        layers: [initLayer, layer],
+        view: new View({
+            center: fromLonLat([19.845013, 45.255068]),
+            zoom: 18,
+        }),
+    });
+
+	map.on('singleclick', function(event) {
+        const coordinates = event.coordinate;
+        const newLayer = createPoint(coordinates);
+        map.removeLayer(previusLayer);
+        map.addLayer(newLayer)
+        previusLayer = newLayer;
+        _this.$emit("changeCoordinates", coordinates)
+	});
+};
+
 export default {
+	data() {
+		return {
+			longitude: 19.845729,
+			latitude: 45.255595,
+		};
+	},
 	props: ['restaurant'],
 	mounted() {
-		document.getElementById('appContainer').style.overflow = 'hidden';
-		document.getElementById('appContainer').style.height = '100vh';
-		console.log(this.restaurant);
-		const target = this.$refs['map-root'];
-		const layer = createPoint([this.restaurant.location.longitude, this.restaurant.location.latitude])
-		const map = new Map({
-			target: target,
-			layers: [initLayer, layer],
-			view: new View({
-				center: [this.restaurant.location.longitude, this.restaurant.location.latitude],
-				zoom: 18,
-			}),
-		});
+		initMap(this);
 	},
 	unmounted() {
-		document.getElementById('appContainer').style.overflow = 'unset';
-		document.getElementById('appContainer').style.height = 'unset';
+		console.log('Unmounging locations...');
 	},
 };
 </script>
@@ -81,7 +101,9 @@ export default {
 <style scoped>
 .map {
 	/* width: 100vw;  */
+	/* height: calc(100% + 25px); */
 	height: 100%;
-	margin-top: -207px;
+	/* margin-top: -15px; */
+	/* padding-bottom: -30px; */
 }
 </style>

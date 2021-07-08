@@ -13,9 +13,15 @@ public class Path {
         @Getter public static final String GET_USER_BY_TOKEN = "/userByToken";
         @Getter public static final String REGISTER_RESTAURANT="/restaurants/register";
         @Getter public static final String CREATE_USER="/register";
+
+        @Getter public static final String UPLOAD_IMAGE = "/upload";
+        @Getter public static final String CREATE_RESTAURANT = "/createRestaurant";
+        @Getter public static final String SAVE_ITEM = "/saveItem/:restaurantId" ;
+
         @Getter public static final String UPDATE_USER="/userList/update";
         @Getter public static final String GET_ALL_USERS="/userList";
         @Getter public static final String UPDATE_PASSWORD="/editProfile/updatePassword";
+
     }
     public static class Storage{
         @Getter public static final String Restaurant = "src/main/java/restaurant/Restaurant.json";

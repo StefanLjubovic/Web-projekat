@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collector;
 
+import static server.Server.restaurantDAO;
+
 public class RestaurantDao implements ModelDao<Restaurant> {
     private List<Restaurant> restaurants;
     private String filePath="src/main/java/restaurant/Restaurant.json";
@@ -68,5 +70,25 @@ public class RestaurantDao implements ModelDao<Restaurant> {
                 return true;
         }
         return false;
+    }
+
+    public String generateId() {
+        int nextId = 1;
+        for(Restaurant restaurant: restaurants){
+            int restaurantId = Integer.parseInt(restaurant.getId());
+            if(restaurantId > nextId){
+                nextId = restaurantId + 1;
+            }
+        }
+        return  "" + nextId;
+    }
+
+    public void UpdateRestaurant(Restaurant restaurant) {
+        for(int i = 0; i < restaurants.size(); i++){
+            if(restaurants.get(i).getId().equals(restaurant.getId())){
+                restaurants.set(i, restaurant);
+                return;
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="container" @click="openRestaurant()">
-        <div class="picture" v-if="restaurant.logo" >
-            <img class="rounded-image" :src="getImgUrl(restaurant.logo)" v-bind:alt="restaurant.logo">
+        <div class="picture" v-if="restaurant.logo != ''" >
+            <img class="rounded-image" :src=restaurant.logo v-bind:alt="restaurant.logo">
         </div>
         <div class="restaurant-info">
             <h3>{{restaurant.name}}</h3>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import server from '../server';
 export default {
     name: 'Restaurant',
     props:{
@@ -32,12 +33,21 @@ export default {
     },
     emits:['restaurant-info'],
     methods:{
-        getImgUrl(pic) {
-            return require('../assets/'+pic)
+        async getImgUrl(pic) {
+            console.log(pic);
+            return pic ? require(pic) : ''
         },
         openRestaurant() {
             this.$router.push({ name: 'Restaurant',params: { id: this.restaurant.id } });
         }
+    },
+    mounted(){
+        const aa = async () => {
+            const image = await server.getImage(this.$props.restaurant.logo);
+            console.log('Image: ',image);
+            this.restaurant.logo = image
+        };
+        aa();
     }
 }
 </script>

@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import VModal from 'vue-js-modal'
 import Vuex from 'vuex'
-
+// import Notifications from 'vue-notification/dist/ssr.js'
 // Vue.use(Vuex)
 import store from './store'
 import router from './router'
@@ -12,8 +12,11 @@ import VTooltip from 'v-tooltip'
 
 Vue.use(VTooltip)
 
+import Swal from 'sweetalert2'
+
 Vue.use(VModal)
 Vue.use(Map)
+// Vue.use(Notifications)
 Vue.use(TileLayer)
 Vue.use(OsmSource)
 Vue.use(Geoloc)
