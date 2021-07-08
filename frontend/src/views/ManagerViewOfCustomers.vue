@@ -7,7 +7,7 @@
         <OrdersSearch v-if="showModal" @close-modal="closeModal" class="advanced" @applyFilters="applyFilters"/>
     	<CustomerOrders :users="users" :filters="filters" class="orders" @openDialog="openDialog"/>
         <CommentModal @close-modal="closeComment" v-if="showReview" @saveReview="saveReview"/>
-        <ConfirmModal v-if="confirmModal" :title="title" :description="description" @cancelConfirm="closeConfirmModal"/>
+        <ConfirmModal v-if="confirmModal" :title="title" :description="description" @saveConfirm="saveConfirm" @cancelConfirm="closeConfirmModal"/>
         </div>
 	</div>
 </template>
@@ -22,6 +22,7 @@ import Comment from "@/components/Comment.vue";
 import ConfirmModal from "@/components/ConfirmModal.vue";
 const allUsers = [
 		{
+            id: '5',
 			name: "Pera",
 			surname: "Peric",
 			type: "Barbeque",
@@ -29,6 +30,7 @@ const allUsers = [
             status: "InPreparation",
             searchBar:'',
              totalPrice: 0,
+              managerConfirm: false,
 			items:[
                 {
                    item: "Pljeskavica",
@@ -45,11 +47,13 @@ const allUsers = [
             ]
 		},
 		{
+            id: '4',
 			name: "Pera",
 			surname: "Peric",
 			type: "Italian",
              totalPrice: 0,
-             status: "InPreparation",
+             status: "WaitingForDelivery",
+              managerConfirm: false,
 			items:[
                 {
                    item: "Pljeskavica",
@@ -66,11 +70,13 @@ const allUsers = [
             ]
 		},
         {
+            id: '3',
 			name: "Pera",
 			surname: "Peric",
 			type: "Italian",
             totalPrice: 0,
             status: "InPreparation",
+             managerConfirm: false,
 			items:[
                 {
                    item: "Pljeskavica",
@@ -87,11 +93,13 @@ const allUsers = [
             ]
 		},
         {
+            id: '2',
 			name: "Dana",
 			surname: "Peric",
 			type: "Chinese",
              totalPrice: 0,
-             status: "InPreparation",
+             status: "InTransport",
+              managerConfirm: false,
 			items:[
                 {
                    item: "Pljeskavica",
@@ -108,11 +116,13 @@ const allUsers = [
             ]
 		},
         {
+            id: '1',
 			name: "Ana",
 			surname: "Peric",
 			type: "chinese",
-            status: "InPreparation",
+            status: "WaitingForDelivery",
              totalPrice: 0,
+             managerConfirm: true,
 			items:[
                 {
                    item: "Pljeskavica",
@@ -140,7 +150,9 @@ export default {
             title: 'Change order status',
             description: 'Are you sure you want to change status from in preparation to waiting for delivery?',
             confirmModal:false,
-            user:{}
+            user:{},
+            modifiedOrder:{},
+
         }
     },
     components:{
@@ -218,21 +230,81 @@ export default {
            document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset'; 
         },
-        openDialog(){
-            if(this.user.role=="Admin"){
+
+        openDialog(user){
+            if(this.user.role=="Manager" && user.status=='InPreparation'){
+            this.modifiedOrder=user;
             this.confirmModal=true
             document.getElementById('appContainer').style.overflow = 'hidden';
           document.getElementById('appContainer').style.height = '100vh';
-            }else{
+            }else if(this.user.role=="Customer"){
             this.showReview=true
             document.getElementById('appContainer').style.overflow = 'hidden';
           document.getElementById('appContainer').style.height = '100vh';
             }
+            else if(this.user.role=="Deliverer" && user.status=='InTransport'){
+                this.modifiedOrder=user;
+                this.description="Are you sure you want to change status from in transport to delivered?"
+                this.confirmModal=true
+                document.getElementById('appContainer').style.overflow = 'hidden';
+                document.getElementById('appContainer').style.height = '100vh';
+            }
+            else if(this.user.role=="Deliverer" && user.status=='WaitingForDelivery' && !user.managerConfirm){
+                this.modifiedOrder=user;
+                this.description="Send request?"
+                this.confirmModal=true
+                document.getElementById('appContainer').style.overflow = 'hidden';
+                document.getElementById('appContainer').style.height = '100vh';
+            }
+             else if(this.user.role=="Manager" && user.status=='WaitingForDelivery' && user.managerConfirm){
+                 this.modifiedOrder=user;
+                  this.description="Confirm delivery request?"
+                 this.confirmModal=true
+                document.getElementById('appContainer').style.overflow = 'hidden';
+                document.getElementById('appContainer').style.height = '100vh';
+             }
         },
+
         closeConfirmModal(){
             this.confirmModal=false
-            document.getElementById('appContainer').style.overflow = 'hidden';
-          document.getElementById('appContainer').style.height = '100vh';
+            document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset'; 
+        },
+        saveConfirm(){
+            if(this.user.role=="Manager" && this.modifiedOrder.status=='InPreparation'){
+                this.modifiedOrder.status="WaitingForDelivery"
+                this.confirmModal=false
+                document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset'; 
+            }else if(this.user.role=="Deliverer" && this.modifiedOrder.status=='InTransport'){
+                this.modifiedOrder.status="Delivered"
+                this.confirmModal=false
+                document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset'; 
+            }
+            else if(this.user.role=="Deliverer" && this.modifiedOrder.status=='WaitingForDelivery'){
+                this.confirmModal=false;
+                for(var i=0;i<this.users.length;i++){
+                    if(this.users[i].id==this.modifiedOrder.id){
+                        this.users[i].managerConfirm=true;
+                        break;
+                    }
+                }
+                document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset'; 
+            }
+            else if(this.user.role=="Manager" && this.modifiedOrder.status=='WaitingForDelivery' && this.modifiedOrder.managerConfirm){
+                this.confirmModal=false;
+                for(var i=0;i<this.users.length;i++){
+                    if(this.users[i].id==this.modifiedOrder.id){
+                        this.users[i].managerConfirm=false;
+                        this.users[i].status="InTransport"
+                        break;
+                    }
+                }
+                document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset'; 
+            }
         }
     }
 }

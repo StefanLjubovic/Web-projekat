@@ -1,7 +1,7 @@
 <template>
     <div class="restaurant-list">
         <div  :key="user" v-for="user in users">
-            <CustomerOrder @openDialog="$emit('openDialog')" @applyFilters="apply" :filters="filters" :user="user"/>
+            <CustomerOrder @openDialog="$emit('openDialog',user)" @applyFilters="apply" :filters="filters" :user="user"/>
         </div>
     </div>
 </template>

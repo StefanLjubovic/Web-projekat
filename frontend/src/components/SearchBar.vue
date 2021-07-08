@@ -10,7 +10,7 @@
 		v-on:input="searchHandler"
 		aria-describedby="search-addon"
 		/>
-		<button type="button" class="btn" v-if="advanced" @click="advancedSearch">Advanced search</button>
+		<button type="button" class="btn" v-if="advanced" @click="$emit('restaurantSearch')">Advanced search</button>
 		<button type="button" class="btn" v-if="advancedOrders" @click="$emit('orders-search')">Advanced search</button>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
 	  advanced: false,
 	};
   },
-  emits:['advanced-search','search','orders-search'],
+  emits:['restaurantSearch','search','orders-search'],
   props:['advancedFilter','advancedOrders'],
   methods: {
 	searchHandler() {
@@ -36,9 +36,6 @@ export default {
 		this.$emit("search", this.userName);
 	  }, 700);
 	},
-	advancedSearch(){
-		this.$router.push({ path: '/advanced-search' });
-	}
   },
   mounted(){
         if(this.advancedFilter !=null){

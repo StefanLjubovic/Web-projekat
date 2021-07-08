@@ -1,6 +1,7 @@
 <template>
 
 <div class="app" @click="hideOptions" id="appContainer">
+    <notifications group="foo" />
     <Header @login-user="loginUser" @show-options="showOptions"/>
     <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
     <router-view/>
@@ -58,7 +59,6 @@ export default {
                 const user = JSON.parse(data['user'])
                 const token = data['loginToken']
                 localStorage.setItem("token", token);
-                // setUser(user);
                 this.$store.commit("setUser", user)
             }
         }

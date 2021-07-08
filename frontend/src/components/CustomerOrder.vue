@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @click="$emit('openDialog')">
+    <div class="container" @click="$emit('openDialog',user)">
         <div class="picture">
             <i class="far fa-user fa-5x" rounded-image></i>
         </div>
@@ -13,6 +13,7 @@
             <div class="restaurant-location">
                 <p>Order status📍:  {{user.status}}</p>
                 <p>Price💸: {{price}}</p>
+                <div v-if="user.managerConfirm">Waiting for confirmation✔</div>
             </div>
         </div>
     </div>

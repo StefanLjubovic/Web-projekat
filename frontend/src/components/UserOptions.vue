@@ -1,5 +1,5 @@
 <template>
-	<div class="container" @click="$emit('hideDialog')">
+	<div class="container">
 		<div class="profile-btn margin">
 			<button class="btn btn-light profile-container" @click="$emit('edit-profile')">
 				<div class="profile-conatiner-image">
@@ -72,6 +72,7 @@ export default {
              this.$router.push({ path: '/view-customers' });
         },
 		signout() {
+			localStorage.clear()
 			this.$store.commit('setUser', {});
 			this.$emit('hideDialog');
 		},

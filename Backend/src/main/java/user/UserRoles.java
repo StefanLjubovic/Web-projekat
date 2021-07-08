@@ -3,6 +3,6 @@ package user;
 public enum UserRoles {
     Admin,
     Manager,
-    Buyer,
+    Customer,
     Deliverer
 }

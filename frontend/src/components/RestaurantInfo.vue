@@ -27,6 +27,7 @@
 </div>
 </template>
 <script>
+import server from '../server';
 export default {
 
     data(){
@@ -48,7 +49,9 @@ export default {
     },
     methods:{
         getImage(img) {
-            return !!img ? require('../assets/'+img) : ""
+            const image = server.getImage(img);
+            console.log('Image: ',image);
+            return image
         },
         getRestaurantType(type){
             let retValue = type;
@@ -58,6 +61,9 @@ export default {
                     break;
                 case 'chinese':
                     retValue = `🥡 ${type}`
+                    break;
+                case 'italian':
+                    retValue = `🍕 ${type}`
                     break;
                 default:
                     return type;
@@ -75,7 +81,7 @@ export default {
     .container{
         position: relative;
         display: block;
-        z-index: 10;
+        z-index: 2;
     }
     .restaurant-card{
         padding: 17px;

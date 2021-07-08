@@ -9,6 +9,7 @@
       <th scope="col">Surname</th>
       <th scope="col">Username</th>
       <th scope="col">Type</th>
+      <th scope="col">Collected points</th>
       <th scope="col">Status</th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
       <td>{{user.lastName}}</td>
        <td>{{user.username}}</td>
        <td>{{user.role}}</td>
+       <td>{{user.collectedPoints}}</td>
        <div v-if="user.status">
         <td><button type="button" @click="changeText(i)" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger btn-circle btn-sm"></button></td>
        </div>
@@ -57,38 +59,15 @@ import Server from '@/server'
 export default {
     data(){
       return{
-        users:[
-          {
-            name:'pera',
-            surname:'peric',
-            email:'pera@gmail.com',
-            username:'aaa',
-            type:'Deliverer',
-            status: true
-          },
-          {
-            name:'pera',
-            surname:'peric',
-            email:'pera@gmail.com',
-            username:'aaa',
-            type:'Deliverer',
-             status: false
-          },
-          {
-            name:'pera',
-            surname:'peric',
-            email:'pera@gmail.com',
-            username:'aaa',
-            type:'Deliverer',
-             status: false
-          }
-        ],
         block:{
           title:'Ban user',
           content:'Are you sure you want to ban user?',
           id: '0'
         },
       }
+    },
+    props:{
+      users:Array
     },
     methods:{
       changeStatus(){
@@ -110,14 +89,6 @@ export default {
         }
       }
     },
-    async created() {
-        Server.getAllUsers().then(resp=>{
-          if(resp.success){
-				      this.users=resp.data;
-			      }
-        });
-		
-	},
     
 }
 </script>

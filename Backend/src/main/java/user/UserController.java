@@ -17,7 +17,7 @@ import java.util.UUID;
 public class UserController  {
 
 
-    private static Gson gson=new Gson();
+    public static Gson gson=new Gson();
     private static Map<String, String> loginTrack = new HashMap<>();
 
     public static Route getAvailableManagers = (Request req, Response res)-> {
@@ -64,7 +64,6 @@ public class UserController  {
     public static Route getUserByToken = (Request req, Response res) -> {
         Map<String, Object> model = new HashMap<>();
         String token = req.queryParams("token");
-        System.out.println("Searching for user: "+token);
         if(loginTrack.containsKey(token)){
             String userId = loginTrack.get(token);
             User user = userDao.getOne(userId);
@@ -113,6 +112,7 @@ public class UserController  {
         System.out.println(yourObjectStr);
         Gson gson = new GsonBuilder().create();
         User user = gson.fromJson(yourObjectStr , User.class);
+        System.out.println(user.getRole());
         String uniqueID = UUID.randomUUID().toString();
         user.setId(uniqueID);
         if(authorize(user.getUsername(),user.getPassword())==null){

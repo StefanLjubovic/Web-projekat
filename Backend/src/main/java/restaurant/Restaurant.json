@@ -1,1 +1,2 @@
-[]
+[{"id":"2","name":"Kineski restoran","type":"Chinese","status":false,"location":{"address":"Sremska","longitude":2208844.141134343,"latitude":5660861.179225027},"logo":"10542888031937574458petrus.jpg","items":[],"grade":0.0},{"id":"1","name":"Petrus","type":"italian","status":true,"location":{"address":"Modena","longitude":2209322.298728669,"latitude":5661656.7306950735},"logo":"14054440584588514228petrus.jpg","items":[],"grade":0.0},{"id":"3","name":"Foody","type":"Similarly","status":true,"location":{"address":"Promenada","longitude":2209208.9266955084,"latitude":5661722.799245063},"logo":"9913675835407439909download.jfif","items":[],"grade":0.0}]
+

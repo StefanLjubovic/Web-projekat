@@ -70,7 +70,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="col-sm-6">
+					<div class="col-sm-6" v-if="roleComboBox">
 						<div class="form-group">
 							<label for="exampleFormControlSelect1">User type:</label>
 							<select class="form-control" v-model="userType">
@@ -123,6 +123,7 @@ export default {
 			surnameError: false,
 			dateError: false,
 			confirmError: false,
+			roleComboBox: false
 		};
 	},
 	methods: {
@@ -159,6 +160,7 @@ export default {
 						username: newUser.username,
 						password: newUser.password
 					}
+					if(this.$store.getters.getUser.role !="Admin" || typeof(this.$store.getters.getUser) === 'undefined'){
 					Server.login(loginUser).then(resp => {
         				if(resp.success){
           					const data = resp.data;
@@ -167,8 +169,9 @@ export default {
           					localStorage.setItem("token", token);
           					store.commit("setUser", user);
           					this.$emit('close')
-        			}
-      		})
+        				}
+      				})
+					}
 				}
 			})
 		},
@@ -176,6 +179,11 @@ export default {
 			this.$emit('changeState', 'login');
 		},
 	},
+			async created(){
+			if(this.$store.getters.getUser?.role=="Admin"){
+				this.roleComboBox=true;
+			}
+		},
 };
 </script>
 

@@ -1,0 +1,79 @@
+<template>
+    <div class="container">
+        <div class="row">
+            <div class="fraction ">
+            <label for="" class="label href">First name</label>
+            <a href="#" class="href" @click="$emit('sortName',1)"><i class="fas fa-chevron-up"></i></a>
+            <a href="#" class="href" @click="$emit('sortName',-1)"><i class="fas fa-chevron-down"></i></a>
+            </div>
+             <div class="fraction ">
+            <label for="" class="label href">Last name</label>
+            <a href="#" class="href" @click="$emit('sortSurname',1)"><i class="fas fa-chevron-up"></i></a>
+            <a href="#" class="href" @click="$emit('sortSurname',-1)"><i class="fas fa-chevron-down"></i></a>
+            </div>
+             <div class="fraction ">
+            <label for="" class="label href">Username</label>
+            <a href="#" class="href"  @click="$emit('sortUsername',1)"><i class="fas fa-chevron-up"></i></a>
+            <a href="#" class="href" @click="$emit('sortUsername',-1)"><i class="fas fa-chevron-down"></i></a>
+            </div>
+             <div class="fraction ">
+            <label for="" class="label href">Points colected</label>
+            <a href="#" class="href"  @click="$emit('sortPoints',1)"><i class="fas fa-chevron-up"></i></a>
+            <a href="#" class="href" @click="$emit('sortPoints',-1)"><i class="fas fa-chevron-down"></i></a>
+            </div>
+            
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    data(){
+        return{
+        }
+    },
+    methods:{
+
+    }
+}
+</script>
+
+
+<style scoped>
+	.container{
+		position: absolute;
+		width: 80%;
+		left: 10%;
+		right: 10%;
+		top: 10px;
+		display: flex;
+		flex-direction: row;
+        background: white;
+		border-radius: 10px;
+		padding: 0px 11px;
+		height: 39px;
+		align-items: center;
+		box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+	}
+	.search-input{
+		background-color: transparent;
+		border: unset;
+		flex: 1;
+		color: white;
+	}
+	.search-input:focus{
+		outline: unset
+	}
+    .href{
+        margin-top:5px;
+    }
+    .label{
+        margin-left: 15px;
+        margin-right: 10px;
+    }
+    .fraction{
+        background:  #e0e0d1;
+        width: 285px;
+        border-radius: 10px;
+    }
+</style>

@@ -1,15 +1,19 @@
 <template>
     <div class="container" @click="openRestaurant()">
-        <div class="picture" v-if="restaurant.logo" >
-            <img class="rounded-image" :src="getImgUrl(restaurant.logo)" v-bind:alt="restaurant.logo">
+        <div class="picture" v-if="restaurant.logo != ''" >
+            <img class="rounded-image" :src=restaurant.logo v-bind:alt="restaurant.logo">
         </div>
         <div class="restaurant-info">
             <h3>{{restaurant.name}}</h3>
             <label for="desctiption">{{restaurant.description}}</label>
+            <p class="restaurant-type">{{getRestaurantType(restaurant.type)}}</p>
         </div>
         <div class="restaurant-details">
             <div class="restaurant-location">
                 <p>📍:  {{restaurant.location.address}}</p>
+            </div>
+                        <div class="restaurant-status">
+                {{getRestaurantStatus()}}
             </div>
             <div class="grade">
                 <i class="fas fa-star" style="color: #FAE480"></i>
@@ -20,6 +24,7 @@
 </template>
 
 <script>
+import server from '../server';
 export default {
     name: 'Restaurant',
     props:{
@@ -32,12 +37,44 @@ export default {
     },
     emits:['restaurant-info'],
     methods:{
-        getImgUrl(pic) {
-            return require('../assets/'+pic)
+        async getImgUrl(pic) {
+            console.log(pic);
+            return pic ? require(pic) : ''
         },
         openRestaurant() {
             this.$router.push({ name: 'Restaurant',params: { id: this.restaurant.id } });
-        }
+        },
+            getRestaurantStatus(){
+            return this.restaurant.status ? `✋🏼 Closed ✋🏼` : "👍🏼 Open"
+        },
+         getRestaurantType(type){
+            let retValue = type;
+            switch (type) {
+                case 'Barbecue':
+                    retValue = `🍖 ${type}`;
+                    break;
+                case 'Chinese':
+                    retValue = `🥡 ${type}`
+                    break;
+                case 'italian':
+                    retValue = `🍕 ${type}`
+                    break;
+                case 'Similarly':
+                    retValue = `🍖 ${type}`
+                    break;
+                default:
+                    return type;
+            }
+            return retValue;
+        },
+    },
+    mounted(){
+        const aa = async () => {
+            const image = await server.getImage(this.$props.restaurant.logo);
+            console.log('Image: ',image);
+            this.restaurant.logo = image
+        };
+        aa();
     }
 }
 </script>
@@ -73,6 +110,12 @@ export default {
         font-size: 14px;
     }
 
+    .restaurant-status{
+        flex: 1;
+        font-weight: 500;
+        color: #8F8FA1;
+        font-weight: 600; 
+    }
     .restaurant-details{
         display: flex;
         flex-direction: column;

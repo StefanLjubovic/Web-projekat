@@ -1,24 +1,29 @@
 //Mylib.js
 
 import axios from 'axios';
-import { handleError } from 'vue';
+
 
 let server = {};
 const baseUrl = 'http://localhost:8080'
 // this (vue instance) is passed as that , so we
 // can read and write data from and to it as we please :)
 server.getAllRestaurants = () => {
+    const token = localStorage.getItem('token')
     const options = {
         method: "GET",
         headers: {
             "Content-Type": 'application/json;charset=UTF-8',
             "Accept": 'application/json',
+            "Authorization": token,
         },
         url: `${baseUrl}/restaurants/`,
     };
     return axios(options)
         .then(response => handleSuccess(response))
-        .catch(error => handelError(error));
+        .catch(error => handleError(error));
+};
+server.getImage = (image) => {
+    return `${baseUrl}/${image}`
 };
 
 server.login = (data) => {
@@ -30,7 +35,7 @@ server.login = (data) => {
     
     return axios(options)
         .then(response => handleSuccess(response))
-        .catch(error => handelError(error));
+        .catch(error => handleError(error));
 };
 
 
@@ -41,7 +46,20 @@ server.getRestaurantById = (id) => {
     };
     return axios(options)
         .then(response => handleSuccess(response))
-        .catch(error => handelError(error));
+        .catch(error => handleError(error));
+}
+
+server.saveItem = (item, restaurantId) => {
+    const options = {
+        method: "POST",
+        url: `${baseUrl}/saveItem/${restaurantId}`,
+        data: item
+    };
+
+    return axios(options)
+        .then(response => handleSuccess(response))
+        .catch(error => handleError(error));
+
 }
 
 server.getUserByToken = (token) => {
@@ -51,7 +69,7 @@ server.getUserByToken = (token) => {
     };
     return axios(options)
         .then(response => handleSuccess(response))
-        .catch(error => handelError(error));
+        .catch(error => handleError(error));
 
 }
 
@@ -143,12 +161,48 @@ server.getAllUsers=()=>{
     .catch(error=>handleError(error));
 }
 
-function handelError(error) {
+server.uploadImage = file => {
+    const token = localStorage.getItem("token")
+    // Upload the image using the fetch and FormData APIs
+    let formData = new FormData();
+    formData.set('enctype', 'multipart/form-data') 
+    const filename = file.name;
+    // Assume "photo" is the name of the form field the server expects
+    formData.append('file', file);
+    formData.append('filename', filename);
+    console.log(formData);
+    const options = {
+        method: "POST",
+        body: formData,
+        // headers: {'Authorization': token,
+        // 'content-type': 'multipart/form-data',},
+    };
+    return fetch(`${baseUrl}/upload`, options).then(response => response.json()).then(handleSuccess).catch(handleError);
+}
+
+server.createRestaurant=(data)=>{
+    
+    const token = localStorage.getItem("token");
+    const options={
+        method: "POST",
+        headers:{
+            "Content-Type": 'application/json;charset=UTF-8',
+            "Authorization": token,
+        },
+        url: `${baseUrl}/createRestaurant`,
+        data: data
+    };
+    return axios(options)
+        .then(response=>handleSuccess(response))
+        .catch(error=>handleError(error));
+}
+
+function handleError(error) {
     console.log('Error');
     return { success: false, data: error };
 }
 function handleSuccess(response) {
-    return { success: true, data: response.data };
+    return { success: true, data: response.data || response };
 }
 
 
