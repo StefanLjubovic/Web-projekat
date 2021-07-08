@@ -195,7 +195,7 @@ export default {
 	},
 
     async created() {
-        Server.getAllManagers().then(resp=>{
+        server.getAllManagers().then(resp=>{
             console.log("Resp", resp.data);
             if(resp.success){
 				this.managers = resp.data;

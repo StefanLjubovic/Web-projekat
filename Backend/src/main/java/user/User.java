@@ -31,14 +31,20 @@ public class User{
         this.role = role;
     }
 
-    public User(String firstName, String lastName, String username, String password, String gender, Integer dateOfBirth, UserRoles role) {
+    public User(String firstName, String lastName, String username, String password, String gender, Integer dateOfBirth, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
-        this.role = role;
+        if(role.equals("Customer"))
+            this.role = UserRoles.Customer;
+        else if(role.equals("Manager")){
+            this.role = UserRoles.Manager;
+        }else{
+            this.role = UserRoles.Deliverer;
+        }
     }
 
     public boolean isStatus() {
