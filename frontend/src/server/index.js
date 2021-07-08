@@ -49,6 +49,19 @@ server.getRestaurantById = (id) => {
         .catch(error => handleError(error));
 }
 
+server.saveItem = (item, restaurantId) => {
+    const options = {
+        method: "POST",
+        url: `${baseUrl}/saveItem/${restaurantId}`,
+        data: item
+    };
+
+    return axios(options)
+        .then(response => handleSuccess(response))
+        .catch(error => handleError(error));
+
+}
+
 server.getUserByToken = (token) => {
     const options = {
         method: "GET",

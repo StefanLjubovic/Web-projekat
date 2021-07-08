@@ -117,10 +117,10 @@ export default {
 		},
 		async saveRestaurant(event) {
 			event.preventDefault();
-            // this.error['name'] = this.name == ''
-            // this.error['manager'] = this.manager == null
+            this.error['name'] = this.name == ''
+            this.error['manager'] = this.manager == null
             this.error['logo'] = this.logo == ''
-            // this.error['address'] = this.address == ''
+            this.error['address'] = this.address == ''
 			if(this.containesError()){
                 Swal.fire({
                     title: 'Error!',
@@ -129,7 +129,6 @@ export default {
                     confirmButtonText: 'Okay'
                 })
             }else{
-                console.log(this.imageFile);
                 const respImage = await server.uploadImage(this.imageFile);
                 if(respImage.success){
                     console.log(respImage);

@@ -82,4 +82,13 @@ public class RestaurantDao implements ModelDao<Restaurant> {
         }
         return  "" + nextId;
     }
+
+    public void UpdateRestaurant(Restaurant restaurant) {
+        for(int i = 0; i < restaurants.size(); i++){
+            if(restaurants.get(i).getId().equals(restaurant.getId())){
+                restaurants.set(i, restaurant);
+                return;
+            }
+        }
+    }
 }

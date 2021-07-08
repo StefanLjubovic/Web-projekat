@@ -12,7 +12,6 @@ import static server.Server.restaurantDAO;
 public class RestaurantController {
 
 
-
     private static Gson gson=new Gson();
 
     public static Route getAllRestaurants = (Request req,Response res) -> {
@@ -42,5 +41,18 @@ public class RestaurantController {
         }
         return gson.toJson(restaurant);
     };
+    public static Route saveItem = (Request req, Response res) -> {
+        System.out.println("Saving item");
+        String restaurantId = req.params(":restaurantId");
+        System.out.println("Taking restaurant with id: "+ restaurantId);
+        String itemJson = req.body();
+        Item item = gson.fromJson(itemJson,Item.class);
+        Restaurant restaurant = restaurantDAO.getOne(restaurantId);
+        restaurant = restaurant.addItem(item);
+        restaurantDAO.UpdateRestaurant(restaurant);
+        res.status(200);
+        return "Ok";
+    };
+
 
 }

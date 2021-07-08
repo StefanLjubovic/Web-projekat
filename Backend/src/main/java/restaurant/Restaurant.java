@@ -1,6 +1,7 @@
 package restaurant;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Restaurant {
     private String id;
@@ -86,5 +87,20 @@ public class Restaurant {
 
     public void setGrade(Double score) {
         this.grade = score;
+    }
+
+    public Restaurant addItem(Item item) {
+        if(item.id == null){
+            item.id = UUID.randomUUID().toString();
+            this.items.add(item);
+        }else{
+            for(int i=0;i < this.items.size(); i++){
+                if(this.items.get(i).id.equals(item.id)){
+                    this.items.set(i, item);
+                    return this;
+                }
+            }
+        }
+        return this;
     }
 }

@@ -44,6 +44,7 @@ public class Server {
         get(Path.Web.GET_AVAILABLE_MANAGERS, UserController.getAvailableManagers);
         get(Path.Web.GET_SINGLE_RESTAURANT, RestaurantController.getSingleRestaurant);
         post(Path.Web.CREATE_USER, UserController.createUser);
+        post(Path.Web.SAVE_ITEM, RestaurantController.saveItem);
 
         post(Path.Web.UPLOAD_IMAGE, Upload.uploadImage);
 //        after((request, response) -> response.type("application/json"));

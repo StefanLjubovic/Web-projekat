@@ -15,6 +15,7 @@ public class Path {
         @Getter public static final String CREATE_USER="/register";
         @Getter public static final String UPLOAD_IMAGE = "/upload";
         @Getter public static final String CREATE_RESTAURANT = "/createRestaurant";
+        @Getter public static final String SAVE_ITEM = "/saveItem/:restaurantId" ;
     }
     public static class Storage{
         @Getter public static final String Restaurant = "src/main/java/restaurant/Restaurant.json";

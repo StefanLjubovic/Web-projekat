@@ -81,7 +81,7 @@ export default {
     .container{
         position: relative;
         display: block;
-        z-index: 10;
+        z-index: 2;
     }
     .restaurant-card{
         padding: 17px;

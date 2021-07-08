@@ -5,7 +5,7 @@
 		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" />
 		<RestaurantLocation v-if="selectedView == 'informations'" :restaurant="restaurant"/>
 		<RestaurantReviews v-if="selectedView == 'reviews'" :restaurant="restaurant" />
-		<RestaurantItems v-if="selectedView == 'items'" :restaurant="restaurant"/>
+		<RestaurantItems v-if="selectedView == 'items'" :restaurant="restaurant" @refreshRestaurant="refreshRestaurant"/>
 	</div>
 </template>
 <script>
@@ -32,6 +32,17 @@ export default {
 	methods:{
 		changeView(view){
 			this.selectedView = view;
+		},
+		refreshRestaurant(){
+			console.log('Refreshing restaurant...');
+			const id = this.$route.params.id;
+			console.log(id);
+			Server.getRestaurantById(id).then(resp => {
+				if(resp.success){
+					this.restaurant = resp.data;
+					console.log(this.restaurant)
+				}
+			})
 		}
 	},
 	created() {

@@ -1,12 +1,12 @@
 <template>
 	<div style="width: 888px; margin: auto" class="header">
 		<h3>Items</h3>
-		<span class="header-new-item">
+		<span class="header-new-item" @click="openEditModal(null)">
 			<i class="fas fa-plus"></i> New Item
 		</span>
 	</div>
 	<div class="items-list">
-		<div :key="index" v-for="(item, index) in items">
+		<div :key="index" v-for="(item, index) in restaurant.items">
 			<div class="item" @click="openItem(item)">
 				<div class="item-image-container">
 					<img class="item-image" :src="getImage(item)" alt="" />
@@ -24,20 +24,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="empty-list" v-if="items.length == 0">
+		<div class="empty-list" v-if="restaurant.items.length == 0">
 			<p>This restaurant don't have any item yet</p>
 		</div>
-		<div class="new-item-placeholder">
+		<div class="new-item-placeholder" @click="openEditModal(null)">
 			<p class="new-item-placeholder-text">
 				Add new item
 			</p>
 		</div>
 	</div>
     <RestaurantItemModal v-if="showModal" v-bind:item="selectedItem" @closeModal="closeModal" />
+    <EditItemModal v-if="showEditModal" v-bind:selectedItem="selectedItem" :restaurant="restaurant" @closeModal="closeEditModal" @closeSuccess="closeSuccess" />
 </template>
 <script>
 import moment from 'moment';
 import RestaurantItemModal from './RestaurantItemModal.vue';
+import EditItemModal from './NewItemModal.vue';
+import server from '../../server';
 export default {
 	data() {
 		return {
@@ -55,28 +58,42 @@ export default {
 				// },
 			],
             showModal: false,
+			showEditModal: false,
             selectedItem: {}
 		};
 	},
 	props:["restaurant"],
-    components:{RestaurantItemModal},
+    components:{RestaurantItemModal,EditItemModal},
 	methods: {
 		getImage(review) {
-			console.log(review.image);
-			return review.image;
+			
+			return server.getImage(review.image);
 		},
 		format_date(value) {
 			if (value) {
 				return moment(value).format('DD.MM.YYYY.');
 			}
 		},
+		openEditModal(item = null){
+			this.selectedItem = item;
+			this.showEditModal = true
+		},
         openItem(item){
             this.selectedItem = item;
             this.showModal = true;
-        },closeModal(){
+        },
+		closeModal(){
             this.selectedItem = {};
             this.showModal = false;
-        }
+        },
+		closeEditModal(){
+            this.selectedItem = {};
+            this.showEditModal = false;
+        },closeSuccess(){
+            this.showEditModal = false;
+			this.selectedItem = {};
+			this.$emit("refreshRestaurant");
+		}
 	}
 };
 </script>
@@ -90,7 +107,7 @@ export default {
 	padding: 10px 40px;
 	position: relative;
 	width: 100%;
-	justify-content: center;
+	/* justify-content: center; */
 	min-height: calc(100% - 320px);
 }
 .item {
