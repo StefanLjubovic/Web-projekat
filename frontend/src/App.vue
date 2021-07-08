@@ -63,7 +63,7 @@ export default {
     }
 };
 </script>
-<style>
+<style scoped>
     .app{
         font-family: 'Quicksand', sans-serif;   
          /* position: relative; */
