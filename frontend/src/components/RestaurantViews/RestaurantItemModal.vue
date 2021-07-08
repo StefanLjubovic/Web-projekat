@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import server from '../../server';
 export default {
     data(){
         return{
@@ -56,7 +57,7 @@ export default {
     },
     methods:{
         getImage() {
-			return this.item.image;
+			return server.getImage(this.item.image);
 		},
         incAmount(){
             this.amount++;

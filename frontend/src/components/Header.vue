@@ -36,7 +36,7 @@ export default {
   emits:['login-user','show-options'],
     methods:{
         retrunToHomePage(){
-            this.$router.push({ name: 'Home' });
+            this.$router.push('/')
         },
         openLogin(){
           this.showLoginModal = true;

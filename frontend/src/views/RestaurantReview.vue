@@ -24,8 +24,9 @@ export default {
 	
 	data() {
 		return {
-			restaurants: [],
-			restaurant:{},
+			restaurant:{
+				items: []
+			},
 			selectedView: 'items'
 		};
 	},

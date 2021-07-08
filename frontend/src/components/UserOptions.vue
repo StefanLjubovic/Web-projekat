@@ -28,7 +28,7 @@
            <button type="button" class="btn btn-light btn" @click="viewCustomers"><span class="btn-components">View customers<i class="fas fa-user-friends icon"></i></span></button>
            </div>
        <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
+           <button type="button" class="btn btn-light btn" @click="signout"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
            </div>
 	</div>
 </template>
