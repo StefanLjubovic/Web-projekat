@@ -1,5 +1,6 @@
 package restaurant;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -101,6 +102,16 @@ public class Restaurant {
                 }
             }
         }
+        return this;
+    }
+
+    public Restaurant availableItems() {
+        List<Item> items = new ArrayList<>();
+        for(Item item: this.items){
+            if(!item.deleted)
+                items.add(item);
+        }
+        this.items = items;
         return this;
     }
 }

@@ -37,6 +37,20 @@ server.login = (data) => {
         .then(response => handleSuccess(response))
         .catch(error => handleError(error));
 };
+server.updateRestaurant = (data) => {
+    const options = {
+        method: "POST",
+        url: `${baseUrl}/updateRestaurant`,
+        headers: {
+            "Content-Type": 'application/json;charset=UTF-8',
+        },
+        data: data
+    };
+    
+    return axios(options)
+        .then(response => handleSuccess(response))
+        .catch(error => handleError(error));
+};
 
 
 server.getRestaurantById = (id) => {

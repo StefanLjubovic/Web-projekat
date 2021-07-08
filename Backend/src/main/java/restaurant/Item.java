@@ -8,4 +8,5 @@ public class Item {
     Double size;
     String description;
     String image;
+    boolean deleted;
 }
