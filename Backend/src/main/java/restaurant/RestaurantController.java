@@ -5,6 +5,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.util.ArrayList;
 import java.util.List;
 import static server.Server.restaurantDAO;
 
@@ -22,9 +23,15 @@ public class RestaurantController {
 
     public static Route createRestaurant=(Request req,Response res)->{
       String restaurantJson = req.body();
+      System.out.println(restaurantJson);
       Restaurant restaurant = gson.fromJson(restaurantJson,Restaurant.class);
+      restaurant.setStatus(true);
+      restaurant.setItems(new ArrayList<>());
+      restaurant.setGrade(0.0);
+      restaurant.setId(restaurantDAO.generateId());
       return restaurantDAO.SaveRestaurant(restaurant);
     };
+
 
     public static Route getSingleRestaurant = (Request req, Response res) -> {
         res.type("application/json");

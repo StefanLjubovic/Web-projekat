@@ -1,7 +1,7 @@
 //Mylib.js
 
 import axios from 'axios';
-import { handleError } from 'vue';
+
 
 let server = {};
 const baseUrl = 'http://localhost:8080'
@@ -20,7 +20,10 @@ server.getAllRestaurants = () => {
     };
     return axios(options)
         .then(response => handleSuccess(response))
-        .catch(error => handelError(error));
+        .catch(error => handleError(error));
+};
+server.getImage = (image) => {
+    return `${baseUrl}/${image}`
 };
 
 server.login = (data) => {
@@ -32,7 +35,7 @@ server.login = (data) => {
     
     return axios(options)
         .then(response => handleSuccess(response))
-        .catch(error => handelError(error));
+        .catch(error => handleError(error));
 };
 
 
@@ -43,7 +46,7 @@ server.getRestaurantById = (id) => {
     };
     return axios(options)
         .then(response => handleSuccess(response))
-        .catch(error => handelError(error));
+        .catch(error => handleError(error));
 }
 
 server.getUserByToken = (token) => {
@@ -53,7 +56,7 @@ server.getUserByToken = (token) => {
     };
     return axios(options)
         .then(response => handleSuccess(response))
-        .catch(error => handelError(error));
+        .catch(error => handleError(error));
 
 }
 
@@ -73,24 +76,21 @@ server.register=(data)=>{
 
 server.uploadImage = file => {
     const token = localStorage.getItem("token")
-    // ImagePicker saves the taken photo to disk and returns a local URI to it
-    let localUri = file.uri;
-    let filename = localUri.split('/').pop();
-        console.log(filename);
-    // Infer the type of the image
-    let match = /\.(\w+)$/.exec(filename);
-    let type = match ? `image/${match[1]}` : `image`;
-
     // Upload the image using the fetch and FormData APIs
     let formData = new FormData();
+    formData.set('enctype', 'multipart/form-data') 
+    const filename = file.name;
     // Assume "photo" is the name of the form field the server expects
-    formData.append('file', { uri: localUri, name: filename, type });
-        const options = {
-            method: "POST",
-            body: formData,
-            headers: {'Authorization': token,'content-type': 'multipart/form-data',},
-        };
-        return fetch(`${baseUrl}/upload`, options).then(response => response.json()).catch(error => handelError(error));
+    formData.append('file', file);
+    formData.append('filename', filename);
+    console.log(formData);
+    const options = {
+        method: "POST",
+        body: formData,
+        // headers: {'Authorization': token,
+        // 'content-type': 'multipart/form-data',},
+    };
+    return fetch(`${baseUrl}/upload`, options).then(response => response.json()).then(handleSuccess).catch(handleError);
 }
 
 server.createRestaurant=(data)=>{
@@ -110,12 +110,12 @@ server.createRestaurant=(data)=>{
         .catch(error=>handleError(error));
 }
 
-function handelError(error) {
+function handleError(error) {
     console.log('Error');
     return { success: false, data: error };
 }
 function handleSuccess(response) {
-    return { success: true, data: response.data };
+    return { success: true, data: response.data || response };
 }
 
 

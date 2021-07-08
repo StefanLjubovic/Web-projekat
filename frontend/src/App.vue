@@ -1,6 +1,7 @@
 <template>
 
 <div class="app" @click="hideOptions" id="appContainer">
+    <notifications group="foo" />
     <Header @login-user="loginUser" @show-options="showOptions"/>
     <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
     <router-view/>

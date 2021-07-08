@@ -13,6 +13,8 @@ public class Path {
         @Getter public static final String GET_USER_BY_TOKEN = "/userByToken";
 
         @Getter public static final String CREATE_USER="/register";
+        @Getter public static final String UPLOAD_IMAGE = "/upload";
+        @Getter public static final String CREATE_RESTAURANT = "/createRestaurant";
     }
     public static class Storage{
         @Getter public static final String Restaurant = "src/main/java/restaurant/Restaurant.json";

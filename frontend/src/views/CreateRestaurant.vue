@@ -9,7 +9,7 @@
                             <i class="fas fa-times"></i>
                         </div>
 					</div>
-					<div class="image-placeholder" @click="onPickFile" style="cursor: pointer" v-if="logo == ''">
+					<div class="image-placeholder" @click="onPickFile" style="cursor: pointer" v-if="logo == ''" v-bind:class="{errorLogo: error['logo']}">
 						<i class="far fa-images fa-3x"></i>
 						<input type="file" @change="uploadPhoto" accept="image/*" style="display:none" ref="fileInput" />
 					</div>
@@ -21,25 +21,25 @@
                         <div class="restaurant-info-body-part">
 
 						<div class="form-group ">
-							<label for="nameInput">Name:</label>
+							<label for="nameInput" v-bind:class="{error: error['name']}">Name:</label>
 							<input type="text" class="form-control" id="nameInput" placeholder="Name*" v-model="name" />
-							<div class="alert alert-danger" v-if="nameError" role="alert">
+							<div class="alert alert-danger" v-if="false" role="alert">
 								Field must not be empty!
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="type">Restaurant type:</label>
 							<select name="cars" id="type" class="form-control" v-model="type">
-								<option value="volvo">Italian🍕</option>
-								<option value="saab">Chinese🥡</option>
-								<option value="mercedes">Barbeque🍖</option>
-								<option value="audi">Similarly🍗</option>
+								<option value="Italian">Italian 🍕</option>
+								<option value="Chinese">Chinese🥡</option>
+								<option value="Barbeque">Barbeque🍖</option>
+								<option value="Similarly">Similarly🍗</option>
 							</select>
 						</div>
                         </div>
                         <div class="restaurant-info-body-part">
 						<div class="form-group">
-							<label for="manager">Manager:</label>
+							<label for="manager" v-bind:class="{error: error['manager']}">Manager:</label>
 							<div v-if="managers.length">
 								<select name="manager" id="manager" class="form-control" v-model="manager">
 									<option v-bind:key="manager.firstname" v-for="manager in managers"> {{ manager.firstName }} {{ manager.lastName }} </option>
@@ -59,9 +59,12 @@
 				</div>
 			</div>
 			<div class="restaurant-map">
-				<MapContainer />
+				<MapContainer @changeCoordinates="changeCoordinates" />
 				<div class="address-field">
-                    <input type="text" name="" id="">
+                    <input type="text" placeholder="Enter address here*" v-bind:class="{errorAddress: error['address']}" @change="changeAddress" v-model="address">
+                </div>
+                <div class="submit-register" @click="saveRestaurant">
+                    Create
                 </div>
 			</div>
 		</div>
@@ -72,18 +75,24 @@
 <script>
 import LoginModal from '@/components/Login/LoginModal.vue';
 import MapContainer from '../components/MapContainer.vue';
+import Swal from 'sweetalert2'
+import server from '../server';
 export default {
 	data() {
 		return {
 			logo: '',
 			nameError: false,
 			name: '',
-			manager: {},
+			manager: null,
 			type: 'Italian',
-			location: '',
 			managers: [],
 			showLoginModal: false,
 			formType: 'register',
+            longitude: 1,
+            latitude: 1,
+            address: '',
+            error:{},
+            imageFile: null
 		};
 	},
 	methods: {
@@ -101,16 +110,66 @@ export default {
 			});
 			console.log(files[0]);
 			fileReader.readAsDataURL(files[0]);
+            this.imageFile = files[0]
 		},
 		onPickFile() {
 			this.$refs.fileInput.click();
 		},
-		saveRestaurant(event) {
+		async saveRestaurant(event) {
 			event.preventDefault();
-			this.nameError = false;
-			if (this.name == '') this.nameError = true;
-			if (this.nameError) return;
+            // this.error['name'] = this.name == ''
+            // this.error['manager'] = this.manager == null
+            this.error['logo'] = this.logo == ''
+            // this.error['address'] = this.address == ''
+			if(this.containesError()){
+                Swal.fire({
+                    title: 'Error!',
+                    text: "You didn't feel all fields...",
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                })
+            }else{
+                console.log(this.imageFile);
+                const respImage = await server.uploadImage(this.imageFile);
+                if(respImage.success){
+                    console.log(respImage);
+                    const image = respImage.data.filename;
+                    const data = {
+                        name: this.name,
+                        location: {
+                            address: this.address,
+                            longitude: this.longitude,
+                            latitude: this.latitude
+                        },
+                        type: this.type,
+                        logo: image
+                    }
+                    const resp = await server.createRestaurant(data);
+                    if(resp.success){
+                        this.$router.push({ name: 'Home' });
+                        Swal.fire({
+                            title: 'Restaurant is created!',
+                            icon: 'success',
+                            confirmButtonText: 'Okay',
+                            timer: 2000,
+                            timerProgressBar: true
+                        })
+                    }
+                    
+                }else{
+                    console.log(respImage);
+                }
+            }
+            
 		},
+        containesError(){
+            for(const key in this.error){
+                console.log(key);
+                if(this.error[key])
+                    return true
+            }
+            return false
+        },
 		registerManager() {
 			this.showLoginModal = true;
 			document.getElementById('appContainer').style.overflow = 'hidden';
@@ -121,6 +180,14 @@ export default {
 			document.getElementById('appContainer').style.overflow = 'unset';
 			document.getElementById('appContainer').style.height = 'unset';
 		},
+        changeCoordinates(coordinates){
+            console.log("Received coorinates");
+            this.longitude = coordinates[0]
+            this.latitude = coordinates[1]
+        },
+        changeAddress(){
+            this.error['address'] = this.address == ''
+        }
 	},
 	components: {
 		LoginModal,
@@ -383,10 +450,62 @@ export default {
     align-items: center;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
 }
+.submit-register{
+    padding: 10px;
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    background-color: #fddf6d;
+    border-radius: 27px;
+    border-radius: 100px;
+    padding: 0px 11px;
+    line-height: 42px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-weight: 600;
+    color: #42405F;
+    padding: 0 40px;
+    opacity: 0.8;
+}
+.submit-register:hover{
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    opacity: 1;
+}
 .address-field > input{
     background-color: transparent;
     border: unset;
     flex: 1;
     color: #42405F;
+}
+.address-field > input::placeholder{
+    color: #42405F;
+    opacity: 0.5;
+}
+.error{
+    color: #FC4C59 !important;
+    font-weight: 600;
+}
+.errorLogo{
+    border: 2px solid #FC4C59 ;
+    border-radius: 14px;
+    color: #FC4C59
+}
+
+.errorAddress::placeholder{
+    color: #FC4C59 !important;
+    font-weight: 600;
+}
+.image-placeholder{
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.image-placeholder>  i{
+    width: 100%;
 }
 </style>

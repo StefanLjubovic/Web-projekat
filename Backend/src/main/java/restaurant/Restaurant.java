@@ -10,6 +10,7 @@ public class Restaurant {
     private Location location;
     private String logo;
     private List<Item> items;
+    private Double grade;
 
     public Restaurant(String id, String name, String type, boolean status, Location location) {
         this.id = id;
@@ -73,5 +74,17 @@ public class Restaurant {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public Double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Double score) {
+        this.grade = score;
     }
 }

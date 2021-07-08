@@ -59,24 +59,25 @@ const initMap = (_this) => {
 	var attribution = new Attribution({
 		collapsible: false,
 	});
-    const layer = createPoint(fromLonLat([19.900489, 45.247821]))
+    const layer = createPoint(fromLonLat([19.845013, 45.255068]))
     previusLayer = layer;
-	const map = new Map({
-		controls: [attribution],
-		target: target,
-		layers: [initLayer, layer],
-		view: new View({
-			center: fromLonLat([19.900489, 45.247821]),
-			zoom: 18,
-		}),
-	});
+    const map = new Map({
+        controls: [attribution],
+        target: target,
+        layers: [initLayer, layer],
+        view: new View({
+            center: fromLonLat([19.845013, 45.255068]),
+            zoom: 18,
+        }),
+    });
 
 	map.on('singleclick', function(event) {
         const coordinates = event.coordinate;
         const newLayer = createPoint(coordinates);
         map.removeLayer(previusLayer);
         map.addLayer(newLayer)
-        previusLayer = newLayer
+        previusLayer = newLayer;
+        _this.$emit("changeCoordinates", coordinates)
 	});
 };
 
@@ -89,16 +90,10 @@ export default {
 	},
 	props: ['restaurant'],
 	mounted() {
-		// document.getElementById('appContainer').style.overflow = 'hidden';
-		// document.getElementById('appContainer').style.height = '100vh';
 		initMap(this);
-
-		// map.addLayer(layer);
 	},
 	unmounted() {
 		console.log('Unmounging locations...');
-		// document.getElementById('appContainer').style.overflow = 'unset';
-		// document.getElementById('appContainer').style.height = 'unset';
 	},
 };
 </script>
