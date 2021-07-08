@@ -87,6 +87,7 @@ public class RestaurantDao implements ModelDao<Restaurant> {
         for(int i = 0; i < restaurants.size(); i++){
             if(restaurants.get(i).getId().equals(restaurant.getId())){
                 restaurants.set(i, restaurant);
+                restaurantSerialization.save(filePath,restaurants);
                 return;
             }
         }

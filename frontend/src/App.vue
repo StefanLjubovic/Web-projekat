@@ -1,11 +1,9 @@
 <template>
-
-<div class="app" @click="hideOptions" id="appContainer">
-    <notifications group="foo" />
-    <Header @login-user="loginUser" @show-options="showOptions"/>
-    <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
-    <router-view/>
-</div>
+    <div class="app" @click="hideOptions" id="appContainer">
+        <Header @login-user="loginUser" @show-options="showOptions"/>
+        <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
+        <router-view/>
+    </div>
 </template>
 
 <script>
@@ -65,10 +63,10 @@ export default {
     }
 };
 </script>
-<style>
+<style scoped>
     .app{
         font-family: 'Quicksand', sans-serif;   
-         position: relative;
+         /* position: relative; */
     }
     .app input:focus{
         outline: none !important;

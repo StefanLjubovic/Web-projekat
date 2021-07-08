@@ -12,6 +12,7 @@ import static server.Server.restaurantDAO;
 public class RestaurantController {
 
 
+
     private static Gson gson=new Gson();
 
     public static Route getAllRestaurants = (Request req,Response res) -> {
@@ -35,6 +36,7 @@ public class RestaurantController {
     public static Route getSingleRestaurant = (Request req, Response res) -> {
         res.type("application/json");
         Restaurant restaurant = restaurantDAO.getOne(req.queryParams("id"));
+//        restaurant = restaurant.availableItems();
         res.status(200);
         if(restaurant == null){
             res.status(400);
@@ -54,5 +56,12 @@ public class RestaurantController {
         return "Ok";
     };
 
+    public static Route updateRestaurant = (Request req, Response res) -> {
+        String restaurantJson = req.body();
+        Restaurant restaurant = gson.fromJson(restaurantJson, Restaurant.class);
+        restaurantDAO.UpdateRestaurant(restaurant);
+        res.status(200);
+        return "Ok";
+    };
 
 }
