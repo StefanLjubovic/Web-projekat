@@ -1,6 +1,9 @@
 <template>
-	<div style="width: 70%; margin: auto">
+	<div style="width: 888px; margin: auto" class="header">
 		<h3>Items</h3>
+		<span class="header-new-item">
+			<i class="fas fa-plus"></i> New Item
+		</span>
 	</div>
 	<div class="items-list">
 		<div :key="index" v-for="(item, index) in items">
@@ -21,6 +24,14 @@
 				</div>
 			</div>
 		</div>
+		<div class="empty-list" v-if="items.length == 0">
+			<p>This restaurant don't have any item yet</p>
+		</div>
+		<div class="new-item-placeholder">
+			<p class="new-item-placeholder-text">
+				Add new item
+			</p>
+		</div>
 	</div>
     <RestaurantItemModal v-if="showModal" v-bind:item="selectedItem" @closeModal="closeModal" />
 </template>
@@ -31,17 +42,17 @@ export default {
 	data() {
 		return {
 			items: [
-				{
-					name: 'Chiken nuggets',
-					description: '10 komada. 300 grama pilećeg filea, pomfrit 100 grama, sos po izboru, kajzerica',
-					price: 400.00,
-					image: 'https://cdn.donesi.rs/cdn-cgi/image/w=800,h=450,fit=cover,q=100,f=auto/restaurants/1200/popular_item/0000000144119?c=674e1869af5e28d0874ba7c07dbcad6a',
-				},{
-					name: 'Punjena pljeskavica',
-					description: '200 grama. Sir, šampinjoni',
-					price: 280.00,
-					image: 'https://cdn.donesi.rs/cdn-cgi/image/w=800,h=450,fit=cover,q=100,f=auto/restaurants/1200/popular_item/0000000096598?c=6ca20e7751415c84fc6c003e1528fada',
-				},
+				// {
+				// 	name: 'Chiken nuggets',
+				// 	description: '10 komada. 300 grama pilećeg filea, pomfrit 100 grama, sos po izboru, kajzerica',
+				// 	price: 400.00,
+				// 	image: 'https://cdn.donesi.rs/cdn-cgi/image/w=800,h=450,fit=cover,q=100,f=auto/restaurants/1200/popular_item/0000000144119?c=674e1869af5e28d0874ba7c07dbcad6a',
+				// },{
+				// 	name: 'Punjena pljeskavica',
+				// 	description: '200 grama. Sir, šampinjoni',
+				// 	price: 280.00,
+				// 	image: 'https://cdn.donesi.rs/cdn-cgi/image/w=800,h=450,fit=cover,q=100,f=auto/restaurants/1200/popular_item/0000000096598?c=6ca20e7751415c84fc6c003e1528fada',
+				// },
 			],
             showModal: false,
             selectedItem: {}
@@ -80,6 +91,7 @@ export default {
 	position: relative;
 	width: 100%;
 	justify-content: center;
+	min-height: calc(100% - 320px);
 }
 .item {
 	width: 800px;
@@ -133,5 +145,52 @@ export default {
 .item-pricing{
     text-align: right;
 
+}
+.new-item-placeholder{
+	width: 800px;
+	padding: 0 17px;
+	/* background-color: white; */
+	border: 2px dotted #8F8FA1;
+	border-radius: 20px;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-items: center;
+	margin: 5px;
+	cursor: pointer;
+}
+.new-item-placeholder:hover{
+	font-weight: 600;
+	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+.new-item-placeholder-text{
+	margin: 0 auto;
+	color: #8F8FA1;
+	line-height: 40px;
+}
+.header{
+	width: 888px;
+	display: flex;
+	align-items: center;
+}
+.header > *:first-child{
+	flex: 1;
+}
+.header-new-item{
+	color: #8F8FA1;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.empty-list{
+	color: #8F8FA1;
+	/* margin: 70px 0; */
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-items: center;
+	justify-content: center;
 }
 </style>
