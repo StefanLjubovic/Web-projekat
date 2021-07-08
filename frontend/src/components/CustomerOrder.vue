@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @click="write">
+    <div class="container" @click="$emit('openDialog')">
         <div class="picture">
             <i class="far fa-user fa-5x" rounded-image></i>
         </div>
@@ -11,7 +11,7 @@
         </div>
         <div class="restaurant-details">
             <div class="restaurant-location">
-                <p>Ordered items📍:  {{user.items.length}}</p>
+                <p>Order status📍:  {{user.status}}</p>
                 <p>Price💸: {{price}}</p>
             </div>
         </div>
@@ -30,10 +30,8 @@ export default {
             price: 0
         }
     },
+    emits:['openDialog'],
     methods:{
-        write(){
-            console.log(this.filters);
-        }
     },
     created(){
         for(var i=0;i<this.user.items.length;i++){

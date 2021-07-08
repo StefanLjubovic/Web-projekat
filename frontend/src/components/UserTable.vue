@@ -93,7 +93,6 @@ export default {
     methods:{
       changeStatus(){
           this.users[this.block.id].status=!this.users[this.block.id].status;
-          console.log(this.users[this.block.id].status);
           Server.updateUser(this.users[this.block.id]).then(resp=>{
 			      if(resp.success){
 				      console.log('this.restaurants');
@@ -101,7 +100,6 @@ export default {
           });
       },
       changeText(i){
-        console.log(this.users[i])
         this.block.id=i;
         if(!this.users[i].blocked){
           this.block.title='Ban user';

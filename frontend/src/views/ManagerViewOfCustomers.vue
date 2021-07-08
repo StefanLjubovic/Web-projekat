@@ -2,10 +2,12 @@
 <div class="home">
 		<!-- <Header @login-user="loginUser"/> -->
 		<div class="home-container" >
-        <SearchBar class="search" :advanced-orders="advancedOrders" @search="search"/>
+        <SearchBar class="search" :advanced-orders="advancedOrders" @orders-search="openModal" @search="search" />
         <SortOrder @sortName="sortByName" @sortPrice="sortByPrice" @sortDate="sortByDate" class="sorters"/>
-        <OrdersSearch class="advanced" @applyFilters="applyFilters"/>
-    	<CustomerOrders :users="users" :filters="filters" class="orders" />
+        <OrdersSearch v-if="showModal" @close-modal="closeModal" class="advanced" @applyFilters="applyFilters"/>
+    	<CustomerOrders :users="users" :filters="filters" class="orders" @openDialog="openDialog"/>
+        <CommentModal @close-modal="closeComment" v-if="showReview" @saveReview="saveReview"/>
+        <ConfirmModal v-if="confirmModal" :title="title" :description="description" @cancelConfirm="closeConfirmModal"/>
         </div>
 	</div>
 </template>
@@ -15,6 +17,9 @@ import CustomerOrders from "@/components/CustomerOrders.vue";
 import OrdersSearch from "@/components/OrdersSearch.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import SortOrder from "@/components/SortOrders.vue";
+import CommentModal from "@/components/CommentModal.vue";
+import Comment from "@/components/Comment.vue";
+import ConfirmModal from "@/components/ConfirmModal.vue";
 const allUsers = [
 		{
 			name: "Pera",
@@ -129,16 +134,26 @@ export default {
         return{
             users:[],
             advancedOrders:true,
-            filters: {}
+            filters: {},
+            showModal: false,
+            showReview: false,
+            title: 'Change order status',
+            description: 'Are you sure you want to change status from in preparation to waiting for delivery?',
+            confirmModal:false,
+            user:{}
         }
     },
     components:{
         CustomerOrders,
         SearchBar,
         OrdersSearch,
-        SortOrder
+        SortOrder,
+        CommentModal,
+        Comment,
+        ConfirmModal
     },
     created(){
+        this.user=this.$store.getters.getUser;
         this.users=allUsers;
         let sum=0;
         for(var i=0;i<this.users.length;i++){
@@ -172,17 +187,52 @@ export default {
         },
         applyFilters(filters,search){
             this.users = allUsers.filter(e => e.totalPrice<parseInt(search.priceTo) && e.totalPrice>parseInt(search.priceFrom));
-            if(Number.isInteger(search.priceFrom) && Number.isInteger(search.priceTo)){
-            }
-            if(search.name){
-                this.users = allUsers.filter(e => e.name.toLowerCase().includes(this.searchBar.toLowerCase()));
-            }
             this.filters=filters;
             this.users = allUsers.filter(e => e.type.toLowerCase().includes(filters.restaurantType.toLowerCase()) && 
             e.status.toLowerCase().includes(filters.orderStatus.toLowerCase()));
+            this.showModal=false;
+            document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset';
         },
         search(name){
             this.searchBar=name;
+            this.users = allUsers.filter(e => e.name.toLowerCase().includes(this.searchBar.toLowerCase()));
+        },
+        openModal(){
+          this.showModal=true;
+          document.getElementById('appContainer').style.overflow = 'hidden';
+          document.getElementById('appContainer').style.height = '100vh';
+        },
+        closeModal(){
+            this.showModal=false;
+            document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset';
+        },
+        saveReview(rating,comment){
+        this.showReview=false;
+           document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset'; 
+        },
+        closeComment(){
+            this.showReview=false;
+           document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset'; 
+        },
+        openDialog(){
+            if(this.user.role=="Admin"){
+            this.confirmModal=true
+            document.getElementById('appContainer').style.overflow = 'hidden';
+          document.getElementById('appContainer').style.height = '100vh';
+            }else{
+            this.showReview=true
+            document.getElementById('appContainer').style.overflow = 'hidden';
+          document.getElementById('appContainer').style.height = '100vh';
+            }
+        },
+        closeConfirmModal(){
+            this.confirmModal=false
+            document.getElementById('appContainer').style.overflow = 'hidden';
+          document.getElementById('appContainer').style.height = '100vh';
         }
     }
 }
@@ -219,6 +269,7 @@ export default {
 .orders{
 	height: 100%;
 	overflow: auto;
+    margin-top:50px; ;
 }
 
 </style>
