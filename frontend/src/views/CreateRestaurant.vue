@@ -118,7 +118,7 @@ export default {
 		async saveRestaurant(event) {
 			event.preventDefault();
             this.error['name'] = this.name == ''
-            this.error['manager'] = this.manager == null
+            // this.error['manager'] = this.manager == null
             this.error['logo'] = this.logo == ''
             this.error['address'] = this.address == ''
 			if(this.containesError()){
