@@ -1,46 +1,37 @@
 <template>
-    <transition name="modal">
+   <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-item-container">
-                <LoginElement v-if="state == 'login'"    @changeState="changeState" @close="close"/>
-                <RegisterForm v-if="state == 'register'" @closeForm="close" @changeState="changeState" @close="close"/>
-            </div>  
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <div class="media-content">       
+                <h2 class="text-light rate">{{title}}</h2>    
+                <div class="row"> 
+                </div>
+                <div class="form-group">
+                    <h5 class="text-light rate">{{description}}</h5>
+                    <div class="row">
+                    <input type="submit" class="btnRegister" @click="$emit('saveConfirm')"  value="Confirm"/>
+                    <input type="submit" class="btnRegister" @click="$emit('cancelConfirm')"  value="Cancel"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </div> 
+            </div>
           </div>
         </div>
       </transition>
 </template>
 
 <script>
-import LoginElement from "@/components/LoginElement.vue"
-import RegisterForm from "@/components/RegisterForm.vue"
 export default {
-    data(){
-        return{
-            state: 'login'
-        }
-    },
-    methods: {
-        
-    },
-    props:['formType'],
-    mounted(){
-        this.state=this.formType;
-    },
-    methods:{
-        changeState(state){
-            this.state = state;
-        },
-        close(){
-            this.$emit('close')
-            console.log(this.formType);
-        }
-    },
-    components:{
-        LoginElement,
-        RegisterForm
-    }
-    
+  emits:['saveConfirm','cancelConfirm'],
+  props:['title','description']
 }
 </script>
 
@@ -69,6 +60,71 @@ export default {
   transition: all 0.3s ease;
   /* display: flex; */
   /* flex-direction: column; */
+}
+.star-rating{
+        display: inline-block;
+        color:gold;
+        font-size:2rem;
+        position: relative;
+    }
+    .card{
+         background-color: #5E639B;
+        border-radius: 15px;
+        width:30%;
+        height: 250px;
+        margin-top: -355px;
+    }
+    .star-rating .current{
+        position: absolute;
+        top:0;
+        width: 80%;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        border-radius: 20px;
+    }
+    .comment{
+        height: 300px;
+        width: 80%;
+        margin-left: 35px;
+        margin-top: 15px;
+    }
+    .rate{
+        margin-left: 10px;
+        margin-top:10px;
+    }
+    .btnRegister{
+    float: right;
+    margin-top: 5%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background-color: #FFC312;
+    color: black;
+    font-weight: 600;
+    width: 30%;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-left: 10%;
+}
+.small-img-btn{
+    position: absolute;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 2;
+    cursor: pointer;
+    top:10px;
+}
+.title{
+    margin-left: 25px;
 }
 
 .modal-item-image{

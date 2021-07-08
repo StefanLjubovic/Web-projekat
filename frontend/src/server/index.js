@@ -85,6 +85,80 @@ server.register=(data)=>{
     return axios(options)
         .then(response=>handleSuccess(response))
         .catch(error=>handleError(error));
+};
+
+server.registerRestaurant=(data)=>{
+    const options={
+        method: "post",
+        headers:{
+            "Content-Type": 'application/json;charset=UTF-8',
+            "Accept": 'application/json',
+        },
+        url: `${baseUrl}/restaurants/register`,
+    };
+    return axios(options)
+    .then(response=>handleSuccess(response))
+    .catch(error=>handleError(error));
+}
+
+server.updateUser=(data)=>{
+    const options={
+        method: "put",
+        headers:{
+            "Content-Type": 'application/json;charset=UTF-8',
+            "Accept": 'application/json',
+        },
+        url: `${baseUrl}/userList/update`,
+        data: data
+    };
+    return axios(options)
+    .then(response=>handleSuccess(response))
+    .catch(error=>handleError(error));
+}
+
+server.updatePassword=(data)=>{
+    const options={
+        method: "put",
+        headers:{
+            "Content-Type": 'application/json;charset=UTF-8',
+            "Accept": 'application/json',
+        },
+        url: `${baseUrl}/editProfile/updatePassword`,
+        data: data
+    };
+    return axios(options)
+    .then(response=>handleSuccess(response))
+    .catch(error=>handleError(error));
+}
+
+server.getAllManagers=()=>{
+    const options={
+        mehod: "get",
+        headers:{
+            "Content-Type": 'application/json;charset=UTF-8',
+            "Accept": 'application/json',
+        },
+        url: `${baseUrl}/restaurants/managers`,
+    };
+    return axios(options)
+    .then(response=>handleSuccess(response))
+    .catch(error=>handleError(error));
+}
+
+
+
+server.getAllUsers=()=>{
+    const options={
+        mehod: "get",
+        headers:{
+            "Content-Type": 'application/json;charset=UTF-8',
+            "Accept": 'application/json',
+        },
+        url: `${baseUrl}/userList`,
+    };
+    return axios(options)
+    .then(response=>handleSuccess(response))
+    .catch(error=>handleError(error));
 }
 
 server.uploadImage = file => {

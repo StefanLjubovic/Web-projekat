@@ -8,6 +8,7 @@
                         <div class="remove-image" @click="removeImage">
                             <i class="fas fa-times"></i>
                         </div>
+
 					</div>
 					<div class="image-placeholder" @click="onPickFile" style="cursor: pointer" v-if="logo == ''" v-bind:class="{errorLogo: error['logo']}">
 						<i class="far fa-images fa-3x"></i>
@@ -36,6 +37,7 @@
 								<option value="Similarly">Similarly🍗</option>
 							</select>
 						</div>
+
                         </div>
                         <div class="restaurant-info-body-part">
 						<div class="form-group">
@@ -73,10 +75,12 @@
 </template>
 
 <script>
+
 import LoginModal from '@/components/Login/LoginModal.vue';
 import MapContainer from '../components/MapContainer.vue';
 import Swal from 'sweetalert2'
 import server from '../server';
+
 export default {
 	data() {
 		return {
@@ -187,12 +191,22 @@ export default {
         changeAddress(){
             this.error['address'] = this.address == ''
         }
+
 	},
-	components: {
-		LoginModal,
-		MapContainer,
+
+    async created() {
+        Server.getAllManagers().then(resp=>{
+            console.log("Resp", resp.data);
+            if(resp.success){
+				this.managers = resp.data;
+			}
+        })
 	},
-};
+    components:{
+        LoginModal,
+        MapContainer
+    }
+}
 </script>
 
 <style scoped>

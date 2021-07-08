@@ -16,9 +16,6 @@ export default {
         }
     },
     created(){
-       // EventBus.$on('filter-changed',(search)=>{
-        //    console.log(search);
-       // });
     },
     name: 'Restaurants',
     props:{

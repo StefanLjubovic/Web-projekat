@@ -6,7 +6,6 @@
 					<img class="rounded-image" :src="getImgUrl(user?.logo)" v-bind:alt="user.logo" v-if="!!user.logo" />
 					<i class="far fa-user user-icon fa-2x" v-if="!user.logo"></i>
 				</div>
-
 				<div class="user-info">
 					<h3>{{ user.firstName }} {{ user.lastName }}</h3>
 					<p class="info">Profile info</p>
@@ -14,28 +13,25 @@
 			</button>
 		</div>
 		<div class="btn-div margin">
-			<button type="button" class="btn btn-light btn" @click="createRestaurant">
-				<span class="btn-components">Register restaurant<i class="fas fa-plus icon"></i></span>
-			</button>
-		</div>
-		<div class="btn-div margin">
-			<button type="button" class="btn btn-light btn" @click="managersRestaurant">
-				<span class="btn-components">My restaurant<i class="fas fa-utensils icon"></i></span>
-			</button>
-		</div>
-		<div class="btn-div margin">
-			<button type="button" class="btn btn-light btn" @click="allUsers">
-				<span class="btn-components">All users<i class="fas fa-users icon"></i></span>
-			</button>
-		</div>
-		<div class="btn-div margin">
-			<button type="button" class="btn btn-light btn" @click="signout">
-				<span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span>
-			</button>
-		</div>
+           <button type="button" class="btn btn-light btn"  @click="createRestaurant"><span class="btn-components">Register restaurant<i class="fas fa-plus icon"></i></span></button>
+           </div>
+            <div class="btn-div margin">
+           <button type="button" class="btn btn-light btn" @click="managersRestaurant"><span class="btn-components">My restaurant<i class="fas fa-utensils icon"></i></span></button>
+           </div>
+           <div class="btn-div margin">
+           <button type="button" class="btn btn-light btn" @click="allUsers"><span class="btn-components">All users<i class="fas fa-users icon"></i></span></button>
+           </div>
+            <div class="btn-div margin">
+           <button type="button" class="btn btn-light btn" @click="createArticle"><span class="btn-components">Add article<i class="fas fa-plus icon"></i></span></button>
+           </div>
+           <div class="btn-div margin">
+           <button type="button" class="btn btn-light btn" @click="viewCustomers"><span class="btn-components">View customers<i class="fas fa-user-friends icon"></i></span></button>
+           </div>
+       <div class="btn-div margin">
+           <button type="button" class="btn btn-light btn"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
+           </div>
 	</div>
 </template>
-
 <script>
 const User = {
 	name: 'Pera',
@@ -67,6 +63,14 @@ export default {
 			this.$emit('hideDialog');
 			this.$router.push({ path: '/restaurant' });
 		},
+		createArticle(){
+             this.$emit('create-restaurant');
+             this.$router.push({ path: '/create-article' });
+        },
+        viewCustomers(){
+            this.$emit('create-restaurant');
+             this.$router.push({ path: '/view-customers' });
+        },
 		signout() {
 			localStorage.clear()
 			this.$store.commit('setUser', {});
@@ -79,7 +83,6 @@ export default {
 	emits: ['create-restaurant', 'edit-profile', 'all-users', 'hideDialog'],
 };
 </script>
-
 <style scoped>
 .container {
 	background: #f0f1f3;
@@ -90,7 +93,6 @@ export default {
 	/* height: 400px; */
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
-
 .btn-div {
 	width: 100vw;
 	position: relative;

@@ -52,6 +52,14 @@ public class UserController  {
         return gson.toJson(model);
     };
 
+    public static Route changePassword=(Request req,Response res)->{
+        String yourObjectStr = "" + req.body();
+        Gson gson = new GsonBuilder().create();
+        LoginRequest requestData = gson.fromJson(yourObjectStr , LoginRequest.class);
+        User user=userDao.getByUsername(requestData.username);
+        user.setPassword(requestData.password);
+        return userDao.update(user);
+    };
 
     public static Route getUserByToken = (Request req, Response res) -> {
         Map<String, Object> model = new HashMap<>();
@@ -72,6 +80,18 @@ public class UserController  {
         return gson.toJson(model);
     };
 
+    public static Route updateUser=(Request req,Response res)->{
+        String yourObjectStr = "" + req.body();
+        System.out.println(yourObjectStr);
+        Gson gson = new GsonBuilder().create();
+        User user = gson.fromJson(yourObjectStr , User.class);
+        return userDao.update(user);
+    };
+
+    public static Route getAllUsers=(Request req,Response res)->{
+        return gson.toJson(userDao.getAll());
+    };
+
     public static User authorize(String username, String password){
         username = username.toLowerCase(Locale.ROOT);
         List<User> users = userDao.getAll();
@@ -89,7 +109,6 @@ public class UserController  {
 
     public static Route createUser=(Request req,Response res)->{
         String yourObjectStr = "" + req.body();
-        System.out.println("aaaaa");
         System.out.println(yourObjectStr);
         Gson gson = new GsonBuilder().create();
         User user = gson.fromJson(yourObjectStr , User.class);

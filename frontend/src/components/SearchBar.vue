@@ -11,6 +11,7 @@
 		aria-describedby="search-addon"
 		/>
 		<button type="button" class="btn" v-if="advanced" @click="advancedSearch">Advanced search</button>
+		<button type="button" class="btn" v-if="advancedOrders" @click="$emit('orders-search')">Advanced search</button>
   </div>
 </template>
 
@@ -23,8 +24,8 @@ export default {
 	  advanced: false,
 	};
   },
-  emits:['advanced-search'],
-  props:['advancedFilter'],
+  emits:['advanced-search','search','orders-search'],
+  props:['advancedFilter','advancedOrders'],
   methods: {
 	searchHandler() {
 	  if (!this.searchTimeout) {

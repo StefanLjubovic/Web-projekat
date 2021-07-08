@@ -14,10 +14,11 @@ public class User{
     private String username;
     private String password;
     private String gender;
-    private Integer dateOfBirth;
+    private double dateOfBirth;
     private UserRoles role;
     private Integer restaurantId;
     private String cartId;
+    private boolean status=true;
 
     public User(String id, String firstName, String lastName, String username, String password, String gender, Integer dateOfBirth, UserRoles role) {
         this.id = id;
@@ -28,6 +29,24 @@ public class User{
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.role = role;
+    }
+
+    public User(String firstName, String lastName, String username, String password, String gender, Integer dateOfBirth, UserRoles role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.role = role;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     private BuyerType type;
@@ -80,11 +99,11 @@ public class User{
         this.gender = gender;
     }
 
-    public Integer getDateOfBirth() {
+    public double getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Integer dateOfBirth) {
+    public void setDateOfBirth(double dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

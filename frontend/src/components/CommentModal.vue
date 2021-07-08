@@ -3,49 +3,29 @@
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-item-container">
-                <LoginElement v-if="state == 'login'"    @changeState="changeState" @close="close"/>
-                <RegisterForm v-if="state == 'register'" @closeForm="close" @changeState="changeState" @close="close"/>
-            </div>  
+                <Comment @saveReview="$emit('saveReview')" @close-modal="$emit('close-modal')"/>
+    </div>  
           </div>
         </div>
       </transition>
 </template>
 
 <script>
-import LoginElement from "@/components/LoginElement.vue"
-import RegisterForm from "@/components/RegisterForm.vue"
+import Comment from "@/components/Comment.vue";
 export default {
     data(){
         return{
-            state: 'login'
-        }
-    },
-    methods: {
-        
-    },
-    props:['formType'],
-    mounted(){
-        this.state=this.formType;
-    },
-    methods:{
-        changeState(state){
-            this.state = state;
-        },
-        close(){
-            this.$emit('close')
-            console.log(this.formType);
         }
     },
     components:{
-        LoginElement,
-        RegisterForm
+        Comment
     }
-    
 }
 </script>
 
+
 <style scoped>
-.modal-mask {
+    .modal-mask{
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -149,15 +129,52 @@ export default {
 .amount-container{
     flex: 1;
 }
-
-.submit-order{
-    background-color: #FDDF6D;
-    border: unset;
-    width: 300px;
-    color: #42405F;
-	font-weight: 600;
-    border-radius: 100px;
-    padding: 10px 0;
+body {
+    background-color: #eee
 }
 
+div.stars {
+    width: 270px;
+    display: inline-block
+}
+
+.mt-200 {
+    margin-top: 200px
+}
+
+input.star {
+    display: none
+}
+
+label.star {
+    float: right;
+    padding: 10px;
+    font-size: 36px;
+    color: #4A148C;
+    transition: all .2s
+}
+
+input.star:checked~label.star:before {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s
+}
+
+input.star-5:checked~label.star:before {
+    color: #FE7;
+    text-shadow: 0 0 20px #952
+}
+
+input.star-1:checked~label.star:before {
+    color: #F62
+}
+
+label.star:hover {
+    transform: rotate(-15deg) scale(1.3)
+}
+
+label.star:before {
+    content: '\f006';
+    font-family: FontAwesome
+}
 </style>
