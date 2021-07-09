@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static server.Server.userDao;
+import static spark.Spark.halt;
 
 import java.util.UUID;
 public class UserController  {
@@ -49,6 +50,7 @@ public class UserController  {
             model.put("errorMessage", "User doesn't exist or email/password is not correct");
             res.body(gson.toJson(model));
             res.status(400);
+            halt(400,"User doesn't exist or email/password is not correct");
         }
         return gson.toJson(model);
     };

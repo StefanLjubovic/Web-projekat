@@ -23,6 +23,7 @@ public class Path {
         @Getter public static final String UPDATE_PASSWORD="/editProfile/updatePassword";
 
         @Getter public static final String UPDATE_RESTAURANT = "/updateRestaurant";
+        @Getter public static final String CREATE_ORDER ="/createOrder" ;
     }
     public static class Storage{
         @Getter public static final String Restaurant = "src/main/java/restaurant/Restaurant.json";

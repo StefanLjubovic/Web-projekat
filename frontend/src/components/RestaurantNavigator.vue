@@ -9,8 +9,11 @@
         <div class="navigator-clip" v-bind:class="{ selected: selectedState=='reviews' }" @click="selectState('reviews')">
             <span><i class="fas fa-star"></i> Reviews</span>
         </div>
-        <div class="navigator-clip" v-bind:class="{ selected: selectedState=='informations' }" @click="selectState('informations')">
+        <div class="navigator-clip" v-bind:class="{ selected: selectedState=='informations' }" @click="selectState('informations')" >
             <span>📍 Location</span>
+        </div>
+        <div class="navigator-clip" @click="$emit('edit-restaurant')" v-if="editEnabled">
+            <span>⚙️ Edit</span>
         </div>
     </div>
 </div>
@@ -22,7 +25,7 @@ export default {
             selectedState: 'reviews'
         })
     },
-    props:['selectedView'],
+    props:['selectedView', "editEnabled"],
     methods:{
         selectState(state){
             this.selectedState = state;
@@ -32,7 +35,8 @@ export default {
     mounted(){
         console.log(`Selected View ${this.selectedView}`);
         this.selectedState = this.selectedView;
-    }
+    },
+    emits:['edit-restaurant', "change-view"]
 }
 </script>
 

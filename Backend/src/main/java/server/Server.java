@@ -1,6 +1,8 @@
 package server;
 
 import grade.GradeDao;
+import order.OrderController;
+import order.OrderDao;
 import restaurant.RestaurantController;
 import restaurant.RestaurantDao;
 import spark.Filter;
@@ -22,12 +24,12 @@ public class Server {
     public static UserDao userDao;
     public static RestaurantDao restaurantDAO;
     public static GradeDao gradeDao;
-
+    public static OrderDao orderDao;
     public static void main(String[] args) {
         port(8080);
         restaurantDAO = new RestaurantDao();
         userDao = new UserDao();
-
+        orderDao = new OrderDao();
 //        uploadDir = new File("upload");
         File uploadDir =  new File("upload");
         uploadDir.mkdir();
@@ -50,6 +52,7 @@ public class Server {
         get(Path.Web.GET_SINGLE_RESTAURANT, RestaurantController.getSingleRestaurant);
         post(Path.Web.CREATE_USER, UserController.createUser);
         post(Path.Web.UPDATE_RESTAURANT, RestaurantController.updateRestaurant);
+        post(Path.Web.CREATE_ORDER, OrderController.createOrder);
 
         post(Path.Web.SAVE_ITEM, RestaurantController.saveItem);
 

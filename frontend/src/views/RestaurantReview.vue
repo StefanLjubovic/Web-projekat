@@ -2,7 +2,7 @@
 	<div class="home">
 		<!-- <Header @login-user="loginUser"/> -->
 		<RestaurantInfo :restaurant="restaurant"/>
-		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" />
+		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" :editEnabled="restaurant.id == user.restaurantId" />
 		<RestaurantLocation v-if="selectedView == 'informations'" :restaurant="restaurant"/>
 		<RestaurantReviews v-if="selectedView == 'reviews'" :restaurant="restaurant" />
 		<RestaurantItems v-if="selectedView == 'items'" :restaurant="restaurant" @refreshRestaurant="refreshRestaurant"/>
@@ -29,6 +29,10 @@ export default {
 			},
 			selectedView: 'items'
 		};
+	},computed: {
+		user() {
+			return this.$store.getters.getUser;
+		},
 	},
 	methods:{
 		changeView(view){
