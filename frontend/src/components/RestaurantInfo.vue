@@ -29,28 +29,12 @@
 <script>
 import server from '../server';
 export default {
-
-    data(){
-        return({
-            restaurant: {}
-        })
-    },
     props:['restaurant'],
     created() {
-        // this.restaurant = {
-		// 	name: "Petrus",
-		// 	description: "Modern restaurant in the city center",
-		// 	type: "barbecue",
-		// 	status: false,
-		// 	logo: 'petrus.jpg',
-		// 	location: "Bulevar 4",
-		// 	grade: "4.7",
-		// }
     },
     methods:{
         getImage(img) {
             const image = server.getImage(img);
-            console.log('Image: ',image);
             return image
         },
         getRestaurantType(type){

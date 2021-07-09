@@ -1,5 +1,6 @@
 package restaurant;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,13 +13,19 @@ public class  Restaurant {
     private String logo;
     private List<Item> items;
     private Double grade;
+    private String managerId;
 
-    public Restaurant(String id, String name, String type, boolean status, Location location) {
+    public Restaurant(String id, String name, String type, boolean status, Location location,String managerId) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.status = status;
         this.location = location;
+        this.managerId = managerId;
+    }
+
+    public String getManagerId() {
+        return managerId;
     }
 
     public String getId() {
@@ -101,6 +108,16 @@ public class  Restaurant {
                 }
             }
         }
+        return this;
+    }
+
+    public Restaurant availableItems() {
+        List<Item> items = new ArrayList<>();
+        for(Item item: this.items){
+            if(!item.deleted)
+                items.add(item);
+        }
+        this.items = items;
         return this;
     }
 }

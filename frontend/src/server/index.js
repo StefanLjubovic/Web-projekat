@@ -23,13 +23,30 @@ server.getAllRestaurants = () => {
         .catch(error => handleError(error));
 };
 server.getImage = (image) => {
-    return `${baseUrl}/${image}`
+    console.log(image);
+    if(image?.includes(baseUrl))
+        return image;
+    return !!image ? `${baseUrl}/${image}` : ''
 };
 
 server.login = (data) => {
     const options = {
         method: "POST",
         url: `${baseUrl}/login`,
+        data: data
+    };
+    
+    return axios(options)
+        .then(response => handleSuccess(response))
+        .catch(error => handleError(error));
+};
+server.updateRestaurant = (data) => {
+    const options = {
+        method: "POST",
+        url: `${baseUrl}/updateRestaurant`,
+        headers: {
+            "Content-Type": 'application/json;charset=UTF-8',
+        },
         data: data
     };
     

@@ -5,15 +5,15 @@
         </div>
         <div class="restaurant-info">
             <h3>Customer: {{user.name}} {{user.surname}}</h3>
+            <h5>Deliverer🚚: {{user.name}} {{user.surname}}</h5>
             <label for="desctiption">Ordered food:&nbsp;</label>
-            <label for="desctiption" v-for="item in user.items" :key="item">{{item.item}},&nbsp;</label><br>
-            <label for="descripiton">Date of order📆: <b>{{user.date}}</b> </label>
+            <label for="desctiption" v-for="article in articles" :key="article">{{article.item}} x{{article.count}}&nbsp;</label><br>
         </div>
         <div class="restaurant-details">
             <div class="restaurant-location">
                 <p>Order status📍:  {{user.status}}</p>
                 <p>Price💸: {{price}}</p>
-                <div v-if="user.managerConfirm">Waiting for confirmation✔</div>
+                <p>Date of order📆: <b>{{user.date}}</b></p>
             </div>
         </div>
     </div>
@@ -28,18 +28,35 @@ export default {
     },
     data(){
         return{
-            price: 0
+            price: 0,
+            articles: []
         }
     },
     emits:['openDialog'],
     methods:{
+        group(){
+            let ordersDict={}
+            for(const item of this.user.items){
+                if(!ordersDict[item.item])
+                    ordersDict[item.item]={count: 0,...item};
+                ordersDict[item.item].count++
+            }
+            console.log(Object.values(ordersDict))
+            return Object.values(ordersDict)
+        }   
     },
     created(){
         for(var i=0;i<this.user.items.length;i++){
-            console.log(this.user.items[i]);
             this.price+=parseInt(this.user.items[i].price);
         }
-        console.log(this.price)
+        let ordersDict={}
+            for(const item of this.user.items){
+                if(!ordersDict[item.item])
+                    ordersDict[item.item]={count: 0,...item};
+                ordersDict[item.item].count++
+            }
+            this.articles=Object.values(ordersDict)
+            return Object.values(ordersDict)
     }
 }
 </script>

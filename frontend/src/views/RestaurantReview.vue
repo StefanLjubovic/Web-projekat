@@ -24,8 +24,9 @@ export default {
 	
 	data() {
 		return {
-			restaurants: [],
-			restaurant:{},
+			restaurant:{
+				items: []
+			},
 			selectedView: 'items'
 		};
 	},
@@ -48,7 +49,7 @@ export default {
 	created() {
 		// this.restaurants = allRestaurants;
 		const id = this.$route.params.id;
-		console.log(id);
+		console.log(id+'aaaaaaaaaaaaaaaaaaaaaa');
 		Server.getRestaurantById(id).then(resp => {
 			if(resp.success){
 				this.restaurant = resp.data;

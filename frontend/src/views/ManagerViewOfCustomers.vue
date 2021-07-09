@@ -30,7 +30,36 @@ const allUsers = [
             status: "InPreparation",
             searchBar:'',
              totalPrice: 0,
-              managerConfirm: false,
+			items:[
+                {
+                   item: "Pljeskavica",
+                   price: "300"
+                },
+                {
+                    item: "Pljeskavica",
+                   price: "300"
+                },
+                 {
+                    item: "Pljeskavica",
+                   price: "300"
+                },
+                 {
+                    item: "Piletina",
+                   price: "300"
+                },
+                {
+                    item: "Piletina",
+                   price: "300"
+                }
+            ]
+		},
+		{
+            id: '4',
+			name: "Pera",
+			surname: "Peric",
+			type: "Italian",
+             totalPrice: 0,
+             status: "WaitingForDelivery",
 			items:[
                 {
                    item: "Pljeskavica",
@@ -46,14 +75,13 @@ const allUsers = [
                 }
             ]
 		},
-		{
-            id: '4',
+        {
+            id: '6',
 			name: "Pera",
 			surname: "Peric",
 			type: "Italian",
              totalPrice: 0,
-             status: "WaitingForDelivery",
-              managerConfirm: false,
+             status: "Delivered",
 			items:[
                 {
                    item: "Pljeskavica",
@@ -75,8 +103,7 @@ const allUsers = [
 			surname: "Peric",
 			type: "Italian",
             totalPrice: 0,
-            status: "InPreparation",
-             managerConfirm: false,
+            status: "WaitingManagerConfirmation",
 			items:[
                 {
                    item: "Pljeskavica",
@@ -99,7 +126,6 @@ const allUsers = [
 			type: "Chinese",
              totalPrice: 0,
              status: "InTransport",
-              managerConfirm: false,
 			items:[
                 {
                    item: "Pljeskavica",
@@ -122,7 +148,6 @@ const allUsers = [
 			type: "chinese",
             status: "WaitingForDelivery",
              totalPrice: 0,
-             managerConfirm: true,
 			items:[
                 {
                    item: "Pljeskavica",
@@ -237,10 +262,17 @@ export default {
             this.confirmModal=true
             document.getElementById('appContainer').style.overflow = 'hidden';
           document.getElementById('appContainer').style.height = '100vh';
-            }else if(this.user.role=="Customer"){
+            }else if(this.user.role=="Customer" && user.status == "Delivered"){
             this.showReview=true
             document.getElementById('appContainer').style.overflow = 'hidden';
           document.getElementById('appContainer').style.height = '100vh';
+            }
+            else if(this.user.role=="Customer" && user.status == "InPreparation"){
+                this.modifiedOrder=user;
+                this.description="Are you sure you want to cancel your order?"
+                this.confirmModal=true
+                document.getElementById('appContainer').style.overflow = 'hidden';
+                document.getElementById('appContainer').style.height = '100vh';
             }
             else if(this.user.role=="Deliverer" && user.status=='InTransport'){
                 this.modifiedOrder=user;
@@ -256,7 +288,7 @@ export default {
                 document.getElementById('appContainer').style.overflow = 'hidden';
                 document.getElementById('appContainer').style.height = '100vh';
             }
-             else if(this.user.role=="Manager" && user.status=='WaitingForDelivery' && user.managerConfirm){
+             else if(this.user.role=="Manager" && user.status=='WaitingManagerConfirmation'){
                  this.modifiedOrder=user;
                   this.description="Confirm delivery request?"
                  this.confirmModal=true
@@ -293,11 +325,10 @@ export default {
                 document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset'; 
             }
-            else if(this.user.role=="Manager" && this.modifiedOrder.status=='WaitingForDelivery' && this.modifiedOrder.managerConfirm){
+            else if(this.user.role=="Manager" && this.modifiedOrder.status=='WaitingManagerConfirmation'){
                 this.confirmModal=false;
                 for(var i=0;i<this.users.length;i++){
                     if(this.users[i].id==this.modifiedOrder.id){
-                        this.users[i].managerConfirm=false;
                         this.users[i].status="InTransport"
                         break;
                     }
@@ -305,6 +336,17 @@ export default {
                 document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset'; 
             }
+            else if(this.user.role=="Customer" && this.modifiedOrder.status == "InPreparation"){
+                this.confirmModal=false;
+                for(var i=0;i<this.users.length;i++){
+                    if(this.users[i].id==this.modifiedOrder.id){
+                        this.users[i].status="Canceled"
+                        break;
+                    }
+                }
+                document.getElementById('appContainer').style.overflow = 'unset';
+                document.getElementById('appContainer').style.height = 'unset';
+            }       
         }
     }
 }

@@ -15,13 +15,13 @@
 													<label for="nameInput">Filter by:</label>
 													<div class="form-check">
 														<div class="form-group">
-															<label for="type">Restaurant type:</label>
-															<select name="cars" id="type" class="form-control" v-model="filters.restaurantType">
+															<label for="type">Role:</label>
+															<select name="cars" id="type" class="form-control" v-model="filters.userRole">
 																<option value="">Clear</option>
-																<option value="Italian">Italian🍕</option>
-																<option value="Chinese">Chinese🥡</option>
-																<option value="Barbeque">Barbeque🍖</option>
-																<option value="Similarly">Similarly🍗</option>
+																<option value="Customer">Customer</option>
+																<option value="Manager">Manager</option>
+																<option value="Deliverer">Deliverer</option>
+																<option value="Admin">Admin</option>
 															</select>
 														</div>
 													</div>
@@ -30,10 +30,12 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<br />
-													<label for="nameInput">Open restaurants:</label>
-													<select name="cars" id="type" class="form-control open" v-model="filters.openRestaurants">
+													<label for="nameInput">Customer type:</label>
+													<select name="cars" id="type" class="form-control open" v-model="filters.customerType">
 														<option value="">Show all</option>
-														<option value="Open">Open</option>
+														<option value="Bronze">Bronze🥉</option>
+                                                        <option value="Silver">Silver🥈</option>
+                                                         <option value="Gold">Gold🥇</option>
 													</select>
 												</div>
                                                 <input type="submit" class="btnRegister" @click="$emit('applyFilters', filters)" value="Apply" />
@@ -57,8 +59,8 @@ export default {
 	data() {
 		return {
 			filters: {
-				restaurantType: '',
-				openRestaurants: '',
+				userRole: '',
+				customerType: '',
 			},
 		};
 	},

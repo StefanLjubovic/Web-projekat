@@ -16,7 +16,7 @@ public class User{
     private String gender;
     private double dateOfBirth;
     private UserRoles role;
-    private Integer restaurantId;
+    private String restaurantId;
     private String cartId;
     private boolean status=true;
     private Double collectedPoints=0.0;
@@ -122,11 +122,11 @@ public class User{
         this.role = role;
     }
 
-    public Integer getRestaurantId() {
+    public String getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(Integer restaurantId) {
+    public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
     }
 
