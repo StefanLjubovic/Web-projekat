@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 import server from '../../server';
 import store from '../../store/index'
 export default {
@@ -63,6 +64,13 @@ export default {
         decAmount(){
             this.amount--;
         },submitOrder(){
+            Swal.fire({ 
+                title: 'Items are added to your cart',
+                icon: 'success',
+                confirmButtonText: 'Okay',
+                timer: 2000,
+                timerProgressBar: true
+            })
             const newOrderArray = new Array(this.amount).fill(this.item);
             store.commit("addItems", newOrderArray);
             this.hide();

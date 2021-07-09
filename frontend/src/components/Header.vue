@@ -33,7 +33,7 @@ export default {
     UserOptions,
     LoginModal
   },
-  emits:['login-user','show-options','show-cart'],
+  emits:['login-user','show-options','show-cart', 'click'],
     methods:{
         retrunToHomePage(){
             this.$router.push('/')

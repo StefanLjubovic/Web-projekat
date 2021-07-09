@@ -9,6 +9,7 @@ import ListOfAllUsers from '../views/ListOfAllUsers.vue'
 import AdvancedSearch from '../views/AdvancedSearch.vue'
 import CreateArticle from '../views/CreateArticle.vue'
 import ManagerViewOfCustomers from '../views/ManagerViewOfCustomers.vue'
+import CartReview from '../views/CartReview.vue'
 const routes = [
   {
     path: '/',
@@ -19,6 +20,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: CartReview
   },
   {
     path: '/register',

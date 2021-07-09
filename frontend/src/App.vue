@@ -1,9 +1,9 @@
 <template>
-    <div class="app" @click="hideOptions" id="appContainer">
+    <div class="app" @click="hideOptions"  id="appContainer">
         <Header @login-user="loginUser" @show-options="showOptions" @show-cart="showCartDialog" />
-        <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
-        <CartDialog class="cart" v-bind:class="{ clicked: !showCart }"/>
-        <router-view/>
+        <UserOptions  class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
+        <CartDialog  class="cart" v-bind:class="{ clicked: !showCart }"/>
+        <router-view />
     </div>
 </template>
 
@@ -38,16 +38,21 @@ export default {
         showOptions(){
             this.buttonClick=true;
             this.show=!this.show;
+            this.cartClick = false;
+            this.showCart  = false;
         },
         showCartDialog(){
             console.log("Click cart");
-            this.cartClick = true;
-            this.showCart  = true;
+            this.cartClick = !this.cartClick;
+            this.showCart  = !this.showCart;
+            this.buttonClick = false;
+            this.show = false;
         },
         hideOptions(){
             if(!this.buttonClick)
                 this.show    = false;
-            this.showCart    = this.cartClick;
+            if(!this.cartClick)
+                this.showCart = false;
             this.buttonClick = false;
             this.cartClick   = false;
         },
@@ -71,6 +76,11 @@ export default {
                 localStorage.setItem("token", token);
                 this.$store.commit("setUser", user)
             }
+        }
+        const cartString = localStorage.getItem("cart");
+        if(!!cartString){
+            const cart = JSON.parse(cartString);
+            this.$store.commit("setCart", cart)
         }
     }
 };
@@ -105,7 +115,7 @@ export default {
     }
     .cart{
         position: absolute;
-        right: 190px;
+        right: 145px;
         z-index: 12;
         top: 50px;
     }
