@@ -36,10 +36,12 @@
                 placeholder="password"
               />
             </div>
+            <label for="" v-if="!!errorMessage" class="errorMessage">{{errorMessage}}</label>
             <div class="row align-items-center remember">
               <input type="checkbox" />Remember Me
             </div>
             <div class="form-group">
+              
               <input
                 type="submit"
                 value="Login"
@@ -74,7 +76,8 @@ export default {
   data() {
     return {
       username: "pera",
-      password: "111",
+      password: "123",
+      errorMessage: ''
     };
   },
   methods: {
@@ -97,6 +100,9 @@ export default {
           localStorage.setItem("token", token);
           store.commit("setUser", user);
           this.$emit('close')
+        }else{
+          console.log(resp);
+          this.errorMessage = resp.data;
         }
       })
       // this.$emit("login-user", newUser);
@@ -107,13 +113,7 @@ export default {
     ...mapMutations({ setUser: "setUser" })
   },
   mounted(){
-    // const loginUser = {
-    //     username: this.username,
-    //     password: this.password,
-    //   };
-    //   Server.login(loginUser).then(resp => {
-    //     console.log(resp);
-    //   })
+   
   }
 };
 </script>
@@ -137,7 +137,7 @@ body {
 }
 
 .card {
-  height: 370px;
+  min-height: 370px;
   margin-top: 100px;
   margin-bottom: auto;
   width: 400px;
@@ -223,5 +223,10 @@ input:focus {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+.errorMessage{
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
 }
 </style>

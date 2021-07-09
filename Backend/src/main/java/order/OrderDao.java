@@ -2,6 +2,7 @@ package order;
 
 import grade.Grade;
 import grade.GradeSerialization;
+import restaurant.Restaurant;
 import util.ModelDao;
 
 import java.util.List;
@@ -57,4 +58,14 @@ public class OrderDao implements ModelDao<Order> {
         return false;
     }
 
+    public String generateId() {
+        int nextId = 1;
+        for(Order order: orders){
+            int orderId = Integer.parseInt(order.getId());
+            if(orderId > nextId){
+                nextId = orderId + 1;
+            }
+        }
+        return  "" + nextId;
+    }
 }

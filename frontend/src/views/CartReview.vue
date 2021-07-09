@@ -5,7 +5,7 @@
             <CartItemsList />
             <div class="footer">
                 <div class="total-price">Total price: {{totalPrice}} RSD</div>
-                <button class="order-button">Order now</button>
+                <button class="order-button" @click="orderNow">Order now</button>
             </div>
         </div>
 	</div>
@@ -14,6 +14,8 @@
 <script>
 // @ is an alias to /src
 import CartItemsList from '@/components/Cart/CartItemsList.vue'
+import server from '../server';
+import Swal from 'sweetalert2';
 export default {
 	computed: {
 		user() {
@@ -32,6 +34,30 @@ export default {
             return this?.cart?.items?.reduce((a, b) => a + b.price, 0) || "0";
         }
 	},
+
+    methods:{
+        async orderNow(){
+            const data = {
+                ...this.cart,
+                price: this.totalPrice,
+                buyerId: this.user.id
+            }
+            console.log(data);
+            const resp = await server.createOrder(data);
+            if(resp.success){
+                Swal.fire({ 
+                    title: 'Your order is on the way!',
+                    icon: 'success',
+                    confirmButtonText: 'Okay',
+                    timer: 2000,
+                    timerProgressBar: true
+                })
+                localStorage.removeItem("cart");
+                this.$store.commit("clearCart");
+                this.$router.push("/");
+            }
+        }
+    },
     components:{
         CartItemsList
     }

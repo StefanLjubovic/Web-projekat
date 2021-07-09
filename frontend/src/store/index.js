@@ -26,6 +26,9 @@ export default createStore({
     setCart(state, cart){
       state.cart = cart;
     },
+    setRestaurantId(state,restaurantId){
+      state.cart.restaurantId = restaurantId;
+    },
     addItem(state,item){
       state.cart.items = !!state.cart?.items ? state.cart.items : [];
       state.cart.items.push(item);

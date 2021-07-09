@@ -45,7 +45,7 @@ export default {
             amount: 1
         }
     },
-    props:['item'],
+    props:['item', 'restaurant'],
     mounted(){
     },
     methods:{
@@ -73,6 +73,7 @@ export default {
             })
             const newOrderArray = new Array(this.amount).fill(this.item);
             store.commit("addItems", newOrderArray);
+            store.commit("setRestaurantId", this.restaurant.id)
             this.hide();
         }
     },
