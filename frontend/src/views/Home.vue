@@ -97,7 +97,6 @@ export default {
 			if (resp.success) {
 				this.restaurants = resp.data;
 				this.allRestaurants = JSON.parse(JSON.stringify(resp.data));
-				console.log(this.restaurants);
 			}
 		});
 	},

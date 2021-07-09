@@ -1,7 +1,8 @@
 <template>
     <div class="app" @click="hideOptions" id="appContainer">
         <Header @login-user="loginUser" @show-options="showOptions"/>
-        <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
+        <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" @openRegistration="registerUser" v-bind:class="{ clicked: !show }"/>
+        <LoginModal :form-type="formType" v-if="showLoginModal" @close="closeLogin"/>
         <router-view/>
     </div>
 </template>
@@ -11,6 +12,7 @@
 import Header from "@/components/Header.vue";
 import UserOptions from "@/components/UserOptions.vue";
 import { mapMutations, mapGetters } from "vuex";
+import LoginModal from '@/components/Login/LoginModal.vue';
 import Server from './server'
 export default {
 	name: "App",
@@ -18,11 +20,14 @@ export default {
         return{
             show:false,
             buttonClick:false,
+            showLoginModal: false,
+            formType: 'register',
         }
     },
 	components: {
 		Header,
-        UserOptions
+        UserOptions,
+        LoginModal
 	},
     methods:{
         loginUser(){
@@ -46,6 +51,16 @@ export default {
             this.show=false;
             this.$router.push({ path: '/profile' });
         },
+        registerUser(){
+            this.showLoginModal = true;
+			document.getElementById('appContainer').style.overflow = 'hidden';
+			document.getElementById('appContainer').style.height = '100vh';
+		},
+		closeLogin(){
+			this.showLoginModal = false;
+			document.getElementById('appContainer').style.overflow = 'unset';
+			document.getElementById('appContainer').style.height = 'unset';
+		},
         ...mapMutations({ setUser: "setUser" })
     },
     async mounted(){

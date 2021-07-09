@@ -43,8 +43,9 @@
 						<div class="form-group">
 							<label for="manager" v-bind:class="{error: error['manager']}">Manager:</label>
 							<div v-if="managers.length">
-								<select name="manager" id="manager" class="form-control" v-model="manager">
-									<option v-bind:key="manager.firstname" v-for="manager in managers"> {{ manager.firstName }} {{ manager.lastName }} </option>
+								<select name="manager" id="manager" class="form-control" @change="onChange($event)">
+									<option value=""></option>t
+									<option v-bind:key="manager.username" v-for="(manager,index) in managers">{{index+1}}. {{ manager.firstName }} {{ manager.lastName }} </option>
 								</select>
 							</div>
 							<div class="form-row" v-else>
@@ -87,7 +88,7 @@ export default {
 			logo: '',
 			nameError: false,
 			name: '',
-			manager: null,
+			selectedManager: null,
 			type: 'Italian',
 			managers: [],
 			showLoginModal: false,
@@ -144,8 +145,10 @@ export default {
                             longitude: this.longitude,
                             latitude: this.latitude
                         },
+
                         type: this.type,
-                        logo: image
+                        logo: image,
+						managerId: this.selectedManager.id
                     }
                     const resp = await server.createRestaurant(data);
                     if(resp.success){
@@ -184,12 +187,17 @@ export default {
 			document.getElementById('appContainer').style.height = 'unset';
 		},
         changeCoordinates(coordinates){
-            console.log("Received coorinates");
+            console.log(this.selectedManager.username);
             this.longitude = coordinates[0]
             this.latitude = coordinates[1]
         },
         changeAddress(){
             this.error['address'] = this.address == ''
+        },
+		onChange(event) {
+			const myArr= event.target.value.split(".");
+			var index=myArr[0]-1
+			this.selectedManager=this.managers[index]
         }
 
 	},

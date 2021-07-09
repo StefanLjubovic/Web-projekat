@@ -91,6 +91,7 @@ export default {
       Server.login(loginUser).then(resp => {
         if(resp.success){
           const data = resp.data;
+          console.log(data)
           const user = JSON.parse(data['user'])
           const token = data['loginToken']
           localStorage.setItem("token", token);

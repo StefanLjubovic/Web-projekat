@@ -4,10 +4,12 @@ import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import user.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import static server.Server.restaurantDAO;
+import static server.Server.userDao;
 
 public class RestaurantController {
 
@@ -25,22 +27,28 @@ public class RestaurantController {
       String restaurantJson = req.body();
       System.out.println(restaurantJson);
       Restaurant restaurant = gson.fromJson(restaurantJson,Restaurant.class);
+      System.out.println(restaurant.getName());
       restaurant.setStatus(true);
       restaurant.setItems(new ArrayList<>());
       restaurant.setGrade(0.0);
       restaurant.setId(restaurantDAO.generateId());
+      User user=userDao.getOne(restaurant.getManagerId());
+      user.setRestaurantId(restaurant.getId());
+      userDao.update(user);
       return restaurantDAO.SaveRestaurant(restaurant);
     };
 
 
     public static Route getSingleRestaurant = (Request req, Response res) -> {
         res.type("application/json");
+        System.out.println(req.queryParams("id")+"aaaaa");
         Restaurant restaurant = restaurantDAO.getOne(req.queryParams("id"));
 //        restaurant = restaurant.availableItems();
         res.status(200);
         if(restaurant == null){
             res.status(400);
         }
+        System.out.println(gson.toJson(restaurant));
         return gson.toJson(restaurant);
     };
     public static Route saveItem = (Request req, Response res) -> {

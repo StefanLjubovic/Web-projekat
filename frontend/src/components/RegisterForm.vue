@@ -168,10 +168,11 @@ export default {
           					const token = data['loginToken']
           					localStorage.setItem("token", token);
           					store.commit("setUser", user);
-          					this.$emit('close')
+
         				}
       				})
 					}
+					this.$emit('close')
 				}
 			})
 		},
