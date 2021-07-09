@@ -35,7 +35,7 @@ export default {
 		},
         totalPrice(){
             const discount = this?.user?.reward?.discount || 1;
-            return this?.cart?.items?.reduce((a, b) => a + b.price, 0) * discount || "0";
+            return (this?.cart?.items?.reduce((a, b) => a + b.price, 0) * discount).toFixed(2) || "0.00";
         }
 	},
 

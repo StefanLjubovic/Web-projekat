@@ -9,12 +9,12 @@
                     </div>
                     <div class="item-body">
                         <p class="item-name">{{item.name}}</p>
-                        <p for="price" class="price">{{item.price}} RSD x {{item.count}} </p>
+                        <p for="price" class="price">{{item.price.toFixed(2)}} RSD x {{item.count}} </p>
                         <!-- <p for="" class="total-item-price"></p> -->
                     </div>
                 </div>
                 <p class="total-item-price" v-if="!!user?.reward">Discount: {{user?.reward?.discount * 100}}%</p>
-                <p class="total-item-price">Total price: {{totalPrice()}} RSD</p>
+                <p class="total-item-price">Total price: {{totalPrice().toFixed(2)}} RSD</p>
             </div>
             <div class="footer">
                 <button class="checkout" @click="checkout">
