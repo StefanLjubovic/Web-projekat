@@ -23,6 +23,9 @@ server.getAllRestaurants = () => {
         .catch(error => handleError(error));
 };
 server.getImage = (image) => {
+    console.log(image);
+    if(image?.includes(baseUrl))
+        return image;
     return !!image ? `${baseUrl}/${image}` : ''
 };
 

@@ -1,7 +1,7 @@
 <template>
     <div class="container" @click="openRestaurant()">
         <div class="picture" v-if="restaurant.logo != ''" >
-            <img class="rounded-image" :src=restaurant.logo v-bind:alt="restaurant.logo">
+            <img class="rounded-image" :src="getImage(restaurant.logo)" v-bind:alt="restaurant.logo">
         </div>
         <div class="restaurant-info">
             <h3>{{restaurant.name}}</h3>
@@ -67,14 +67,16 @@ export default {
             }
             return retValue;
         },
+        getImage(image) {
+			return server.getImage(image);
+		}
     },
     mounted(){
-        const aa = async () => {
-            const image = await server.getImage(this.$props.restaurant.logo);
-            console.log('Image: ',image);
-            this.restaurant.logo = image
-        };
-        aa();
+        // const aa = async () => {
+        //     const image = await server.getImage(this.$props.restaurant.logo);
+        //     this.restaurant.logo = image
+        // };
+        // aa();
     }
 }
 </script>
