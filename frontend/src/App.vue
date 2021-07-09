@@ -1,9 +1,10 @@
 <template>
-    <div class="app" @click="hideOptions" id="appContainer">
-        <Header @login-user="loginUser" @show-options="showOptions"/>
-        <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" @openRegistration="registerUser" v-bind:class="{ clicked: !show }"/>
+    <div class="app" @click="hideOptions"  id="appContainer">
+        <Header @login-user="loginUser" @show-options="showOptions" @show-cart="showCartDialog" />
+        <UserOptions  class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"  @openRegistration="registerUser"/>
+        <CartDialog  class="cart" v-bind:class="{ clicked: !showCart }"/>
         <LoginModal :form-type="formType" v-if="showLoginModal" @close="closeLogin"/>
-        <router-view/>
+        <router-view />
     </div>
 </template>
 
@@ -11,6 +12,7 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import UserOptions from "@/components/UserOptions.vue";
+import CartDialog from "@/components/Cart/CartDialog.vue"
 import { mapMutations, mapGetters } from "vuex";
 import LoginModal from '@/components/Login/LoginModal.vue';
 import Server from './server'
@@ -22,12 +24,15 @@ export default {
             buttonClick:false,
             showLoginModal: false,
             formType: 'register',
+            showCart:false,
+            cartClick:false,
         }
     },
 	components: {
 		Header,
         UserOptions,
-        LoginModal
+        LoginModal,
+        CartDialog
 	},
     methods:{
         loginUser(){
@@ -38,11 +43,23 @@ export default {
         showOptions(){
             this.buttonClick=true;
             this.show=!this.show;
+            this.cartClick = false;
+            this.showCart  = false;
+        },
+        showCartDialog(){
+            console.log("Click cart");
+            this.cartClick = !this.cartClick;
+            this.showCart  = !this.showCart;
+            this.buttonClick = false;
+            this.show = false;
         },
         hideOptions(){
             if(!this.buttonClick)
-                this.show=false;
-            this.buttonClick=false;
+                this.show    = false;
+            if(!this.cartClick)
+                this.showCart = false;
+            this.buttonClick = false;
+            this.cartClick   = false;
         },
         hideDialog(){
             this.show=false;
@@ -75,6 +92,11 @@ export default {
                 this.$store.commit("setUser", user)
             }
         }
+        const cartString = localStorage.getItem("cart");
+        if(!!cartString){
+            const cart = JSON.parse(cartString);
+            this.$store.commit("setCart", cart)
+        }
     }
 };
 </script>
@@ -105,6 +127,12 @@ export default {
         right: 20px;
         z-index: 12;
         top: 60px;
+    }
+    .cart{
+        position: absolute;
+        right: 145px;
+        z-index: 12;
+        top: 50px;
     }
     .clicked{
         display: none;

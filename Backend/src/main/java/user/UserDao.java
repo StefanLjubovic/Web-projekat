@@ -117,7 +117,7 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
         Date result = cal.getTime();
         List<Order> orders=orderDao.getAll();
         long count=orders.stream()
-                .filter(o-> o.getBuyerId().equals(user.getUsername()) && compare(o.getDate(),result) && !o.isDelivered())
+                .filter(o-> o.getBuyerId().equals(user.getUsername()) && compare(o.getDate(),result) )
                 .count();
         if(count>=5)
             return true;

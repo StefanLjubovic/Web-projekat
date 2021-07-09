@@ -45,7 +45,7 @@
 			</p>
 		</div>
 	</div>
-	<RestaurantItemModal v-if="showModal" v-bind:item="selectedItem" @closeModal="closeModal" />
+	<RestaurantItemModal v-if="showModal" v-bind:item="selectedItem" @closeModal="closeModal" :restaurant="restaurant" />
 	<EditItemModal v-if="showEditModal" v-bind:selectedItem="selectedItem" :restaurant="restaurant" @closeModal="closeEditModal" @closeSuccess="closeSuccess" />
 </template>
 <script>
@@ -83,6 +83,7 @@ export default {
 		},
 	},
 	components: { RestaurantItemModal, EditItemModal },
+	emits:['refreshRestaurant'],
 	methods: {
 		getImage(review) {
 			return server.getImage(review.image);
@@ -147,7 +148,7 @@ export default {
 	position: relative;
 	width: 100%;
 	/* justify-content: center; */
-	min-height: calc(100% - 320px);
+	min-height: calc(100% - 350px);
 }
 .item-wrapper{
 	width: 800px;
