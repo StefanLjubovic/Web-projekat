@@ -10,8 +10,8 @@
 		v-on:input="searchHandler"
 		aria-describedby="search-addon"
 		/>
-		<button type="button" class="btn" v-if="advanced" @click="$emit('restaurantSearch')">Advanced search</button>
-		<button type="button" class="btn" v-if="advancedOrders" @click="$emit('orders-search')">Advanced search</button>
+		<button type="button" class="btn" v-if="advanced" @click="$emit('restaurantSearch')"><i class="fas fa-filter"></i> Filter</button>
+		<button type="button" class="btn" v-if="advancedOrders" @click="$emit('orders-search')"><i class="fas fa-filter"></i> Filter</button>
   </div>
 </template>
 
@@ -57,7 +57,7 @@ export default {
 		flex-direction: row;
 		background-color: #767aaa;
 		border-radius: 100px;
-		padding: 0px 11px;
+		padding-left: 11px;
 		height: 39px;
 		align-items: center;
 		box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
@@ -72,12 +72,15 @@ export default {
 		outline: unset
 	}
 	.btn{
-        width: 150px;
+        /* width: 150px; */
         background-color: #FDDF6D;
         color: #42405F;
         font-weight: 500;
         border: unset;
 		border-radius: 100px;
+		height: 100%;
+		padding: 0 30px;
+		color: #5E639B;
     }
 
 </style>
