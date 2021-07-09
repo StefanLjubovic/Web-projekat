@@ -1,7 +1,8 @@
 <template>
     <div class="app" @click="hideOptions" id="appContainer">
-        <Header @login-user="loginUser" @show-options="showOptions"/>
+        <Header @login-user="loginUser" @show-options="showOptions" @show-cart="showCartDialog" />
         <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
+        <CartDialog class="cart" v-bind:class="{ clicked: !showCart }"/>
         <router-view/>
     </div>
 </template>
@@ -10,6 +11,7 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import UserOptions from "@/components/UserOptions.vue";
+import CartDialog from "@/components/Cart/CartDialog.vue"
 import { mapMutations, mapGetters } from "vuex";
 import Server from './server'
 export default {
@@ -18,11 +20,14 @@ export default {
         return{
             show:false,
             buttonClick:false,
+            showCart:false,
+            cartClick:false,
         }
     },
 	components: {
 		Header,
-        UserOptions
+        UserOptions,
+        CartDialog
 	},
     methods:{
         loginUser(){
@@ -34,10 +39,17 @@ export default {
             this.buttonClick=true;
             this.show=!this.show;
         },
+        showCartDialog(){
+            console.log("Click cart");
+            this.cartClick = true;
+            this.showCart  = true;
+        },
         hideOptions(){
             if(!this.buttonClick)
-                this.show=false;
-            this.buttonClick=false;
+                this.show    = false;
+            this.showCart    = this.cartClick;
+            this.buttonClick = false;
+            this.cartClick   = false;
         },
         hideDialog(){
             this.show=false;
@@ -90,6 +102,12 @@ export default {
         right: 20px;
         z-index: 12;
         top: 60px;
+    }
+    .cart{
+        position: absolute;
+        right: 190px;
+        z-index: 12;
+        top: 50px;
     }
     .clicked{
         display: none;

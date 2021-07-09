@@ -24,7 +24,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <button class="submit-order">
+                    <button class="submit-order" @click="submitOrder">
                         Add to cart
                     </button>
                 </div>
@@ -37,25 +37,23 @@
 
 <script>
 import server from '../../server';
+import store from '../../store/index'
 export default {
     data(){
         return{
             amount: 1
         }
     },
-    methods: {
+    props:['item'],
+    mounted(){
+    },
+    methods:{
         show () {
             this.$modal.show('my-first-modal');
         },
         hide () {
-            this.$modal.hide('my-first-modal');
-        }
-    },
-    props:['item'],
-    mounted(){
-        console.log(this.item);
-    },
-    methods:{
+            this.$emit('closeModal')
+        },
         getImage() {
 			return server.getImage(this.item.image);
 		},
@@ -64,8 +62,12 @@ export default {
         },
         decAmount(){
             this.amount--;
+        },submitOrder(){
+            const newOrderArray = new Array(this.amount).fill(this.item);
+            store.commit("addItems", newOrderArray);
+            this.hide();
         }
-    }
+    },
     
 }
 </script>
@@ -182,5 +184,6 @@ export default {
 	font-weight: 600;
     border-radius: 100px;
     padding: 10px 0;
+    cursor: pointer;
 }
 </style>
