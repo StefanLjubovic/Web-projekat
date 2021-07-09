@@ -4,7 +4,10 @@
         <div class="cart-card">
             <CartItemsList />
             <div class="footer">
-                <div class="total-price">Total price: {{totalPrice}} RSD</div>
+                <div class="total-price">
+                   <p class="discount" v-if="!!user.reward">Discount: {{user?.reward?.discount * 100}}%</p>
+                   <p>Total price: {{totalPrice}} RSD</p>
+                    </div>
                 <button class="order-button" @click="orderNow">Order now</button>
             </div>
         </div>
@@ -31,7 +34,8 @@ export default {
 			return this.cart?.items?.length || '0';
 		},
         totalPrice(){
-            return this?.cart?.items?.reduce((a, b) => a + b.price, 0) || "0";
+            const discount = this?.user?.reward?.discount || 1;
+            return (this?.cart?.items?.reduce((a, b) => a + b.price, 0) * discount).toFixed(2) || "0.00";
         }
 	},
 
@@ -113,5 +117,11 @@ export default {
 	font-weight: 600;
     padding-right: 20px;
     text-align: right;
+}
+.total-price p{
+    margin-bottom: unset;
+}
+.discount{
+    opacity: 0.7;
 }
 </style>

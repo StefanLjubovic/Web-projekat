@@ -24,6 +24,9 @@ public class OrderController {
         order.setStatus(OrderStatus.InPreparation);
         order.setId(orderDao.generateId());
         order.setDate(new Date());
+        User user = userDao.getOne(order.getBuyerId());
+        user.addScore(order.getPrice());
+        userDao.update(user);
         res.status(200);
         orderDao.create(order);
         return gson.toJson(order);

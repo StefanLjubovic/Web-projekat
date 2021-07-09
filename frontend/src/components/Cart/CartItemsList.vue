@@ -17,7 +17,7 @@
 					<div class="price-section">
 						<p class="price-title">Price</p>
 						<p class="price-info">
-							Item price: <span class="price-label"> {{ item.price }} RSD</span>
+							Item price: <span class="price-label"> {{ item.price.toFixed(2) }} RSD</span>
 						</p>
 						<p class="price-info">
 							Amount:
@@ -29,7 +29,7 @@
 						</p>
 					</div>
                     <p class="total-item-price">
-                        Total price: <span class="price-label">{{ item.price * item.count }}</span>
+                        Total price: <span class="price-label">{{ (item.price * item.count).toFixed(2) }} RSD</span>
                     </p>
 				</div>
 				<div class="delete-section" @click="deleteItem(item)">
