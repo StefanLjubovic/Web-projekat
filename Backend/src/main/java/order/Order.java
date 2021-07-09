@@ -12,21 +12,13 @@ public class Order {
     Date date;
     Double price;
     OrderStatus status;
-    Integer buyerId;
-    boolean delivered;
+    String buyerId;
+
 
     public String getId() {
         return id;
     }
-
-    public boolean isDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(boolean delivered) {
-        this.delivered = delivered;
-    }
-
+    
     public void setId(String id) {
         this.id = id;
     }
@@ -71,11 +63,11 @@ public class Order {
         this.status = status;
     }
 
-    public Integer getBuyerId() {
+    public String getBuyerId() {
         return buyerId;
     }
 
-    public void setBuyerId(Integer buyerId) {
+    public void setBuyerId(String buyerId) {
         this.buyerId = buyerId;
     }
 }

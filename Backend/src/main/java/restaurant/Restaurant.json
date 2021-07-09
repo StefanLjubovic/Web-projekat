@@ -49,7 +49,7 @@
         "size": 300.0,
         "description": "Ovo je neka pljeskavica",
         "image": "9377947844382210943000000000003.webp",
-        "deleted": false
+        "deleted": true
       }
     ],
     "grade": 0.0

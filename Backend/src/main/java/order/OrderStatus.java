@@ -1,10 +1,9 @@
 package order;
 
 public enum OrderStatus {
-    Processing,
     InPreparation,
     WaitingForDelivery,
-    WaitingManagerConfirmation,
+    Processing,
     InTransport,
     Delivered,
     Canceled

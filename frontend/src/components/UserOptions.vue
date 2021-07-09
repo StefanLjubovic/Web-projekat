@@ -91,6 +91,7 @@ export default {
 			localStorage.clear();
 			this.$store.commit('setUser', {});
 			this.$emit('hideDialog');
+			this.$router.push("/")
 		},
 		registerUser(){
 			console.log()
