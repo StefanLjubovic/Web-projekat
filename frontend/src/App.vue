@@ -1,8 +1,9 @@
 <template>
-    <div class="app" @click="hideOptions" id="appContainer">
-        <Header @login-user="loginUser" @show-options="showOptions"/>
-        <UserOptions class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
-        <router-view/>
+    <div class="app" @click="hideOptions"  id="appContainer">
+        <Header @login-user="loginUser" @show-options="showOptions" @show-cart="showCartDialog" />
+        <UserOptions  class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
+        <CartDialog  class="cart" v-bind:class="{ clicked: !showCart }"/>
+        <router-view />
     </div>
 </template>
 
@@ -10,6 +11,7 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import UserOptions from "@/components/UserOptions.vue";
+import CartDialog from "@/components/Cart/CartDialog.vue"
 import { mapMutations, mapGetters } from "vuex";
 import Server from './server'
 export default {
@@ -18,11 +20,14 @@ export default {
         return{
             show:false,
             buttonClick:false,
+            showCart:false,
+            cartClick:false,
         }
     },
 	components: {
 		Header,
-        UserOptions
+        UserOptions,
+        CartDialog
 	},
     methods:{
         loginUser(){
@@ -33,11 +38,23 @@ export default {
         showOptions(){
             this.buttonClick=true;
             this.show=!this.show;
+            this.cartClick = false;
+            this.showCart  = false;
+        },
+        showCartDialog(){
+            console.log("Click cart");
+            this.cartClick = !this.cartClick;
+            this.showCart  = !this.showCart;
+            this.buttonClick = false;
+            this.show = false;
         },
         hideOptions(){
             if(!this.buttonClick)
-                this.show=false;
-            this.buttonClick=false;
+                this.show    = false;
+            if(!this.cartClick)
+                this.showCart = false;
+            this.buttonClick = false;
+            this.cartClick   = false;
         },
         hideDialog(){
             this.show=false;
@@ -59,6 +76,11 @@ export default {
                 localStorage.setItem("token", token);
                 this.$store.commit("setUser", user)
             }
+        }
+        const cartString = localStorage.getItem("cart");
+        if(!!cartString){
+            const cart = JSON.parse(cartString);
+            this.$store.commit("setCart", cart)
         }
     }
 };
@@ -90,6 +112,12 @@ export default {
         right: 20px;
         z-index: 12;
         top: 60px;
+    }
+    .cart{
+        position: absolute;
+        right: 145px;
+        z-index: 12;
+        top: 50px;
     }
     .clicked{
         display: none;

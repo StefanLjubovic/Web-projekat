@@ -8,7 +8,7 @@
           <p for="">Start a day with us</p>
         </div>
       </div>
-      <div class="logIn"><LoginButton @show-options="$emit('show-options')" @login-user="openLogin"/></div>
+      <div class="logIn"><LoginButton @show-options="$emit('show-options')" @login-user="openLogin" @show-cart="$emit('show-cart')"/></div>
     </div>
   </header>
   <LoginModal :form-type="formType" v-if="showLoginModal" @close="closeLogin"/>
@@ -33,7 +33,7 @@ export default {
     UserOptions,
     LoginModal
   },
-  emits:['login-user','show-options'],
+  emits:['login-user','show-options','show-cart', 'click'],
     methods:{
         retrunToHomePage(){
             this.$router.push('/')

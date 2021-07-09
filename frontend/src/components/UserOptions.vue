@@ -13,23 +13,35 @@
 			</button>
 		</div>
 		<div class="btn-div margin">
-           <button type="button" class="btn btn-light btn"  @click="createRestaurant"><span class="btn-components">Register restaurant<i class="fas fa-plus icon"></i></span></button>
-           </div>
-            <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn" @click="managersRestaurant"><span class="btn-components">My restaurant<i class="fas fa-utensils icon"></i></span></button>
-           </div>
-           <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn" @click="allUsers"><span class="btn-components">All users<i class="fas fa-users icon"></i></span></button>
-           </div>
-            <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn" @click="createArticle"><span class="btn-components">Add article<i class="fas fa-plus icon"></i></span></button>
-           </div>
-           <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn" @click="viewCustomers"><span class="btn-components">View customers<i class="fas fa-user-friends icon"></i></span></button>
-           </div>
-       <div class="btn-div margin">
-           <button type="button" class="btn btn-light btn" @click="signout"><span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span></button>
-           </div>
+			<button type="button" class="btn btn-light btn" @click="createRestaurant">
+				<span class="btn-components">Register restaurant<i class="fas fa-plus icon"></i></span>
+			</button>
+		</div>
+		<div class="btn-div margin">
+			<button type="button" class="btn btn-light btn" @click="managersRestaurant">
+				<span class="btn-components">My restaurant<i class="fas fa-utensils icon"></i></span>
+			</button>
+		</div>
+		<div class="btn-div margin">
+			<button type="button" class="btn btn-light btn" @click="allUsers">
+				<span class="btn-components">All users<i class="fas fa-users icon"></i></span>
+			</button>
+		</div>
+		<div class="btn-div margin">
+			<button type="button" class="btn btn-light btn" @click="createArticle">
+				<span class="btn-components">Add article<i class="fas fa-plus icon"></i></span>
+			</button>
+		</div>
+		<div class="btn-div margin">
+			<button type="button" class="btn btn-light btn" @click="viewCustomers">
+				<span class="btn-components">View customers<i class="fas fa-user-friends icon"></i></span>
+			</button>
+		</div>
+		<div class="btn-div margin">
+			<button type="button" class="btn btn-light btn" @click="signout">
+				<span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span>
+			</button>
+		</div>
 	</div>
 </template>
 <script>
@@ -63,16 +75,16 @@ export default {
 			this.$emit('hideDialog');
 			this.$router.push({ path: '/restaurant' });
 		},
-		createArticle(){
-             this.$emit('create-restaurant');
-             this.$router.push({ path: '/create-article' });
-        },
-        viewCustomers(){
-            this.$emit('create-restaurant');
-             this.$router.push({ path: '/view-customers' });
-        },
+		createArticle() {
+			this.$emit('create-restaurant');
+			this.$router.push({ path: '/create-article' });
+		},
+		viewCustomers() {
+			this.$emit('create-restaurant');
+			this.$router.push({ path: '/view-customers' });
+		},
 		signout() {
-			localStorage.clear()
+			localStorage.clear();
 			this.$store.commit('setUser', {});
 			this.$emit('hideDialog');
 		},
@@ -130,17 +142,17 @@ export default {
 .margin {
 	margin-bottom: 10px;
 }
-.profile-container{
-    display: flex;
-    align-items: center;
-    padding-left: 0;
+.profile-container {
+	display: flex;
+	align-items: center;
+	padding-left: 0;
 }
-.profile-conatiner-image{
-    width: 80px;
-    display: flex;
-    justify-content: center;
+.profile-conatiner-image {
+	width: 80px;
+	display: flex;
+	justify-content: center;
 }
-.btn-light{
-    background-color: #fddf6d;
+.btn-light {
+	background-color: #fddf6d;
 }
 </style>
