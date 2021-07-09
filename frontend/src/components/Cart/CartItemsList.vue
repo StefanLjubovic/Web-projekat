@@ -29,7 +29,7 @@
 						</p>
 					</div>
                     <p class="total-item-price">
-                        Total price: <span class="price-label">{{ item.price * item.count }}</span>
+                        Total price: <span class="price-label">{{ item.price * item.count }} RSD</span>
                     </p>
 				</div>
 				<div class="delete-section" @click="deleteItem(item)">

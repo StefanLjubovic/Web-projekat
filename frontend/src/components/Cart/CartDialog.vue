@@ -13,6 +13,7 @@
                         <!-- <p for="" class="total-item-price"></p> -->
                     </div>
                 </div>
+                <p class="total-item-price" v-if="!!user?.reward">Discount: {{user?.reward?.discount * 100}}%</p>
                 <p class="total-item-price">Total price: {{totalPrice()}} RSD</p>
             </div>
             <div class="footer">
@@ -42,6 +43,9 @@ export default {
 		cart() {
 			return this.$store.getters.getCart;
 		},
+        user(){
+            return this.$store.getters.getUser;
+        }
 	},
 	methods: {
         isEmpty(){
@@ -64,7 +68,8 @@ export default {
             this.$router.push({name: 'Checkout'});
         },
         totalPrice(){
-            return this.cart.items.reduce((a, b) => a + b.price, 0);
+            const discount = this?.user?.reward?.discount || 1;
+            return this.cart.items.reduce((a, b) => a + b.price, 0) * discount;
         }
 	},
 	created() {
