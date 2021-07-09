@@ -17,7 +17,14 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
     private List<User> users;
     private String filePath="src/main/java/user/User.json";
     private UserSerialization userSerialization=new UserSerialization();
+    public static List<Reward> rewards = new ArrayList<>();
     public UserDao(){
+        Reward silver = new Reward("Silver", 0.03, 3000);
+        Reward gold = new Reward("Gold", 0.04, 4000);
+        Reward platinum = new Reward("Platinum", 0.1, 10000);
+        rewards.add(silver);
+        rewards.add(gold);
+        rewards.add(platinum);
         users = userSerialization.load(filePath);
     }
 

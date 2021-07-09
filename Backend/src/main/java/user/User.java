@@ -6,6 +6,8 @@ import order.Order;
 import java.util.Date;
 import java.util.List;
 
+import static server.Server.userDao;
+
 
 public class User{
     private String id;
@@ -18,6 +20,7 @@ public class User{
     private UserRoles role;
     private String restaurantId;
     private String cartId;
+    private Reward reward;
     private boolean status=true;
     private Double collectedPoints=0.0;
 
@@ -144,5 +147,22 @@ public class User{
 
     public void setType(BuyerType type) {
         this.type = type;
+    }
+
+    public void addScore(Double price) {
+        this.collectedPoints += price / 1000 * 133;
+        this.setReward();
+    }
+
+    public void removeScore(Double price){
+        this.collectedPoints -= price / 1000 * 133 * 4;
+        this.setReward();
+    }
+
+    private void setReward() {
+        for(Reward reward: userDao.rewards){
+            if(this.collectedPoints > reward.requiredScore)
+                this.reward = reward;
+        }
     }
 }
