@@ -6,21 +6,16 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import static server.Server.userDao;
 import static spark.Spark.halt;
 
-import java.util.UUID;
 public class UserController  {
 
 
     public static Gson gson=new Gson();
     private static Map<String, String> loginTrack = new HashMap<>();
-
     public static Route getAvailableManagers = (Request req, Response res)-> {
         res.type("application/json");
         List<User> users=userDao.getAvailableManagers();
