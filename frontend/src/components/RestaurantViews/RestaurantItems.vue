@@ -83,6 +83,7 @@ export default {
 		},
 	},
 	components: { RestaurantItemModal, EditItemModal },
+	emits:['refreshRestaurant'],
 	methods: {
 		getImage(review) {
 			return server.getImage(review.image);
