@@ -11,8 +11,6 @@ import static server.Server.restaurantDAO;
 
 public class RestaurantController {
 
-
-
     private static Gson gson=new Gson();
 
     public static Route getAllRestaurants = (Request req,Response res) -> {
