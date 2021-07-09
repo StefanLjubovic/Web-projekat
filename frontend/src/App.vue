@@ -1,7 +1,7 @@
 <template>
     <div class="app" @click="hideOptions"  id="appContainer">
         <Header @login-user="loginUser" @show-options="showOptions" @show-cart="showCartDialog" />
-        <UserOptions  class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"/>
+        <UserOptions  class="options" @hideDialog="hideDialog"  @edit-profile="editProfile" v-bind:class="{ clicked: !show }"  @openRegistration="registerUser"/>
         <CartDialog  class="cart" v-bind:class="{ clicked: !showCart }"/>
         <LoginModal :form-type="formType" v-if="showLoginModal" @close="closeLogin"/>
         <router-view />

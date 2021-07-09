@@ -32,6 +32,9 @@
 				<span class="btn-components">View orders<i class="fas fa-truck icon"></i></span>
 			</button>
 		</div>
+		 <div class="btn-div margin" v-if="user.role=='Admin'">
+           <button type="button" class="btn btn-light btn" @click="registerUser"><span class="btn-components">Register user<i class="fas fa-user-friends icon"></i></span></button>
+           </div>
 		<div class="btn-div margin">
 			<button type="button" class="btn btn-light btn" @click="signout">
 				<span class="btn-components">Sign out<i class="fas fa-sign-out-alt icon"></i></span>

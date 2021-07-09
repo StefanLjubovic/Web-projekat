@@ -108,7 +108,6 @@ export default {
         this.confirmModal=false;
             document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset';
-          this.selectedReview.approved=true;
       },
       saveConfirm(){
           this.confirmModal=false;
