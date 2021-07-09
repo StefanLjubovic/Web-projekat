@@ -1,11 +1,16 @@
 package order;
 
+import dto.OrderDTO;
 import grade.Grade;
 import grade.GradeSerialization;
 import restaurant.Restaurant;
 import util.ModelDao;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static server.Server.restaurantDAO;
+import static server.Server.userDao;
 
 public class OrderDao implements ModelDao<Order> {
     private List<Order> orders;
@@ -67,5 +72,28 @@ public class OrderDao implements ModelDao<Order> {
             }
         }
         return  "" + nextId;
+    }
+
+    public List<OrderDTO> fillDTO() {
+        List<OrderDTO> orderDTOS=new ArrayList<OrderDTO>();
+        OrderDTO orderDTO=new OrderDTO();
+        for(Order order: orders){
+            orderDTO.order=order;
+            orderDTO.user=userDao.getOne(order.getBuyerId());
+            orderDTO.restaurant=restaurantDAO.getOne(order.getRestaurantId());
+            orderDTO.deliverer= userDao.getOne(order.getDelivererId());
+            orderDTOS.add(orderDTO);
+        }
+        return orderDTOS;
+    }
+
+    public void UpdateOrder(Order order) {
+        for(int i = 0; i < orders.size(); i++){
+            if(orders.get(i).getId().equals(order.getId())){
+                orders.set(i, order);
+                orderSerialization.save(filePath,orders);
+                return;
+            }
+        }
     }
 }

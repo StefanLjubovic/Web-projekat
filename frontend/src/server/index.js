@@ -21,6 +21,36 @@ server.getAllRestaurants = () => {
 		.then((response) => handleSuccess(response))
 		.catch((error) => handleError(error));
 };
+
+server.getAllOrders = () => {
+	const token = localStorage.getItem('token');
+	const options = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json;charset=UTF-8',
+			Accept: 'application/json',
+		},
+		url: `${baseUrl}/getOrders`,
+	};
+	return axios(options)
+		.then((response) => handleSuccess(response))
+		.catch((error) => handleError(error));
+};
+server.getRestaurantReviews = (id) => {
+	const token = localStorage.getItem('token');
+	const options = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json;charset=UTF-8',
+			Accept: 'application/json',
+		},
+		url: `${baseUrl}/restaurant/reviews?id=${id}`,
+	};
+	return axios(options)
+		.then((response) => handleSuccess(response))
+		.catch((error) => handleError(error));
+};
+
 server.getImage = (image) => {
 	if (image?.includes(baseUrl)) return image;
 	return !!image ? `${baseUrl}/${image}` : '';
@@ -127,6 +157,36 @@ server.updateUser = (data) => {
 		.catch((error) => handleError(error));
 };
 
+server.updateReview = (data) => {
+	const options = {
+		method: 'put',
+		headers: {
+			'Content-Type': 'application/json;charset=UTF-8',
+			Accept: 'application/json',
+		},
+		url: `${baseUrl}/restaurant/reviewsUpdate`,
+		data: data,
+	};
+	return axios(options)
+		.then((response) => handleSuccess(response))
+		.catch((error) => handleError(error));
+};
+
+server.updateOrderStatus = (data) => {
+	const options = {
+		method: 'put',
+		headers: {
+			'Content-Type': 'application/json;charset=UTF-8',
+			Accept: 'application/json',
+		},
+		url: `${baseUrl}/orders/update`,
+		data: data,
+	};
+	return axios(options)
+		.then((response) => handleSuccess(response))
+		.catch((error) => handleError(error));
+};
+
 server.updatePassword = (data) => {
 	const options = {
 		method: 'put',
@@ -201,6 +261,21 @@ server.createRestaurant = (data) => {
 			Authorization: token,
 		},
 		url: `${baseUrl}/createRestaurant`,
+		data: data,
+	};
+	return axios(options)
+		.then((response) => handleSuccess(response))
+		.catch((error) => handleError(error));
+};
+server.createReview = (data) => {
+	const token = localStorage.getItem('token');
+	const options = {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json;charset=UTF-8',
+			Authorization: token,
+		},
+		url: `${baseUrl}/orders/saveReview`,
 		data: data,
 	};
 	return axios(options)

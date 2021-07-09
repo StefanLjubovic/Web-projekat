@@ -1,19 +1,19 @@
 <template>
-    <div class="container" @click="$emit('openDialog',user)">
+    <div class="container" @click="$emit('openDialog',order)">
         <div class="picture">
             <i class="far fa-user fa-5x" rounded-image></i>
         </div>
         <div class="restaurant-info">
-            <h3>Customer: {{user.name}} {{user.surname}}</h3>
-            <h5>Deliverer🚚: {{user.name}} {{user.surname}}</h5>
+            <h3>Customer: {{order.user.firstName}} {{order.user.lastName}}</h3>
+            <div v-if="order.deliverer !=null"><h5>Deliverer🚚:{{order.deliverer.firstName}} {{order.deliverer.lastName}}</h5></div> 
             <label for="desctiption">Ordered food:&nbsp;</label>
-            <label for="desctiption" v-for="article in articles" :key="article">{{article.item}} x{{article.count}}&nbsp;</label><br>
+            <label for="desctiption" v-for="article in articles" :key="article">{{article.name}} x{{article.count}}&nbsp;</label><br>
         </div>
         <div class="restaurant-details">
             <div class="restaurant-location">
-                <p>Order status📍:  {{user.status}}</p>
-                <p>Price💸: {{price}}</p>
-                <p>Date of order📆: <b>{{user.date}}</b></p>
+                <p>Order status📍:{{order.order.status}} </p>
+                <p>Price💸:{{order.order.price}}</p>
+                <p>Date of order📆:{{order.order.date}} <b></b></p>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
 export default {
     name: 'CustomerOrder',
      props:{
-        user: Object,
+        order: Object,
         filters: Array
     },
     data(){
@@ -34,26 +34,13 @@ export default {
     },
     emits:['openDialog'],
     methods:{
-        group(){
-            let ordersDict={}
-            for(const item of this.user.items){
-                if(!ordersDict[item.item])
-                    ordersDict[item.item]={count: 0,...item};
-                ordersDict[item.item].count++
-            }
-            console.log(Object.values(ordersDict))
-            return Object.values(ordersDict)
-        }   
     },
     created(){
-        for(var i=0;i<this.user.items.length;i++){
-            this.price+=parseInt(this.user.items[i].price);
-        }
         let ordersDict={}
-            for(const item of this.user.items){
-                if(!ordersDict[item.item])
-                    ordersDict[item.item]={count: 0,...item};
-                ordersDict[item.item].count++
+            for(const item of this.order.order.items){
+                if(!ordersDict[item.name])
+                    ordersDict[item.name]={count: 0,...item};
+                ordersDict[item.name].count++
             }
             this.articles=Object.values(ordersDict)
             return Object.values(ordersDict)

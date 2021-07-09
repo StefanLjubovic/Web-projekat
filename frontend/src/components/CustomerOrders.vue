@@ -1,7 +1,7 @@
 <template>
     <div class="restaurant-list">
-        <div  :key="user" v-for="user in users">
-            <CustomerOrder @openDialog="$emit('openDialog',user)" @applyFilters="apply" :filters="filters" :user="user"/>
+        <div  :key="order" v-for="order in orders">
+            <CustomerOrder @openDialog="$emit('openDialog',order)" @applyFilters="apply" :filters="filters" :order="order"/>
         </div>
     </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     created(){
     },
     props:{
-        users: Array,
+        orders: Array,
         filters: Array
     },
     name: 'CustomerOrders',

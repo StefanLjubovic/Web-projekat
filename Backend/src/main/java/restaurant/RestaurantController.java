@@ -39,7 +39,6 @@ public class RestaurantController {
 
     public static Route getSingleRestaurant = (Request req, Response res) -> {
         res.type("application/json");
-        System.out.println(req.queryParams("id")+"aaaaa");
         Restaurant restaurant = restaurantDAO.getOne(req.queryParams("id"));
 //        restaurant = restaurant.availableItems();
         res.status(200);

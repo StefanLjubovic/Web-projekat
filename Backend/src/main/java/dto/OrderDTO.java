@@ -5,8 +5,8 @@ import restaurant.Restaurant;
 import user.User;
 
 public class OrderDTO {
-    private Order order;
-    private Restaurant restaurant;
-    private User user;
-    private User deliverer;
+    public Order order;
+    public Restaurant restaurant;
+    public User user;
+    public User deliverer;
 }

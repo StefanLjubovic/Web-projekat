@@ -6,15 +6,15 @@
         <div  :key="review.username" v-for="review in reviews">
             <div class="review" v-if="checkReviewVisibility(review)" v-bind:class="{ selected: !checkUser(review) }" @click="approveReview(review)"> 
                 <div class="review-message">
-                    {{review.text}}
+                    {{review.grade.comment}}
                 </div>
                 <div class="review-details">
                     <label class="food-type">{{review.food}}</label>
-                    <label class="date">{{format_date(review.date)}}</label>
+                    <label class="date">{{format_date(review.grade.date)}}</label>
                 </div>
                 <div class="review-user">
                     <img class="user-image" :src="getImage(review)" alt="">
-                    <label class="username" for="username">{{review.username}}</label>
+                    <label class="username" for="username">{{review.user.username}}</label>
                     <div class="restaurant-status username approved">
                         {{getApproved(review)}}
                     </div>
@@ -27,12 +27,16 @@
 <script>
 import ConfirmModal from "@/components/ConfirmModal.vue";
 import moment from 'moment'
+import Server from '@/server';
 export default {
     	computed: {
 		user() {
 			return this.$store.getters.getUser;
 		},
 	},
+    props:{
+        restaurant:Object
+    },
     components:{
         ConfirmModal
     },
@@ -79,22 +83,24 @@ export default {
     methods:{
         getImage(review){
             console.log(review.image);
-            return review.image
+            return 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png';
         },format_date(value){
          if (value) {
            return moment(value).format('DD.MM.YYYY.')
           }
       },
       getApproved(review){
-          return review.approved ? `Approved 👍🏼` : "Approved 👎🏼"
+          console.log(review)
+          console.log('aaaaaaaaaaaaaaa')
+          return review.grade.approved ? `Approved 👍🏼` : "Waiting approval 👎🏼"
       },
       checkReviewVisibility(review){
-          if(this.user.role=='Customer' && !review.approved)
+          if(this.user.role=='Customer' && !review.grade.approved)
                 return false
           return true;
       },
       checkUser(review){
-          if(this.user.role=='Manager' && !review.approved)
+          if(this.user.role=='Manager' && !review.grade.approved)
               return true;
           return false;
       },
@@ -113,8 +119,24 @@ export default {
           this.confirmModal=false;
             document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset';
-        this.selectedReview.approved=true;
-      }
+        this.selectedReview.grade.approved=true;
+        Server.updateReview(this.selectedReview).then(resp=>{
+			    if(resp.success){
+				    this.selectedReview=resp.data;
+			    }
+          });
+      },
+
+    },
+    created(){
+        const id = this.$route.params.id;
+        console.log(id);
+        Server.getRestaurantReviews(id).then((resp)=>{
+            if(resp.success){
+                console.log(resp.data)
+                this.reviews=resp.data;
+            }
+        });
     }
 }
 </script>

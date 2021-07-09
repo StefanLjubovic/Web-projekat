@@ -5,7 +5,7 @@
         <SearchBar class="search" :advanced-orders="advancedOrders" @orders-search="openModal" @search="search" />
         <SortOrder @sortName="sortByName" @sortPrice="sortByPrice" @sortDate="sortByDate" class="sorters"/>
         <OrdersSearch v-if="showModal" @close-modal="closeModal" class="advanced" @applyFilters="applyFilters"/>
-    	<CustomerOrders :users="users" :filters="filters" class="orders" @openDialog="openDialog"/>
+    	<CustomerOrders :orders="orders" :filters="filters" class="orders" @openDialog="openDialog"/>
         <CommentModal @close-modal="closeComment" v-if="showReview" @saveReview="saveReview"/>
         <ConfirmModal v-if="confirmModal" :title="title" :description="description" @saveConfirm="saveConfirm" @cancelConfirm="closeConfirmModal"/>
         </div>
@@ -20,154 +20,11 @@ import SortOrder from "@/components/SortOrders.vue";
 import CommentModal from "@/components/CommentModal.vue";
 import Comment from "@/components/Comment.vue";
 import ConfirmModal from "@/components/ConfirmModal.vue";
-const allUsers = [
-		{
-            id: '5',
-			name: "Pera",
-			surname: "Peric",
-			type: "Barbeque",
-            date: "12.05.2021.",
-            status: "InPreparation",
-            searchBar:'',
-             totalPrice: 0,
-			items:[
-                {
-                   item: "Pljeskavica",
-                   price: "300"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                },
-                 {
-                    item: "Pljeskavica",
-                   price: "300"
-                },
-                 {
-                    item: "Piletina",
-                   price: "300"
-                },
-                {
-                    item: "Piletina",
-                   price: "300"
-                }
-            ]
-		},
-		{
-            id: '4',
-			name: "Pera",
-			surname: "Peric",
-			type: "Italian",
-             totalPrice: 0,
-             status: "WaitingForDelivery",
-			items:[
-                {
-                   item: "Pljeskavica",
-                   price: "300"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                }
-            ]
-		},
-        {
-            id: '6',
-			name: "Pera",
-			surname: "Peric",
-			type: "Italian",
-             totalPrice: 0,
-             status: "Delivered",
-			items:[
-                {
-                   item: "Pljeskavica",
-                   price: "300"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                }
-            ]
-		},
-        {
-            id: '3',
-			name: "Pera",
-			surname: "Peric",
-			type: "Italian",
-            totalPrice: 0,
-            status: "WaitingManagerConfirmation",
-			items:[
-                {
-                   item: "Pljeskavica",
-                   price: "3000"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                }
-            ]
-		},
-        {
-            id: '2',
-			name: "Dana",
-			surname: "Peric",
-			type: "Chinese",
-             totalPrice: 0,
-             status: "InTransport",
-			items:[
-                {
-                   item: "Pljeskavica",
-                   price: "300"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "150"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                }
-            ]
-		},
-        {
-            id: '1',
-			name: "Ana",
-			surname: "Peric",
-			type: "chinese",
-            status: "WaitingForDelivery",
-             totalPrice: 0,
-			items:[
-                {
-                   item: "Pljeskavica",
-                   price: "100"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                },
-                {
-                    item: "Pljeskavica",
-                   price: "300"
-                }
-            ]
-		},
-	]
+import Server from '@/server';
 export default {
     data(){
         return{
-            users:[],
+            orders:[],
             advancedOrders:true,
             filters: {},
             showModal: false,
@@ -191,49 +48,56 @@ export default {
     },
     created(){
         this.user=this.$store.getters.getUser;
-        this.users=allUsers;
+        Server.getAllOrders().then((resp) => {
+			console.log('Resp', resp.data);
+			if (resp.success) {
+				this.orders = resp.data;
+			}
+		});
         let sum=0;
-        for(var i=0;i<this.users.length;i++){
-            for(var j=0;j<this.users[i].items.length;j++){
+        /*
+        for(var i=0;i<this.orders.length;i++){
+            for(var j=0;j<this.orders[i].items.length;j++){
                 sum+=parseInt(this.users[i].items[j].price)
             }
             this.users[i].totalPrice=sum;
             sum=0;
         }
+        */
     },
     methods:{
         sortByName(i){
             console.log(i);
             if(i==1){
-                let x = this.users.sort((a, b) => (a.name > b.name ? 1 : -1));
+                let x = this.orders.sort((a, b) => (a.user.firstName > b.user.firstName ? 1 : -1));
             }else{
-                let x = this.users.sort((a, b) => (a.name > b.name ? -1 : 1));
+                let x = this.orders.sort((a, b) => (a.user.firstName > b.user.firstName ? -1 : 1));
             }
         },
         sortByPrice(i){
             console.log(i);
             if(i==1){
-                let x = this.users.sort((a, b) => (a.totalPrice > b.totalPrice ? 1 : -1));
+                let x = this.orders.sort((a, b) => (a.order.price > b.order.price ? 1 : -1));
                 console.log(x);
             }else{
-                let x = this.users.sort((a, b) => (a.totalPrice > b.totalPrice ? -1 : 1));
+                let x = this.orders.sort((a, b) => (a.order.price > b.order.price ? -1 : 1));
             }
         },
         sortByDate(i){
 
         },
         applyFilters(filters,search){
-            this.users = allUsers.filter(e => e.totalPrice<parseInt(search.priceTo) && e.totalPrice>parseInt(search.priceFrom));
+            this.orders = this.orders.filter(e => e.order.price<parseInt(search.priceTo) && e.order.price>parseInt(search.priceFrom));
             this.filters=filters;
-            this.users = allUsers.filter(e => e.type.toLowerCase().includes(filters.restaurantType.toLowerCase()) && 
-            e.status.toLowerCase().includes(filters.orderStatus.toLowerCase()));
+            this.orders = this.orders.filter(e => e.restaurant.type.toLowerCase().includes(filters.restaurantType.toLowerCase()) && 
+            e.order.status.toLowerCase().includes(filters.orderStatus.toLowerCase()));
             this.showModal=false;
             document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset';
         },
         search(name){
             this.searchBar=name;
-            this.users = allUsers.filter(e => e.name.toLowerCase().includes(this.searchBar.toLowerCase()));
+            this.orders = this.orders.filter(e => e.restaurant.name.toLowerCase().includes(this.searchBar.toLowerCase()));
         },
         openModal(){
           this.showModal=true;
@@ -246,6 +110,17 @@ export default {
           document.getElementById('appContainer').style.height = 'unset';
         },
         saveReview(rating,comment){
+            console.log(rating)
+            console.log(comment)
+            const retVal={
+                userId: this.user.id,
+                restaurantId: this.modifiedOrder.restaurant.id,
+                comment: comment,
+                grade: parseInt(rating)
+            }
+            Server.createReview(retVal).then((resp) => {
+			console.log('Resp', resp.data);
+		});
         this.showReview=false;
            document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset'; 
@@ -256,40 +131,41 @@ export default {
           document.getElementById('appContainer').style.height = 'unset'; 
         },
 
-        openDialog(user){
-            if(this.user.role=="Manager" && user.status=='InPreparation'){
-            this.modifiedOrder=user;
+        openDialog(order){
+            if(this.user.role=="Manager" && order.order.status=='InPreparation'){
+            this.modifiedOrder=order;
             this.confirmModal=true
             document.getElementById('appContainer').style.overflow = 'hidden';
           document.getElementById('appContainer').style.height = '100vh';
-            }else if(this.user.role=="Customer" && user.status == "Delivered"){
+            }else if(this.user.role=="Customer" && order.order.status == "Delivered"){
+                this.modifiedOrder=order;
             this.showReview=true
             document.getElementById('appContainer').style.overflow = 'hidden';
           document.getElementById('appContainer').style.height = '100vh';
             }
-            else if(this.user.role=="Customer" && user.status == "InPreparation"){
-                this.modifiedOrder=user;
+            else if(this.user.role=="Customer" && order.order.status == "InPreparation"){
+                this.modifiedOrder=order;
                 this.description="Are you sure you want to cancel your order?"
                 this.confirmModal=true
                 document.getElementById('appContainer').style.overflow = 'hidden';
                 document.getElementById('appContainer').style.height = '100vh';
             }
-            else if(this.user.role=="Deliverer" && user.status=='InTransport'){
-                this.modifiedOrder=user;
+            else if(this.user.role=="Deliverer" && order.order.status=='InTransport'){
+                this.modifiedOrder=order;
                 this.description="Are you sure you want to change status from in transport to delivered?"
                 this.confirmModal=true
                 document.getElementById('appContainer').style.overflow = 'hidden';
                 document.getElementById('appContainer').style.height = '100vh';
             }
-            else if(this.user.role=="Deliverer" && user.status=='WaitingForDelivery' && !user.managerConfirm){
-                this.modifiedOrder=user;
+            else if(this.user.role=="Deliverer" && order.order.status=='WaitingForDelivery'){
+                this.modifiedOrder=order;
                 this.description="Send request?"
                 this.confirmModal=true
                 document.getElementById('appContainer').style.overflow = 'hidden';
                 document.getElementById('appContainer').style.height = '100vh';
             }
-             else if(this.user.role=="Manager" && user.status=='WaitingManagerConfirmation'){
-                 this.modifiedOrder=user;
+             else if(this.user.role=="Manager" && order.order.status=='Processing'){
+                 this.modifiedOrder=order;
                   this.description="Confirm delivery request?"
                  this.confirmModal=true
                 document.getElementById('appContainer').style.overflow = 'hidden';
@@ -303,51 +179,67 @@ export default {
           document.getElementById('appContainer').style.height = 'unset'; 
         },
         saveConfirm(){
-            if(this.user.role=="Manager" && this.modifiedOrder.status=='InPreparation'){
-                this.modifiedOrder.status="WaitingForDelivery"
+            console.log(this.modifiedOrder.order.status)
+            console.log(this.user.role)
+            if(this.user.role=="Manager" && this.modifiedOrder.order.status=='InPreparation'){
+                this.modifiedOrder.order.status="WaitingForDelivery"
+                this.updateOrderStatus();
                 this.confirmModal=false
                 document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset'; 
-            }else if(this.user.role=="Deliverer" && this.modifiedOrder.status=='InTransport'){
-                this.modifiedOrder.status="Delivered"
+            }else if(this.user.role=="Deliverer" && this.modifiedOrder.order.status=='InTransport'){
+                this.modifiedOrder.order.status="Delivered"
+                this.updateOrderStatus();
                 this.confirmModal=false
                 document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset'; 
             }
-            else if(this.user.role=="Deliverer" && this.modifiedOrder.status=='WaitingForDelivery'){
+            else if(this.user.role=="Deliverer" && this.modifiedOrder.order.status=='WaitingForDelivery'){
                 this.confirmModal=false;
-                for(var i=0;i<this.users.length;i++){
-                    if(this.users[i].id==this.modifiedOrder.id){
-                        this.users[i].managerConfirm=true;
+                for(var i=0;i<this.orders.length;i++){
+                    if(this.orders[i].order.id==this.modifiedOrder.order.id){
+                        this.orders[i].order.status="Processing";
+                        this.orders[i].deliverer=this.user;
+                        this.orders[i].order.delivererId=this.user.id;
                         break;
                     }
                 }
+                this.updateOrderStatus();
                 document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset'; 
             }
-            else if(this.user.role=="Manager" && this.modifiedOrder.status=='WaitingManagerConfirmation'){
+            else if(this.user.role=="Manager" && this.modifiedOrder.order.status=='Processing'){
                 this.confirmModal=false;
-                for(var i=0;i<this.users.length;i++){
-                    if(this.users[i].id==this.modifiedOrder.id){
-                        this.users[i].status="InTransport"
+                for(var i=0;i<this.orders.length;i++){
+                    if(this.orders[i].order.id==this.modifiedOrder.order.id){
+                        this.orders[i].order.status="InTransport"
                         break;
                     }
                 }
+                this.updateOrderStatus();
                 document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset'; 
             }
-            else if(this.user.role=="Customer" && this.modifiedOrder.status == "InPreparation"){
+            else if(this.user.role=="Customer" && this.modifiedOrder.order.status == "InPreparation"){
                 this.confirmModal=false;
-                for(var i=0;i<this.users.length;i++){
-                    if(this.users[i].id==this.modifiedOrder.id){
-                        this.users[i].status="Canceled"
+                for(var i=0;i<this.orders.length;i++){
+                    if(this.orders[i].order.id==this.modifiedOrder.order.id){
+                        this.orders[i].order.status="Canceled"
                         break;
                     }
                 }
+                this.updateOrderStatus();
                 document.getElementById('appContainer').style.overflow = 'unset';
                 document.getElementById('appContainer').style.height = 'unset';
             }       
-        }
+        },
+            updateOrderStatus(){
+            Server.updateOrderStatus(this.modifiedOrder).then(resp=>{
+			    if(resp.success){
+				    this.modifiedOrder=resp.data;
+			    }
+          });
+        },
     }
 }
 </script>

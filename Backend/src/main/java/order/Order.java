@@ -13,7 +13,15 @@ public class Order {
     Double price;
     OrderStatus status;
     String buyerId;
+    String delivererId;
 
+    public String getDelivererId() {
+        return delivererId;
+    }
+
+    public void setDelivererId(String delivererId) {
+        this.delivererId = delivererId;
+    }
 
     public String getId() {
         return id;

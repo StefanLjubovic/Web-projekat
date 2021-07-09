@@ -1,5 +1,6 @@
 package server;
 
+import grade.GradeController;
 import grade.GradeDao;
 import order.OrderController;
 import order.OrderDao;
@@ -61,6 +62,11 @@ public class Server {
         put(Path.Web.UPDATE_USER, UserController.updateUser);
         get(Path.Web.GET_ALL_USERS,UserController.getAllUsers);
         put(Path.Web.UPDATE_PASSWORD,UserController.changePassword);
+        get(Path.Web.GET_ALL_ORDERS,OrderController.getAllOrders);
+        put(Path.Web.UPDATE_ORDER_STATUS,OrderController.updateOrderStatus);
+        post(Path.Web.SAVE_REVIEW, GradeController.saveReview);
+        get(Path.Web.GET_RESTAURANT_REVIEWS,GradeController.getRestuarantGrades);
+        put(Path.Web.UPDATE_RESTAURANT_REVIEW, GradeController.updateReview);
 
 //        after((request, response) -> response.type("application/json"));
     }

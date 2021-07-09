@@ -1,6 +1,7 @@
 package order;
 
 import com.google.gson.Gson;
+import dto.OrderDTO;
 import restaurant.Restaurant;
 import spark.Request;
 import spark.Response;
@@ -9,6 +10,7 @@ import user.User;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static server.Server.*;
 
@@ -26,4 +28,21 @@ public class OrderController {
         orderDao.create(order);
         return gson.toJson(order);
     };
+
+    public static Route getAllOrders=(Request req,Response res)->{
+        List<OrderDTO> dtos=orderDao.fillDTO();
+        return gson.toJson(dtos);
+    };
+
+    public static Route updateOrderStatus=(Request req,Response res)->{
+        String orderJson = req.body();
+        OrderDTO orderDTO = gson.fromJson(orderJson,OrderDTO.class);
+        orderDao.UpdateOrder(orderDTO.order);
+        if(orderDTO.order.delivererId !=null){
+            orderDTO.deliverer=userDao.getOne(orderDTO.order.delivererId);
+        }
+        System.out.println(gson.toJson(orderDTO));
+        return gson.toJson(orderDTO);
+    };
+
 }

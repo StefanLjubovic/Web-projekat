@@ -3,7 +3,7 @@
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-item-container">
-                <Comment @saveReview="$emit('saveReview')" @close-modal="$emit('close-modal')"/>
+                <Comment @saveReview="aaa" @close-modal="$emit('close-modal')"/>
     </div>  
           </div>
         </div>
@@ -17,9 +17,15 @@ export default {
         return{
         }
     },
+    methods:{
+        aaa(rating,comment){
+            this.$emit('saveReview',rating,comment)
+        }
+    },
     components:{
         Comment
-    }
+    },
+    emits:['saveReview','close-modal'],
 }
 </script>
 
