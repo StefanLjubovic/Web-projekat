@@ -97,6 +97,7 @@ export default {
 			if (resp.success) {
 				this.restaurants = resp.data;
 				this.allRestaurants = JSON.parse(JSON.stringify(resp.data));
+				let x = this.restaurants.sort((a, b) => (a.status > b.status ? 1 : -1));
 			}
 		});
 	},

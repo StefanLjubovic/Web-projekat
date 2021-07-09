@@ -12,29 +12,24 @@
 				</div>
 			</button>
 		</div>
-		<div class="btn-div margin" >
+		<div class="btn-div margin" v-if="user.role=='Admin'">
 			<button type="button" class="btn btn-light btn" @click="createRestaurant">
 				<span class="btn-components">Register restaurant<i class="fas fa-plus icon"></i></span>
 			</button>
 		</div>
-		<div class="btn-div margin">
+		<div class="btn-div margin" v-if="user.role=='Manager' && user.restaurantId !='undefined' ">
 			<button type="button" class="btn btn-light btn" @click="managersRestaurant">
 				<span class="btn-components">My restaurant<i class="fas fa-utensils icon"></i></span>
 			</button>
 		</div>
-		<div class="btn-div margin">
+		<div class="btn-div margin" v-if="user.role=='Admin'">
 			<button type="button" class="btn btn-light btn" @click="allUsers">
 				<span class="btn-components">All users<i class="fas fa-users icon"></i></span>
 			</button>
 		</div>
 		<div class="btn-div margin">
-			<button type="button" class="btn btn-light btn" @click="createArticle">
-				<span class="btn-components">Add article<i class="fas fa-plus icon"></i></span>
-			</button>
-		</div>
-		<div class="btn-div margin">
 			<button type="button" class="btn btn-light btn" @click="viewCustomers">
-				<span class="btn-components">View customers<i class="fas fa-user-friends icon"></i></span>
+				<span class="btn-components">View orders<i class="fas fa-truck icon"></i></span>
 			</button>
 		</div>
 		<div class="btn-div margin">

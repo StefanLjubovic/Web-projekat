@@ -4,10 +4,10 @@
 			Log in
 		</button>
 		<button class="my-cart-container" @click="$emit('show-cart')">
-      <div class="my-cart">
+      <div class="my-cart" v-if="user.role=='Customer'">
 			  <i class="fas fa-shopping-cart"></i>
       </div>
-			<div class="badge">
+			<div class="badge" v-if="user.role=='Customer'">
 				{{ cartLength }}
 			</div>
 		</button>
