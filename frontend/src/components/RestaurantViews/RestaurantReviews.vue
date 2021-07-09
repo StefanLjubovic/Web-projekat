@@ -4,7 +4,7 @@
     </div>
     <div class="reviews-list">
         <div  :key="review.username" v-for="review in reviews">
-            <div class="review">
+            <div class="review" v-if="checkReviewVisibility(review)" v-bind:class="{ selected: !checkUser(review) }" @click="approveReview(review)"> 
                 <div class="review-message">
                     {{review.text}}
                 </div>
@@ -15,41 +15,62 @@
                 <div class="review-user">
                     <img class="user-image" :src="getImage(review)" alt="">
                     <label class="username" for="username">{{review.username}}</label>
+                    <div class="restaurant-status username approved">
+                        {{getApproved(review)}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <ConfirmModal v-if="confirmModal" :title="title" :description="description" @saveConfirm="saveConfirm" @cancelConfirm="closeConfirmModal"/>
 </template>
 <script>
+import ConfirmModal from "@/components/ConfirmModal.vue";
 import moment from 'moment'
 export default {
+    	computed: {
+		user() {
+			return this.$store.getters.getUser;
+		},
+	},
+    components:{
+        ConfirmModal
+    },
     data(){
         return{
+            confirmModal: false,
+            title: 'Approve review',
+            description: 'If you approve review all customers will see it.',
+            selectedReview: {},
             reviews:[
                 {
                     text:"Preporučio bih ga.",
                     date: 1624749081190,
                     username: 'Pera peric',
                     food: 'Riba',
-                    image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+                    image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
+                    approved: true
                 },{
                     text:"Predivan obrok. Brza dostava. Sviđa mi se.",
                     date: 1624749081190,
                     username: 'Predrag Stojacic',
                     food: 'Burger',
-                    image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+                    image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
+                    approved: false
                 },{
                     text:"Test",
                     date: 1624749081190,
                     username: 'Marko Markovic',
                     food: 'Burger',
-                    image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+                    image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
+                    approved: true
                 },{
                     text:"Najavili 71min. Stiglo za max 40min. Lepo, toplo, svi prilozi ispravni, dostavljač izašao u susret. 10/10",
                     date: 1624749081190,
                     username: 'Bosko Buha',
                     food: 'Testenine',
-                    image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+                    image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
+                    approved: false
                 }
             ]
         }
@@ -64,6 +85,37 @@ export default {
            return moment(value).format('DD.MM.YYYY.')
           }
       },
+      getApproved(review){
+          return review.approved ? `Approved 👍🏼` : "Approved 👎🏼"
+      },
+      checkReviewVisibility(review){
+          if(this.user.role=='Customer' && !review.approved)
+                return false
+          return true;
+      },
+      checkUser(review){
+          if(this.user.role=='Manager' && !review.approved)
+              return true;
+          return false;
+      },
+      approveReview(review){
+          this.selectedReview=review
+          this.confirmModal=true;
+          document.getElementById('appContainer').style.overflow = 'hidden';
+          document.getElementById('appContainer').style.height = '100vh';
+      },
+      closeConfirmModal(){
+        this.confirmModal=false;
+            document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset';
+          this.selectedReview.approved=true;
+      },
+      saveConfirm(){
+          this.confirmModal=false;
+            document.getElementById('appContainer').style.overflow = 'unset';
+          document.getElementById('appContainer').style.height = 'unset';
+        this.selectedReview.approved=true;
+      }
     }
 }
 </script>
@@ -78,6 +130,7 @@ export default {
         justify-content: center;
     }
     .review{
+        cursor: pointer;
         width: 400px;
         padding: 17px;
         background-color: white;
@@ -87,6 +140,9 @@ export default {
         flex-direction: column;
         height: calc(100% - 10px);
         margin: 5px;
+    }
+    .selected{
+        pointer-events: none;
     }
     .review-user{
         margin-top: 5px;
@@ -112,6 +168,10 @@ export default {
         color: #8F8FA1;
         font-size: 14px;
         flex: 1;
+    }
+    .approved{
+        right: 5%;
+        margin-top: -10px;
     }
     .review-message{
         flex: 1;
