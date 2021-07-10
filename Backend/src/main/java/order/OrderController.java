@@ -42,6 +42,10 @@ public class OrderController {
         String orderJson = req.body();
         OrderDTO orderDTO = gson.fromJson(orderJson,OrderDTO.class);
         orderDao.UpdateOrder(orderDTO.order);
+        if(orderDTO.order.getStatus().equals(OrderStatus.Canceled)) {
+            orderDTO.user.removeScore(orderDTO.order.getPrice());
+            userDao.update(orderDTO.user);
+        }
         if(orderDTO.order.delivererId !=null){
             orderDTO.deliverer=userDao.getOne(orderDTO.order.delivererId);
         }
