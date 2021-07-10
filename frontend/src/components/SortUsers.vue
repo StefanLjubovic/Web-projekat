@@ -1,57 +1,54 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="fraction ">
-            <label for="" class="label href">First name</label>
-            <a href="#" class="href" @click="$emit('sortName',1)"><i class="fas fa-chevron-up"></i></a>
-            <a href="#" class="href down" @click="$emit('sortName',-1)"><i class="fas fa-chevron-down"></i></a>
-            </div>
-             <div class="fraction ">
-            <label for="" class="label href">Last name</label>
-            <a href="#" class="href" @click="$emit('sortSurname',1)"><i class="fas fa-chevron-up"></i></a>
-            <a href="#" class="href down" @click="$emit('sortSurname',-1)"><i class="fas fa-chevron-down"></i></a>
-            </div>
-             <div class="fraction ">
-            <label for="" class="label href">Username</label>
-            <a href="#" class="href"  @click="$emit('sortUsername',1)"><i class="fas fa-chevron-up"></i></a>
-            <a href="#" class="href down" @click="$emit('sortUsername',-1)"><i class="fas fa-chevron-down"></i></a>
-            </div>
-             <div class="fraction ">
-            <label for="" class="label href">Points colected</label>
-            <a href="#" class="href"  @click="$emit('sortPoints',1)"><i class="fas fa-chevron-up"></i></a>
-            <a href="#" class="href down" @click="$emit('sortPoints',-1)"><i class="fas fa-chevron-down"></i></a>
-            </div>   
-             <div class="fraction ">
-            <label for="" class="label href">Suspicious users</label>
-            <a href="#" class="href"  @click="$emit('suspiciousUsers', 1)"><i class="fas fa-check"></i></a>
-            <a href="#" class="href down" @click="$emit('suspiciousUsers',-1)"><i class="fas fa-times"></i></a>
-            </div>         
-        </div>
-    </div>
+	<div class="container">
+		<div class="fraction ">
+			<label for="" class="label href">First name</label>
+			<a href="#" class="href" @click="$emit('sortName', 1)"><i class="fas fa-chevron-up"></i></a>
+			<a href="#" class="href down" @click="$emit('sortName', -1)"><i class="fas fa-chevron-down"></i></a>
+		</div>
+		<div class="fraction ">
+			<label for="" class="label href">Last name</label>
+			<a href="#" class="href" @click="$emit('sortSurname', 1)"><i class="fas fa-chevron-up"></i></a>
+			<a href="#" class="href down" @click="$emit('sortSurname', -1)"><i class="fas fa-chevron-down"></i></a>
+		</div>
+		<div class="fraction ">
+			<label for="" class="label href">Username</label>
+			<a href="#" class="href" @click="$emit('sortUsername', 1)"><i class="fas fa-chevron-up"></i></a>
+			<a href="#" class="href down" @click="$emit('sortUsername', -1)"><i class="fas fa-chevron-down"></i></a>
+		</div>
+		<div class="fraction ">
+			<label for="" class="label href">Points colected</label>
+			<a href="#" class="href" @click="$emit('sortPoints', 1)"><i class="fas fa-chevron-up"></i></a>
+			<a href="#" class="href down" @click="$emit('sortPoints', -1)"><i class="fas fa-chevron-down"></i></a>
+		</div>
+		<div class="fraction ">
+			<label for="" class="label href">Suspicious users</label>
+			<a href="#" class="href" @click="$emit('suspiciousUsers', 1)"><i class="fas fa-check"></i></a> 
+			<a href="#" class="href down" @click="$emit('suspiciousUsers', -1)"><i class="fas fa-times"></i></a>
+		</div>
+	</div>
 </template>
 
 <script>
 export default {
-    data(){
-        return{
-        }
-    },
-    emits:['suspiciousUsers','sortPoints','sortUsername','sortSurname','sortName']
-}
+	data() {
+		return {};
+	},
+	emits: ['suspiciousUsers', 'sortPoints', 'sortUsername', 'sortSurname', 'sortName'],
+};
 </script>
 
-
 <style scoped>
-	.container {
+.container {
 	position: absolute;
-	width: 100%;
-	left: 10%;
-	right: 10%;
+	width: 90%;
+	left: 1px;
+	right: 1px;
 	top: 10px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-around;
+	margin: auto;
 }
 .search-input {
 	background-color: transparent;
@@ -72,24 +69,19 @@ export default {
 .fraction {
 	background: #fddf6d;
 	/* width: 380px; */
-	width: 17%;
+	width: 19%;
 	border-radius: 10px;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-right: 30px;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 }
-.fraction > label{
-    color: #1F1F43;
-    font-weight: 500;
+.fraction > label {
+	color: #1f1f43;
+	font-weight: 500;
 }
 
-.down{
-    color: #FC4C59;
-    margin-left: 3px;
-}
-.row{
-    width: 100%;
+.down {
+	color: #fc4c59;
 }
 </style>
