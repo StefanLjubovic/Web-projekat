@@ -176,6 +176,7 @@ public class User{
     }
 
     private void setReward() {
+        this.reward = null;
         for(Reward reward: userDao.rewards){
             if(this.collectedPoints > reward.requiredScore)
                 this.reward = reward;

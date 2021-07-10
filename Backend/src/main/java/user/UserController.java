@@ -65,7 +65,7 @@ public class UserController  {
         String id = req.queryParams("id");
         User user = userDao.getOne(id);
         res.status(200);
-        if(user.equals(null)){
+        if(user == null){
             halt(400,"This user doesn't exist");
         }
         return gson.toJson(user);

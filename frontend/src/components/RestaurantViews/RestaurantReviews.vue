@@ -67,7 +67,9 @@ export default {
 		checkReviewVisibility(review) {
 			if (
 				(this.user.role == 'Customer' && !review.grade.approved) ||
-				(this.user.restaurantId != this.restaurant.id && this.user.role == 'Manager' && !review.grade.approved)
+				(this.user.restaurantId != this.restaurant.id && this.user.role == 'Manager' && !review.grade.approved) ||
+				(!this.user.firstName && !review.grade.approved)
+
 			)
 				return false;
 			return true;
