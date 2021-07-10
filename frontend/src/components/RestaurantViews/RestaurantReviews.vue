@@ -18,11 +18,15 @@
 					<div class="restaurant-status username approved">
 						{{ getApproved(review) }}
 					</div>
+					<div class="grade">
+					<i class="fas fa-star icon" style="color: #FAE480"></i>
+					<label  class="username">{{review.grade.grade}}</label>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<ConfirmModal v-if="confirmModal" :title="title" :description="description" @saveConfirm="saveConfirm" @cancelConfirm="closeConfirmModal" />
+	<ConfirmModal :reject="reject" v-if="confirmModal" :title="title" :description="description" @rejectConfirm="rejectConfirm" @saveConfirm="saveConfirm" @cancelConfirm="closeConfirmModal" />
 </template>
 <script>
 import ConfirmModal from '@/components/ConfirmModal.vue';
@@ -47,6 +51,7 @@ export default {
 			description: 'If you approve review all customers will see it.',
 			selectedReview: {},
 			reviews: [],
+			reject: true
 		};
 	},
 	props: ['restaurant'],
@@ -62,20 +67,25 @@ export default {
 		},
 		getApproved(review) {
 			console.log(review);
-			return review?.grade?.approved ? `Approved 👍🏼` : 'Waiting approval 👎🏼';
+			if(review.grade.approved=="WaitingForApproval")
+				return 'Waiting approval 🕐'
+			else if(review.grade.approved=="Approved")
+				return `Approved 👍🏼`
+			else
+				return 'Rejected 👎🏼'
 		},
 		checkReviewVisibility(review) {
 			if (
-				(this.user.role == 'Customer' && !review.grade.approved) ||
-				(this.user.restaurantId != this.restaurant.id && this.user.role == 'Manager' && !review.grade.approved) ||
-				(!this.user.firstName && !review.grade.approved)
-				|| (this.user.role == 'Deliverer' && !review.grade.approved)
+				(this.user.role == 'Customer' && (review.grade.approved != "Approved")) ||
+				(this.user.restaurantId != this.restaurant.id && this.user.role == 'Manager' && review.grade.approved != "Approved") ||
+				(!this.user.firstName && review.grade.approved != "Approved")
+				|| (this.user.role == 'Deliverer' && review.grade.approved != "Approved")
 			)
 				return false;
 			return true;
 		},
 		checkUser(review) {
-			if (this.user.role == 'Manager' && !review.grade.approved) return true;
+			if (this.user.role == 'Manager' && review.grade.approved == "WaitingForApproval") return true;
 			return false;
 		},
 		approveReview(review) {
@@ -93,7 +103,7 @@ export default {
 			this.confirmModal = false;
 			document.getElementById('appContainer').style.overflow = 'unset';
 			document.getElementById('appContainer').style.height = 'unset';
-			this.selectedReview.grade.approved = true;
+			this.selectedReview.grade.approved = "Approved";
 			Server.updateReview(this.selectedReview).then((resp) => {
 				if (resp.success) {
 					this.selectedReview = resp.data;
@@ -101,6 +111,19 @@ export default {
 				}
 			});
 		},
+		rejectConfirm(){
+			this.confirmModal = false;
+			document.getElementById('appContainer').style.overflow = 'unset';
+			document.getElementById('appContainer').style.height = 'unset';
+			console.log(this.selectedReview)
+			this.selectedReview.grade.approved = "Rejected";
+			Server.updateReview(this.selectedReview).then((resp) => {
+				if (resp.success) {
+					this.selectedReview = resp.data;
+                    this.$emit("refreshRestaurant")
+				}
+			});
+		}
 	},
 	mounted() {
 		const id = this.$route.params.id;
@@ -139,10 +162,16 @@ export default {
 	height: calc(100% - 10px);
 	margin: 5px;
 }
+.grade{
+	align-self: center;
+	float:right;
+}
+
 .selected {
 	pointer-events: none;
 }
 .review-user {
+	overflow:auto;
 	margin-top: 5px;
 	border-top: 2px solid #8f8fa1;
 	padding-top: 5px;

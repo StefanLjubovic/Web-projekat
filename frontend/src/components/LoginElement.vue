@@ -59,9 +59,6 @@
               >Sign Up</a
             >
           </div>
-          <div class="d-flex justify-content-center">
-            <a href="#" class="link-danger">Forgot your password?</a>
-          </div>
         </div>
       </div>
     </div>

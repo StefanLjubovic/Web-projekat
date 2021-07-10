@@ -3,8 +3,8 @@
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-item-container">
-<div class="container">
-    <div class="card">
+<div class="container" >
+    <div class="card" >
         <div class="card-content">
             <div class="media-content">       
                 <h2 class="text-light rate">{{title}}</h2>    
@@ -12,7 +12,18 @@
                 </div>
                 <div class="form-group">
                     <h5 class="text-light rate">{{description}}</h5>
-                    <div class="row">
+                    <div v-if="reject" class="row">
+                        <div class="col">
+                            <input type="submit" class="btn" @click="$emit('saveConfirm')"  value="Approve"/>
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="btn" @click="$emit('rejectConfirm')"  value="Reject"/>
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="btn" @click="$emit('cancelConfirm')"  value="Cancel"/>
+                        </div>
+                    </div>
+                    <div class="row" v-else>
                     <input type="submit" class="btnRegister" @click="$emit('saveConfirm')"  value="Confirm"/>
                     <input type="submit" class="btnRegister" @click="$emit('cancelConfirm')"  value="Cancel"/>
                     </div>
@@ -30,8 +41,8 @@
 
 <script>
 export default {
-  emits:['saveConfirm','cancelConfirm'],
-  props:['title','description']
+  emits:['saveConfirm','cancelConfirm','rejectConfirm'],
+  props:['title','description','reject']
 }
 </script>
 
@@ -49,7 +60,9 @@ export default {
     overflow-y: auto;
     overscroll-behavior-y: contain;
 }
-
+.selected  input[type='radio']{
+    width: 40px;
+}
 .modal-item-container {
   /* width: 700px; */
   /* margin: 0px auto; */
@@ -104,13 +117,20 @@ export default {
     border: none;
     border-radius: 1.5rem;
     padding: 2%;
-    background-color: #FFC312;
-    color: black;
+    background-color: #fddf6d;
+	color: #42405f;
     font-weight: 600;
     width: 30%;
     cursor: pointer;
     margin-right: 20px;
     margin-left: 10%;
+}
+.btn{
+    margin-top: 20%;
+    background-color: #fddf6d;
+	color: #42405f;
+    border-radius: 1.5rem;
+    min-width: 80px;
 }
 .small-img-btn{
     position: absolute;

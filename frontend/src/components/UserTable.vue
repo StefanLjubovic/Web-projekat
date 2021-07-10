@@ -40,7 +40,7 @@
 						<td>{{ user.lastName }}</td>
 						<td>{{ user.username }}</td>
 						<td>{{ user.role }}</td>
-						<td style="text-align: right">{{ user.collectedPoints }}</td>
+						<td style="text-align: right">{{ user.collectedPoints.toFixed(2) }}</td>
 						<td  style="    text-align: center;">
 							<button
               v-if="!user.status && user.role != 'Admin'"
