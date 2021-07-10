@@ -39,7 +39,8 @@ public class UserController  {
             loginTrack.put(loginToken, user.getId());
             model.put("loginToken", loginToken);
             model.put("user", gson.toJson(user));
-            res.body("Ide gas");
+            if(!user.getStatus())
+                halt(400,"User is banned!");
             res.status(200);
         }else{
             System.out.println("User doesn't exist or email/password is not correct");

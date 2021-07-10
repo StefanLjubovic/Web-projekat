@@ -21,7 +21,7 @@ public class User{
     private String restaurantId;
     private String cartId;
     private Reward reward;
-    private boolean status=true;
+    private boolean status;
     private Double collectedPoints;
 
     public Reward getReward() {
@@ -67,7 +67,7 @@ public class User{
         }
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
