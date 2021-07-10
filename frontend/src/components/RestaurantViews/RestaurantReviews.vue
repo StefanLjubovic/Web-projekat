@@ -91,7 +91,6 @@ export default {
       },
       getApproved(review){
           console.log(review)
-          console.log('aaaaaaaaaaaaaaa')
           return review.grade.approved ? `Approved 👍🏼` : "Waiting approval 👎🏼"
       },
       checkReviewVisibility(review){

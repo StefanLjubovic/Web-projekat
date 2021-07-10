@@ -77,7 +77,12 @@ export default {
 		},
 		managersRestaurant() {
 			this.$emit('hideDialog');
-			this.$router.push({ name: 'Restaurant',params: { id: this.user.restaurantId } });
+			const routeName = this.$router.currentRoute._value.name;
+			if(routeName == 'Restaurant'){
+				console.log(this.$router.currentRoute?._value?.params?.id);
+				if(this.$router.currentRoute?.params?.id != this.user.restaurantId)
+					this.$router.push({ name: 'Restaurant',params: { id: this.user.restaurantId } });
+			}
 		},
 		createArticle() {
 			this.$emit('create-restaurant');
@@ -113,7 +118,6 @@ export default {
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 .btn-div {
-	width: 100vw;
 	position: relative;
 	height: 30px;
 	left: 50%;

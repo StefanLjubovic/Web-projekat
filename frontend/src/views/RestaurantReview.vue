@@ -21,7 +21,11 @@ import RestaurantReviews from '@/components/RestaurantViews/RestaurantReviews.vu
 import RestaurantLocation from '@/components/RestaurantViews/RestaurantLocation.vue'
 
 export default {
-	
+	watch:{
+		$route (to, from){
+			this.refreshRestaurant()
+		}
+	},
 	data() {
 		return {
 			restaurant:{
@@ -41,19 +45,17 @@ export default {
 		refreshRestaurant(){
 			console.log('Refreshing restaurant...');
 			const id = this.$route.params.id;
-			console.log(id);
-			Server.getRestaurantById(id).then(resp => {
-				if(resp.success){
-					this.restaurant = resp.data;
-					console.log(this.restaurant)
-				}
-			})
+			if(!!id)
+				Server.getRestaurantById(id).then(resp => {
+					if(resp.success){
+						this.restaurant = resp.data;
+						console.log(this.restaurant)
+					}
+				})
 		}
 	},
-	created() {
-		// this.restaurants = allRestaurants;
+	mounted() {
 		const id = this.$route.params.id;
-		console.log(id+'aaaaaaaaaaaaaaaaaaaaaa');
 		Server.getRestaurantById(id).then(resp => {
 			if(resp.success){
 				this.restaurant = resp.data;
@@ -61,7 +63,6 @@ export default {
 			}
 		})
 	},
-
 	name: "RestaurantReview",
 	components: {
 		Header,
