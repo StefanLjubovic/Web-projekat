@@ -3,10 +3,10 @@
 		<button type="button" class="btn btn-primary" @click="$emit('login-user')" v-if="!userExists">
 			Log in
 		</button>
-		<button class="my-cart-container" @click="$emit('show-cart')">
-      <div class="my-cart" v-if="user.role=='Customer'">
-			  <i class="fas fa-shopping-cart"></i>
-      </div>
+		<button class="my-cart-container" @click="$emit('show-cart')"  v-if="user.role=='Customer'">
+			<div class="my-cart">
+					<i class="fas fa-shopping-cart"></i>
+			</div>
 			<div class="badge" v-if="user.role=='Customer'">
 				{{ cartLength }}
 			</div>
