@@ -16,8 +16,8 @@
 			<a href="#" class="href down" @click="$emit('sortUsername', -1)"><i class="fas fa-chevron-down"></i></a>
 		</div>
 		<div class="fraction ">
-			<label for="" class="label href">Points colected</label>
-			<a href="#" class="href" @click="$emit('sortPoints', 1)"><i class="fas fa-chevron-up"></i></a>
+			<label for="" class="label href">Points collected</label>
+			<a href="#" class="href"      @click="$emit('sortPoints',  1)"><i class="fas fa-chevron-up"></i></a>
 			<a href="#" class="href down" @click="$emit('sortPoints', -1)"><i class="fas fa-chevron-down"></i></a>
 		</div>
 		<div class="fraction ">

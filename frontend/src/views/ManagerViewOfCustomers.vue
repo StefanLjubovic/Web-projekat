@@ -64,12 +64,12 @@ export default {
 	methods: {
 		sortByName(i) {
 			const correct = i == 1 ? 1 : -1;
-			const incorrect = i != 1 ? -1 : 1;
+			const incorrect = i == 1 ? -1 : 1;
 			this.orders.sort((a, b) => (a.order.user.firstName > b.order.user.firstName ? correct : incorrect));
 		},
 		sortByPrice(i) {
 			const correct = i == 1 ? 1 : -1;
-			const incorrect = i != 1 ? -1 : 1;
+			const incorrect = i == 1 ? -1 : 1;
 			this.orders.sort((a, b) => (a.order.price > b.order.price ? correct : incorrect));
 		},
 		sortByDate(i) {
@@ -235,10 +235,11 @@ export default {
 <style scoped>
 .home-container {
 	/* padding-top: 10px; */
-	position: relative;
-	flex: 1;
 	display: flex;
 	flex-direction: column;
+	min-height: calc(100vh - 70px);
+	position: relative;
+	background-color: #d7e2f8;
 	/* width: 80%; */
 	/* margin: auto; */
 	/* overflow: auto; */

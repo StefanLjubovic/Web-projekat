@@ -25,7 +25,7 @@
 															</select>
 														</div>
 													</div>
-										
+													<input type="submit" class="btnRegister" @click="$emit('suspiciousUsers', 1)" value="Suspicious users" />
 												</div>
 												
 											</div>
@@ -66,7 +66,7 @@ export default {
 			},
 		};
 	},
-	emits: ['close-modal','applyFilters'],
+	emits: ['close-modal','applyFilters', "suspiciousUsers"],
 	components: {
 		Datepicker,
 	},

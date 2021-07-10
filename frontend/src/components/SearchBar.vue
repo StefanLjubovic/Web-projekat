@@ -68,6 +68,10 @@ export default {
 		flex: 1;
 		color: white;
 	}
+	.search-input::placeholder{
+		color: white;
+		opacity: 0.5
+	}
 	.search-input:focus{
 		outline: unset
 	}
