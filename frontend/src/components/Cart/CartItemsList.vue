@@ -22,15 +22,15 @@
 						<p class="price-info">
 							Amount:
 							<span class="price-label"
-								><span class="changeAmount" @click="decrease(item)"><i class="fas fa-minus"></i></span> 
-                                <span class="count">{{ item.count }}</span>
+								><span class="changeAmount" @click="decrease(item)"><i class="fas fa-minus"></i></span>
+								<span class="count">{{ item.count }}</span>
 								<span class="changeAmount" @click="increase(item)"><i class="fas fa-plus"></i></span>
 							</span>
 						</p>
 					</div>
-                    <p class="total-item-price">
-                        Total price: <span class="price-label">{{ (item.price * item.count).toFixed(2) }} RSD</span>
-                    </p>
+					<p class="total-item-price">
+						Total price: <span class="price-label">{{ (item.price * item.count).toFixed(2) }} RSD</span>
+					</p>
 				</div>
 				<div class="delete-section" @click="deleteItem(item)">
 					<div>
@@ -42,6 +42,7 @@
 	</div>
 </template>
 <script>
+import Swal from 'sweetalert2';
 import server from '../../server';
 export default {
 	watch: {
@@ -53,6 +54,35 @@ export default {
 		},
 	},
 	methods: {
+		async deleteItem(item) {
+			const confirm = await Swal.fire({
+				title: 'Do you want to remove this item from cart?',
+				text: "You won't be able to revert this!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#FC4C59',
+				cancelButtonColor: '#5E639B',
+				confirmButtonText: 'Yes, remove it!'
+				});
+			if(confirm.isConfirmed){
+
+
+
+				this.$store.commit('removeItems', item);
+			this.$nextTick(() => {
+				if (this.cart.items.length == 0) {
+					this.$router.push('/');
+					Swal.fire({
+						title: 'Cart is empty',
+						icon: 'info',
+						confirmButtonText: 'Okay',
+						timer: 2000,
+						timerProgressBar: true,
+					});
+				}
+			});
+						}
+		},
 		isEmpty() {
 			return !this.$store.getters.getCart.items?.length;
 		},
@@ -74,12 +104,12 @@ export default {
 		totalPrice() {
 			return this.cart.items.reduce((a, b) => a + b.price, 0);
 		},
-        decrease(item){
-            this.$store.commit("removeItem",item)
-        },
-        increase(item){
-            this.$store.commit("addItem",item)
-        }
+		decrease(item) {
+			this.$store.commit('removeItem', item);
+		},
+		increase(item) {
+			this.$store.commit('addItem', item);
+		},
 	},
 	created() {
 		// this.user = User;
@@ -139,7 +169,7 @@ export default {
 	margin-right: 10px;
 }
 .total-item-price {
-	color: #1F1F43;
+	color: #1f1f43;
 	font-size: 17px;
 	font-weight: 500;
 	margin-bottom: unset;
@@ -177,40 +207,40 @@ export default {
 	position: absolute;
 	right: 0;
 	top: -10px;
-    padding: 8px 10px;
+	padding: 8px 10px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	color: #fc4c59;
 	cursor: pointer;
-    opacity:  0;
-    border: 1px solid #fc4c59;
+	opacity: 0;
+	border: 1px solid #fc4c59;
 }
 .price-section {
 	margin-right: 0px;
 	transition: 0.7s ease all;
-    flex: 1;
+	flex: 1;
 }
 
 .item:hover .delete-section {
 	opacity: 1;
 }
 
-.count{
-    margin: 0 10px;
-    font-weight: bold;
+.count {
+	margin: 0 10px;
+	font-weight: bold;
 }
-.changeAmount{
-    color: #5E639B;
-    /* width: 50px; */
-    padding: 1px 4px;
-    /* height: 27px; */
-    border-radius: 10px;
-    cursor: pointer;
+.changeAmount {
+	color: #5e639b;
+	/* width: 50px; */
+	padding: 1px 4px;
+	/* height: 27px; */
+	border-radius: 10px;
+	cursor: pointer;
 }
-.item-information{
-    display: flex;
-    flex-direction: column;
+.item-information {
+	display: flex;
+	flex-direction: column;
 }
 </style>

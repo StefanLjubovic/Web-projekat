@@ -53,6 +53,7 @@ import moment from 'moment';
 import RestaurantItemModal from './RestaurantItemModal.vue';
 import EditItemModal from './NewItemModal.vue';
 import server from '../../server';
+import Swal from 'sweetalert2';
 export default {
 	data() {
 		return {
@@ -124,7 +125,17 @@ export default {
 		},
 		async deleteItem(item){
 			const index = this.restaurant.items.findIndex(e => e.id == item.id);
-			if(confirm("Do you want to delete this item?")){
+			const confirm = await Swal.fire({
+				title: 'Do you want to delete this item?',
+				text: "You won't be able to revert this!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#FC4C59',
+				cancelButtonColor: '#5E639B',
+				confirmButtonText: 'Yes, delete it!'
+				});
+
+			if(confirm.isConfirmed){
 				this.restaurant.items[index].deleted = true;
 				const resp = await server.updateRestaurant(this.restaurant);
 				if(resp.success){

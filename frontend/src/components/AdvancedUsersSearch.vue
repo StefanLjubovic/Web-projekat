@@ -35,9 +35,9 @@
 													<label for="nameInput">Customer type:</label>
 													<select name="cars" id="type" class="form-control open" v-model="filters.customerType">
 														<option value="">Show all</option>
-														<option value="Bronze">Bronze🥉</option>
                                                         <option value="Silver">Silver🥈</option>
                                                          <option value="Gold">Gold🥇</option>
+                                                         <option value="Platinum">Platinum ✨</option>
 													</select>
 												</div>
                                                 <input type="submit" class="btnRegister" @click="$emit('applyFilters', filters)" value="Apply" />
