@@ -4,7 +4,7 @@
 		<RestaurantInfo :restaurant="restaurant"/>
 		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" :editEnabled="editPermission" />
 		<RestaurantLocation v-if="selectedView == 'informations'" :restaurant="restaurant"/>
-		<RestaurantReviews v-if="selectedView == 'reviews'" :restaurant="restaurant" :editEnabled="editPermission" />
+		<RestaurantReviews v-if="selectedView == 'reviews'" :restaurant="restaurant" :editEnabled="editPermission" @refreshRestaurant="refreshRestaurant" />
 		<RestaurantItems v-if="selectedView == 'items'" :restaurant="restaurant" @refreshRestaurant="refreshRestaurant" :editEnabled="editPermission"/>
 	</div>
 </template>

@@ -17,7 +17,7 @@
             </div>
             <div class="grade">
                 <i class="fas fa-star" style="color: #FAE480"></i>
-                <label>{{restaurant.grade}}</label>
+                <label>{{restaurant.grade?.toFixed(2)}}</label>
             </div>
         </div>
     </div>

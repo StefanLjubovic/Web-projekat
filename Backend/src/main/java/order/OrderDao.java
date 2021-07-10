@@ -10,6 +10,7 @@ import util.ModelDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static server.Server.restaurantDAO;
 import static server.Server.userDao;
@@ -66,14 +67,7 @@ public class OrderDao implements ModelDao<Order> {
     }
 
     public String generateId() {
-        int nextId = 1;
-        for(Order order: orders){
-            int orderId = Integer.parseInt(order.getId());
-            if(orderId > nextId){
-                nextId = orderId + 1;
-            }
-        }
-        return  "" + nextId;
+        return UUID.randomUUID().toString();
     }
 
     public List<OrderDTO> fillDTO(String id) {
