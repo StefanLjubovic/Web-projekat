@@ -69,6 +69,19 @@
 									</p>
 								</div>
 							</div>
+							<div class="form-group">
+								<label for="type" style="opacity: 0">Open/Closed:</label>
+								<div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="status"  value="true" />
+										<label class="form-check-label" for="inlineRadio1">Open</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="status"  value="false" />
+										<label class="form-check-label" for="inlineRadio2">Closed</label>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -120,7 +133,8 @@ export default {
 			id: null,
 			newImage: false,
 			restaurant: {},
-			errorSpecial: false
+			errorSpecial: false,
+			status: false
 		};
 	},
 	methods: {
@@ -185,6 +199,7 @@ export default {
 				const data = {
 					...this.restaurant,
 					name: this.name,
+					status: !!this.status,
 					location: {
 						address: this.address,
 						longitude: this.longitude,
@@ -269,6 +284,8 @@ export default {
 					this.address = restaurant.location.address;
 					this.logintude = restaurant.location.longitude;
 					this.latitude = restaurant.location.latitude;
+					this.status = !!restaurant.opened + "";
+					console.log(this.status);
 					this.restaurant = restaurant;
 					this.loadManager(restaurant.managerId);
 				}
@@ -672,5 +689,36 @@ export default {
 	margin-right: 10px;
 	border-radius: 100px;
 	cursor: pointer;
+}
+.form-check-label{
+	color: white;
+	font-size: 20px;
+}
+input.form-check-input{
+	height: 20px;
+	width: 20px;
+	cursor: pointer;
+}
+input[type='radio']:after {
+        width: 20px;
+        height: 20px;
+        border-radius: 15px;
+        position: relative;
+        background-color: #d1d3d1;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid white;
+    }
+input[type='radio']:checked:after{
+	width: 20px;
+	height: 20px;
+	border-radius: 15px;
+	position: relative;
+	background-color: #fddf6d;
+	content: '';
+	display: inline-block;
+	visibility: visible;
+	border: 2px solid white;
 }
 </style>

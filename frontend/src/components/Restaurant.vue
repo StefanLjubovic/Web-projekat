@@ -45,7 +45,7 @@ export default {
             this.$router.push({ name: 'Restaurant',params: { id: this.restaurant.id } });
         },
             getRestaurantStatus(){
-            return this.restaurant.status ? `✋🏼 Closed ✋🏼` : "👍🏼 Open"
+            return !this.restaurant.opened ? `✋🏼 Closed ✋🏼` : "👍🏼 Open"
         },
          getRestaurantType(type){
             let retValue = type;

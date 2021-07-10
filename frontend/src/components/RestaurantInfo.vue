@@ -55,7 +55,7 @@ export default {
             return retValue;
         },
         getRestaurantStatus(){
-            return this.restaurant.status ? `✋🏼 Closed ✋🏼` : "👍🏼 Open"
+            return !this.restaurant.opened ? `✋🏼 Closed ✋🏼` : "👍🏼 Open"
         }
     }
 }

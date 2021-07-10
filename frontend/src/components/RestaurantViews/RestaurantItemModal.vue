@@ -18,7 +18,7 @@
                     </div>
                     <!-- <textarea name="" id="" cols="30" rows="10"></textarea> -->
                 </div>
-                <div class="modal-item-footer" v-if="user?.role == 'Customer'">
+                <div class="modal-item-footer" v-if="user?.role == 'Customer' && restaurant.opened">
                     <div class="amount-container">
                         <button class="amount-button" @click="decAmount" >
                             <i class="fas fa-minus"></i>
