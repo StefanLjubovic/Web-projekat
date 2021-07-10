@@ -40,13 +40,13 @@ export default {
         getRestaurantType(type){
             let retValue = type;
             switch (type) {
-                case 'barbecue':
+                case 'Barbeque':
                     retValue = `🍖 ${type}`;
                     break;
-                case 'chinese':
+                case 'Chinese':
                     retValue = `🥡 ${type}`
                     break;
-                case 'italian':
+                case 'Italian':
                     retValue = `🍕 ${type}`
                     break;
                 default:

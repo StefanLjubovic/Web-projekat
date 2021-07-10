@@ -158,6 +158,7 @@ export default {
 				image = await this.uploadImage();
                 if(!image){
                     this.notiftError();
+					return;
                 }
 			}
             this.item.image = image;

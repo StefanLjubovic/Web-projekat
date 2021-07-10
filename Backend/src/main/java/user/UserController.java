@@ -15,6 +15,7 @@ public class UserController  {
 
 
     public static Gson gson=new Gson();
+
     private static Map<String, String> loginTrack = new HashMap<>();
     public static Route getAvailableManagers = (Request req, Response res)-> {
         res.type("application/json");
@@ -38,7 +39,8 @@ public class UserController  {
             loginTrack.put(loginToken, user.getId());
             model.put("loginToken", loginToken);
             model.put("user", gson.toJson(user));
-            res.body("Ide gas");
+            if(!user.getStatus())
+                halt(400,"User is banned!");
             res.status(200);
         }else{
             System.out.println("User doesn't exist or email/password is not correct");
@@ -58,7 +60,16 @@ public class UserController  {
         user.setPassword(requestData.password);
         return userDao.update(user);
     };
-
+    public static Route getSingleManager = (Request req, Response res) -> {
+        Map<String, Object> model = new HashMap<>();
+        String id = req.queryParams("id");
+        User user = userDao.getOne(id);
+        res.status(200);
+        if(user.equals(null)){
+            halt(400,"This user doesn't exist");
+        }
+        return gson.toJson(user);
+    };
     public static Route getUserByToken = (Request req, Response res) -> {
         Map<String, Object> model = new HashMap<>();
         String token = req.queryParams("token");
@@ -111,6 +122,7 @@ public class UserController  {
         System.out.println(yourObjectStr);
         Gson gson = new GsonBuilder().create();
         User user = gson.fromJson(yourObjectStr , User.class);
+        user.setCollectedPoints(0.0);
         System.out.println(user.getRole());
         String uniqueID = UUID.randomUUID().toString();
         user.setId(uniqueID);

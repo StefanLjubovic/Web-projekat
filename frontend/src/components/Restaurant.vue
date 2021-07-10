@@ -50,7 +50,7 @@ export default {
          getRestaurantType(type){
             let retValue = type;
             switch (type) {
-                case 'Barbecue':
+                case 'Barbeque':
                     retValue = `🍖 ${type}`;
                     break;
                 case 'Chinese':

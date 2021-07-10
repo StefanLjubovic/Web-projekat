@@ -8,7 +8,7 @@
     "gender": "Male",
     "dateOfBirth": 2304999.0,
     "role": "Admin",
-    "status": false
+    "status": true
   },
   {
     "id": "123",
@@ -31,7 +31,7 @@
     "gender": "Male",
     "dateOfBirth": 2.295612E11,
     "role": "Deliverer",
-    "status": false
+    "status": true
   },
   {
     "id": "4db09bc5-7df7-4009-945e-c08ca018e69b",
@@ -42,7 +42,7 @@
     "gender": "Male",
     "dateOfBirth": -2.67097418E12,
     "role": "Customer",
-    "status": false,
+    "status": true,
     "collectedPoints": 670.3199999999999
   },
   {
@@ -54,7 +54,7 @@
     "gender": "Female",
     "dateOfBirth": 9.27324E11,
     "role": "Customer",
-    "status": false
+    "status": true
   },
   {
     "id": "07b4ee04-f62b-4e6b-9a38-dff8cc445639",

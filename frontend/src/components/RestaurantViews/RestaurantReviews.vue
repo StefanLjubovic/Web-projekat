@@ -61,8 +61,7 @@ export default {
       },
       getApproved(review){
           console.log(review)
-          console.log('aaaaaaaaaaaaaaa')
-          return review.grade.approved ? `Approved 👍🏼` : "Waiting approval 👎🏼"
+          return review?.grade?.approved ? `Approved 👍🏼` : "Waiting approval 👎🏼"
       },
       checkReviewVisibility(review){
           if(this.user.role=='Customer' && !review.grade.approved || 

@@ -19,7 +19,6 @@ public class GradeController {
     private static Gson gson=new Gson();
 
     public static Route getRestuarantGrades = (Request req, Response res) -> {
-        System.out.println(req.queryParams("id")+"aaaaa");
         List<GradeDTO> grades= gradeDao.getGradesForRestaurant(req.queryParams("id"));
         res.type("application/json");
         return gson.toJson(grades);
@@ -42,6 +41,7 @@ public class GradeController {
         GradeDTO gradeDTO=gson.fromJson(reviewJson,GradeDTO.class);
         System.out.println(gradeDTO.grade.isApproved());
         gradeDao.UpdateGrade(gradeDTO.grade);
+        restaurantDAO.updateGrade(gradeDTO.grade.getRestaurantId());
         return true;
     };
 }

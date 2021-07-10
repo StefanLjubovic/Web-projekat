@@ -29,6 +29,7 @@ public class Path {
         @Getter public static final String SAVE_REVIEW="/orders/saveReview";
         @Getter public static final String GET_RESTAURANT_REVIEWS="/restaurant/reviews";
         @Getter public static final String UPDATE_RESTAURANT_REVIEW="/restaurant/reviewsUpdate";
+        @Getter public static final String GET_SINGLE_MANAGER = "/getManagerById";
     }
     public static class Storage{
         @Getter public static final String Restaurant = "src/main/java/restaurant/Restaurant.json";

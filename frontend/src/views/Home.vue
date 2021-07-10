@@ -119,24 +119,17 @@ export default {
 }
 
 .home-container {
-	/* padding-top: 10px; */
 	position: relative;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	/* width: 80%; */
-	/* margin: auto; */
-	/* overflow: auto; */
 }
 .home {
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
-
-	/* max-height: 100vh; */
+	min-height: calc(100vh - 70px);
 	position: relative;
 	background-color: #d7e2f8;
-	/* overflow: hidden; */
 }
 .restaurants {
 	height: 100%;

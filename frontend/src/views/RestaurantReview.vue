@@ -2,10 +2,10 @@
 	<div class="home">
 		<!-- <Header @login-user="loginUser"/> -->
 		<RestaurantInfo :restaurant="restaurant"/>
-		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" :editEnabled="restaurant.id == user.restaurantId" />
+		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" :editEnabled="editPermission" />
 		<RestaurantLocation v-if="selectedView == 'informations'" :restaurant="restaurant"/>
-		<RestaurantReviews v-if="selectedView == 'reviews'" :restaurant="restaurant" />
-		<RestaurantItems v-if="selectedView == 'items'" :restaurant="restaurant" @refreshRestaurant="refreshRestaurant"/>
+		<RestaurantReviews v-if="selectedView == 'reviews'" :restaurant="restaurant" :editEnabled="editPermission" />
+		<RestaurantItems v-if="selectedView == 'items'" :restaurant="restaurant" @refreshRestaurant="refreshRestaurant" :editEnabled="editPermission"/>
 	</div>
 </template>
 <script>
@@ -21,13 +21,18 @@ import RestaurantReviews from '@/components/RestaurantViews/RestaurantReviews.vu
 import RestaurantLocation from '@/components/RestaurantViews/RestaurantLocation.vue'
 
 export default {
-	
+	watch:{
+		$route (to, from){
+			this.refreshRestaurant()
+		}
+	},
 	data() {
 		return {
 			restaurant:{
 				items: []
 			},
-			selectedView: 'items'
+			selectedView: 'items',
+			editPermission: false
 		};
 	},computed: {
 		user() {
@@ -41,26 +46,20 @@ export default {
 		refreshRestaurant(){
 			console.log('Refreshing restaurant...');
 			const id = this.$route.params.id;
-			console.log(id);
-			Server.getRestaurantById(id).then(resp => {
-				if(resp.success){
-					this.restaurant = resp.data;
-					console.log(this.restaurant)
-				}
-			})
+			if(!!id)
+				Server.getRestaurantById(id).then(resp => {
+					if(resp.success){
+						this.restaurant = resp.data;
+						this.editPermission = this.restaurant.id == this.user.restaurantId || this.user.role == 'Admin';
+						console.log(this.editPermission);
+						console.log(this.restaurant)
+					}
+				})
 		}
 	},
-	created() {
-		// this.restaurants = allRestaurants;
-		const id = this.$route.params.id;
-		Server.getRestaurantById(id).then(resp => {
-			if(resp.success){
-				this.restaurant = resp.data;
-				console.log(this.restaurant)
-			}
-		})
+	mounted() {
+		this.refreshRestaurant()
 	},
-
 	name: "RestaurantReview",
 	components: {
 		Header,

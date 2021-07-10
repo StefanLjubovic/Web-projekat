@@ -12,7 +12,7 @@
         <div class="navigator-clip" v-bind:class="{ selected: selectedState=='informations' }" @click="selectState('informations')" >
             <span>📍 Location</span>
         </div>
-        <div class="navigator-clip" @click="$emit('edit-restaurant')" v-if="editEnabled">
+        <div class="navigator-clip" v-if="editEnabled" @click="openNavigation">
             <span>⚙️ Edit</span>
         </div>
     </div>
@@ -30,6 +30,10 @@ export default {
         selectState(state){
             this.selectedState = state;
             this.$emit("change-view",state)
+        },
+        openNavigation(){
+            const id = this.$route.params.id;
+            this.$router.push({ name: 'EditRestaurant',params: { id: id} });
         }
     },
     mounted(){
