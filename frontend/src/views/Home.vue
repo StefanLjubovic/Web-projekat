@@ -88,7 +88,11 @@ export default {
 			document.getElementById('appContainer').style.overflow = 'unset';
 			document.getElementById('appContainer').style.height = 'unset';
 		},
-		sortAverageGrade(i) {},
+		sortAverageGrade(i) {
+			const correct = i == 1 ? 1 : -1;
+			const incorrect = i == 1 ? -1 : 1;
+			this.restaurants.sort((a, b) => (a.grade > b.grade ? correct : incorrect));
+		},
 	},
 	async created() {
 		// this.restaurants = allRestaurants;
