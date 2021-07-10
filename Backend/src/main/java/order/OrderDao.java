@@ -4,6 +4,8 @@ import dto.OrderDTO;
 import grade.Grade;
 import grade.GradeSerialization;
 import restaurant.Restaurant;
+import user.User;
+import user.UserRoles;
 import util.ModelDao;
 
 import java.util.ArrayList;
@@ -74,17 +76,30 @@ public class OrderDao implements ModelDao<Order> {
         return  "" + nextId;
     }
 
-    public List<OrderDTO> fillDTO() {
+    public List<OrderDTO> fillDTO(String id) {
+        User user =userDao.getOne(id);
         List<OrderDTO> orderDTOS=new ArrayList<OrderDTO>();
-        OrderDTO orderDTO=new OrderDTO();
         for(Order order: orders){
-            orderDTO.order=order;
-            orderDTO.user=userDao.getOne(order.getBuyerId());
-            orderDTO.restaurant=restaurantDAO.getOne(order.getRestaurantId());
-            orderDTO.deliverer= userDao.getOne(order.getDelivererId());
-            orderDTOS.add(orderDTO);
+            if(user.getRole().equals(UserRoles.Customer) && order.getBuyerId().equals(user.getId()))
+                addDTO(orderDTOS, order);
+            else if(user.getRole().equals(UserRoles.Manager) && order.getRestaurantId().equals(user.getRestaurantId()))
+                addDTO(orderDTOS, order);
+            else if(user.getRole().equals(UserRoles.Deliverer) && order.getDelivererId().equals(user.getId())
+            && order.getStatus().equals(OrderStatus.WaitingForDelivery))
+                addDTO(orderDTOS, order);
+            else if(user.getRole().equals(UserRoles.Admin))
+                addDTO(orderDTOS, order);
         }
         return orderDTOS;
+    }
+
+    private void addDTO(List<OrderDTO> orderDTOS, Order order) {
+        OrderDTO orderDTO=new OrderDTO();
+        orderDTO.order= order;
+        orderDTO.user=userDao.getOne(order.getBuyerId());
+        orderDTO.restaurant=restaurantDAO.getOne(order.getRestaurantId());
+        orderDTO.deliverer= userDao.getOne(order.getDelivererId());
+        orderDTOS.add(orderDTO);
     }
 
     public void UpdateOrder(Order order) {

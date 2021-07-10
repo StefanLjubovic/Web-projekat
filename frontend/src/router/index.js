@@ -62,7 +62,7 @@ const routes = [
     component: CreateArticle
   },
   {
-    path: '/view-customers',
+    path: '/view-customers/:id',
     name: 'ManagerViewOfCustomers',
     component: ManagerViewOfCustomers
   }

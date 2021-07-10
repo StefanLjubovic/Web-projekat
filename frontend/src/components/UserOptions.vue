@@ -85,7 +85,7 @@ export default {
 		},
 		viewCustomers() {
 			this.$emit('create-restaurant');
-			this.$router.push({ path: '/view-customers' });
+			this.$router.push({ name: 'ManagerViewOfCustomers',params: { id: this.user.id } });
 		},
 		signout() {
 			localStorage.clear();

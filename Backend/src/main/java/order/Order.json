@@ -19,5 +19,25 @@
     "status": "Delivered",
     "buyerId": "43fe318a-3489-4efa-80ca-070899c069e4",
     "delivererId": "b68a1af1-0330-4c6c-a58a-4e2c64ccb5e9"
+  },
+  {
+    "id": "2",
+    "items": [
+      {
+        "id": "9d612d81-dcd5-425b-890b-d90bc434789f",
+        "name": "Burger",
+        "price": 560.0,
+        "type": "food",
+        "size": 600.0,
+        "description": "asdfasdfas",
+        "image": "163058752905295607520000000096598.webp",
+        "deleted": false
+      }
+    ],
+    "restaurantId": "2",
+    "date": "Jul 9, 2021, 8:43:06 PM",
+    "price": 560.0,
+    "status": "InPreparation",
+    "buyerId": "43fe318a-3489-4efa-80ca-070899c069e4"
   }
 ]

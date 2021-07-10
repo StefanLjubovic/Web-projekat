@@ -53,7 +53,6 @@ export default {
 	created() {
 		// this.restaurants = allRestaurants;
 		const id = this.$route.params.id;
-		console.log(id+'aaaaaaaaaaaaaaaaaaaaaa');
 		Server.getRestaurantById(id).then(resp => {
 			if(resp.success){
 				this.restaurant = resp.data;
