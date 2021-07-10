@@ -46,7 +46,7 @@
     "dateOfBirth": -2.67097418E12,
     "role": "Customer",
     "status": true,
-    "collectedPoints": 670.3199999999999
+    "collectedPoints": 1638.56
   },
   {
     "id": "43fe318a-3489-4efa-80ca-070899c069e4",
@@ -57,8 +57,8 @@
     "gender": "Female",
     "dateOfBirth": 9.27324E11,
     "role": "Customer",
-    "collectedPoints": 0.0,
-    "status": true
+    "status": true,
+    "collectedPoints": 670.3199999999999
   },
   {
     "id": "07b4ee04-f62b-4e6b-9a38-dff8cc445639",

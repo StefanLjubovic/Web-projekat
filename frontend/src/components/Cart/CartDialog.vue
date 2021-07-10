@@ -68,8 +68,8 @@ export default {
             this.$router.push({name: 'Checkout'});
         },
         totalPrice(){
-            const discount = this?.user?.reward?.discount || 1;
-            return this.cart.items.reduce((a, b) => a + b.price, 0) * discount;
+            const discount = this?.user?.reward?.discount || 0;
+            return this.cart.items.reduce((a, b) => a + b.price, 0) * (1 - discount);
         }
 	},
 	created() {

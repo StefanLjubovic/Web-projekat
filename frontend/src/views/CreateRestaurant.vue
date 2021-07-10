@@ -472,7 +472,8 @@ export default {
 	/* padding-bottom: 10px; */
 	z-index: 0;
 	position: relative;
-	height: 300px;
+	min-height: 300px;
+    max-height: calc(100vh - 400px);
 }
 .restaurant-info-card {
 	padding: 17px;
