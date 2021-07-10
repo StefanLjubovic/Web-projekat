@@ -199,7 +199,7 @@ export default {
 				const data = {
 					...this.restaurant,
 					name: this.name,
-					status: !!this.status,
+					opened: this.status == 'true',
 					location: {
 						address: this.address,
 						longitude: this.longitude,
