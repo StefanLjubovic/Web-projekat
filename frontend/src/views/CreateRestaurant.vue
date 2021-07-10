@@ -76,12 +76,13 @@
 				<div class="address-field">
 					<input
 						type="text"
-						placeholder="Enter address here*"
+						placeholder="Enter address here* (Street name, City, Zip code)"
 						v-bind:class="{ errorAddress: error['address'] }"
-						@change="changeAddress"
+						v-on:keydown="changeAddress"
 						v-model="address"
 					/>
 				</div>
+				<p for="" v-if="errorSpecial" class="address-field-error">Invalid format <i>(Street name, City, Zip code)</i></p>
 				<div class="submit-register" @click="saveRestaurant">
 					{{ !!id ? 'Save' : 'Create'}}
 				</div>
@@ -116,7 +117,8 @@ export default {
 			imageFile: null,
 			id: null,
 			newImage: false,
-			restaurant: {}
+			restaurant: {},
+			errorSpecial: false
 		};
 	},
 	methods: {
@@ -227,7 +229,7 @@ export default {
 				console.log(key);
 				if (this.error[key]) return true;
 			}
-			return false;
+			return this.errorSpecial;
 		},
 		registerManager() {
 			this.showLoginModal = true;
@@ -246,6 +248,8 @@ export default {
 		},
 		changeAddress() {
 			this.error['address'] = this.address == '';
+			const regex = /(\w+\ *)+\,\ *(\w+\ *)+\,\ *\w+/g;
+			this.errorSpecial = !this.address.match(regex);
 		},
 		onChange(event) {
 			const myArr = event.target.value.split('.');
@@ -544,12 +548,28 @@ export default {
 	width: 400px;
 	border-radius: 27px;
 	display: flex;
-	flex-direction: row;
+	/* flex-direction: row; */
 	border-radius: 100px;
 	padding: 0px 11px;
 	height: 39px;
 	align-items: center;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+.address-field-error{
+	position: absolute;
+	top: 75px;
+	right: 10px;
+	/* width: 400px; */
+	border-radius: 27px;
+	display: flex;
+	/* flex-direction: row; */
+	border-radius: 100px;
+	padding: 0px 11px;
+	align-items: center;
+	color: #fc4c59;
+	font-weight: 600;
+	background-color: #FFFFFF;
+	margin: 0;
 }
 .submit-register {
 	padding: 10px;

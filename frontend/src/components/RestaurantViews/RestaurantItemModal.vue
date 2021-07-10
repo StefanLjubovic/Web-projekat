@@ -12,9 +12,13 @@
                 <div class="modal-item-body">
                     <h3>{{item.name}}</h3>
                     <p>{{item.description}}</p>
+                    <div class="informations">
+                        <div class="size">Portion size: <b>{{item.size}}g</b></div>
+                        <div class="price">Price: <b>{{item.price}} RSD</b></div>
+                    </div>
                     <!-- <textarea name="" id="" cols="30" rows="10"></textarea> -->
                 </div>
-                <div class="modal-item-footer">
+                <div class="modal-item-footer" v-if="user?.role == 'Customer'">
                     <div class="amount-container">
                         <button class="amount-button" @click="decAmount" >
                             <i class="fas fa-minus"></i>
@@ -45,7 +49,7 @@ export default {
             amount: 1
         }
     },
-    props:['item', 'restaurant'],
+    props:['item', 'restaurant', 'user'],
     mounted(){
     },
     methods:{
@@ -194,5 +198,18 @@ export default {
     border-radius: 100px;
     padding: 10px 0;
     cursor: pointer;
+}
+.price{
+    color: #42405f;
+	font-weight: 500;
+}
+.size{
+    color: #42405f;
+	font-weight: 500;
+    flex: 1;
+}
+.informations{
+    display: flex;
+
 }
 </style>
