@@ -78,7 +78,6 @@ export default {
 		applyFilters(filters, search) {
 			this.filters = filters;
             const maxPrice = !!search.priceTo ? parseInt(search.priceTo) : Number.MAX_SAFE_INTEGER;
-            const maxPrice = !!search.priceTo ? parseInt(search.priceTo) : Number.MAX_SAFE_INTEGER;
             const minPrice = !!search.priceFrom ? parseInt(search.priceFrom) : Number.MIN_SAFE_INTEGER;
 			this.orders = this.allOrders.filter(
 				(e) =>
