@@ -45,7 +45,7 @@
 			</p>
 		</div>
 	</div>
-	<RestaurantItemModal v-if="showModal" v-bind:item="selectedItem" @closeModal="closeModal" :restaurant="restaurant" />
+	<RestaurantItemModal v-if="showModal" v-bind:item="selectedItem" @closeModal="closeModal" :restaurant="restaurant" :user="user" />
 	<EditItemModal v-if="showEditModal" v-bind:selectedItem="selectedItem" :restaurant="restaurant" @closeModal="closeEditModal" @closeSuccess="closeSuccess" />
 </template>
 <script>
@@ -73,6 +73,11 @@ export default {
 			showEditModal: false,
 			selectedItem: {},
 		};
+	},
+	computed: {
+		user() {
+			return this.$store.getters.getUser;
+		},
 	},
 	props: {
 		restaurant: {

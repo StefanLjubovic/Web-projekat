@@ -22,7 +22,7 @@ public class RestaurantDao implements ModelDao<Restaurant> {
     }
     public List<Restaurant> GetAllRestaurants(){
         List<Restaurant> _restaurants = restaurants;
-        Collections.sort(_restaurants, (o1, o2) -> Boolean.compare(o1.getStatus(), o2.getStatus()));
+        Collections.sort(_restaurants, (o1, o2) -> Boolean.compare(o1.isOpened(), o2.isOpened()));
         return _restaurants;
     }
     public boolean SaveRestaurant(Restaurant restaurant){

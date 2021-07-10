@@ -67,7 +67,7 @@ const initMap = (_this) => {
         layers: [initLayer, layer],
         view: new View({
             center: _this.coordinates,
-            zoom: 18,
+            zoom: 17,
         }),
     });
 
@@ -90,7 +90,9 @@ export default {
 	},
 	props: ['restaurant', 'coordinates'],
 	mounted() {
-		initMap(this);
+		setTimeout(()=>{
+			initMap(this);
+		}, 700)
 	},
 	unmounted() {
 		console.log('Unmounging locations...');

@@ -15,7 +15,9 @@
 					</div>
 				</div>
 				<div class="right-side-container">
-					<h3 class="title">Create a restaurant</h3>
+					<div class="header">
+						<button class="back" v-if="!!id" @click="$router.back"><i class="fas fa-chevron-left"></i></button> <h3 class="title">  Create a restaurant</h3>
+					</div>
 					<div class="restaurant-info-body">
 						<div class="restaurant-info-body-part">
 							<div class="form-group ">
@@ -67,6 +69,19 @@
 									</p>
 								</div>
 							</div>
+							<div class="form-group">
+								<label for="type" style="opacity: 0">Open/Closed:</label>
+								<div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="status"  value="true" />
+										<label class="form-check-label" for="inlineRadio1">Open</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="status"  value="false" />
+										<label class="form-check-label" for="inlineRadio2">Closed</label>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -76,12 +91,13 @@
 				<div class="address-field">
 					<input
 						type="text"
-						placeholder="Enter address here*"
+						placeholder="Enter address here* (Street name, City, Zip code)"
 						v-bind:class="{ errorAddress: error['address'] }"
-						@change="changeAddress"
+						v-on:keydown="changeAddress"
 						v-model="address"
 					/>
 				</div>
+				<p for="" v-if="errorSpecial" class="address-field-error">Invalid format <i>(Street name, City, Zip code)</i></p>
 				<div class="submit-register" @click="saveRestaurant">
 					{{ !!id ? 'Save' : 'Create'}}
 				</div>
@@ -116,7 +132,9 @@ export default {
 			imageFile: null,
 			id: null,
 			newImage: false,
-			restaurant: {}
+			restaurant: {},
+			errorSpecial: false,
+			status: false
 		};
 	},
 	methods: {
@@ -181,6 +199,7 @@ export default {
 				const data = {
 					...this.restaurant,
 					name: this.name,
+					opened: this.status == 'true',
 					location: {
 						address: this.address,
 						longitude: this.longitude,
@@ -227,7 +246,7 @@ export default {
 				console.log(key);
 				if (this.error[key]) return true;
 			}
-			return false;
+			return this.errorSpecial;
 		},
 		registerManager() {
 			this.showLoginModal = true;
@@ -246,6 +265,8 @@ export default {
 		},
 		changeAddress() {
 			this.error['address'] = this.address == '';
+			const regex = /(\w+\ *)+\,\ *(\w+\ *)+\,\ *\w+/g;
+			this.errorSpecial = !this.address.match(regex);
 		},
 		onChange(event) {
 			const myArr = event.target.value.split('.');
@@ -263,6 +284,8 @@ export default {
 					this.address = restaurant.location.address;
 					this.logintude = restaurant.location.longitude;
 					this.latitude = restaurant.location.latitude;
+					this.status = !!restaurant.opened + "";
+					console.log(this.status);
 					this.restaurant = restaurant;
 					this.loadManager(restaurant.managerId);
 				}
@@ -473,7 +496,7 @@ export default {
 	z-index: 0;
 	position: relative;
 	min-height: 300px;
-    max-height: calc(100vh - 400px);
+    height: calc(100vh - 400px);
 }
 .restaurant-info-card {
 	padding: 17px;
@@ -544,12 +567,28 @@ export default {
 	width: 400px;
 	border-radius: 27px;
 	display: flex;
-	flex-direction: row;
+	/* flex-direction: row; */
 	border-radius: 100px;
 	padding: 0px 11px;
 	height: 39px;
 	align-items: center;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+.address-field-error{
+	position: absolute;
+	top: 75px;
+	right: 10px;
+	/* width: 400px; */
+	border-radius: 27px;
+	display: flex;
+	/* flex-direction: row; */
+	border-radius: 100px;
+	padding: 0px 11px;
+	align-items: center;
+	color: #fc4c59;
+	font-weight: 600;
+	background-color: #FFFFFF;
+	margin: 0;
 }
 .submit-register {
 	padding: 10px;
@@ -632,5 +671,54 @@ export default {
 	border: unset;
 	outline: unset;
 	border-radius: 100px;
+}
+.header{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.back{
+	background-color: transparent;
+	border: unset;
+	font-size: 15px;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #FFFFFF66;
+	margin-top: -5px;
+	margin-right: 10px;
+	border-radius: 100px;
+	cursor: pointer;
+}
+.form-check-label{
+	color: white;
+	font-size: 20px;
+}
+input.form-check-input{
+	height: 20px;
+	width: 20px;
+	cursor: pointer;
+}
+input[type='radio']:after {
+        width: 20px;
+        height: 20px;
+        border-radius: 15px;
+        position: relative;
+        background-color: #d1d3d1;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid white;
+    }
+input[type='radio']:checked:after{
+	width: 20px;
+	height: 20px;
+	border-radius: 15px;
+	position: relative;
+	background-color: #fddf6d;
+	content: '';
+	display: inline-block;
+	visibility: visible;
+	border: 2px solid white;
 }
 </style>

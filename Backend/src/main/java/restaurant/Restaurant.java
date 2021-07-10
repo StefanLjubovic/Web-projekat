@@ -8,7 +8,7 @@ public class  Restaurant {
     private String id;
     private String name;
     private String type;
-    private boolean status;
+    private boolean opened;
     private Location location;
     private String logo;
     private List<Item> items;
@@ -19,7 +19,7 @@ public class  Restaurant {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.status = status;
+        this.opened = status;
         this.location = location;
         this.managerId = managerId;
     }
@@ -52,12 +52,12 @@ public class  Restaurant {
         this.type = type;
     }
 
-    public boolean getStatus() {
-        return status;
+    public boolean isOpened() {
+        return opened;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setOpened(boolean opened) {
+        this.opened = opened;
     }
 
     public Location getLocation() {
@@ -84,9 +84,6 @@ public class  Restaurant {
         this.items = items;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
 
     public Double getGrade() {
         return grade;
