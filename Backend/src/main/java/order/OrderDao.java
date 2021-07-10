@@ -78,8 +78,9 @@ public class OrderDao implements ModelDao<Order> {
                 addDTO(orderDTOS, order);
             else if(user.getRole().equals(UserRoles.Manager) && order.getRestaurantId().equals(user.getRestaurantId()))
                 addDTO(orderDTOS, order);
-            else if(user.getRole().equals(UserRoles.Deliverer) && order.getDelivererId().equals(user.getId())
-            && order.getStatus().equals(OrderStatus.WaitingForDelivery))
+            else if((user.getRole().equals(UserRoles.Deliverer) && order.getStatus().equals(OrderStatus.WaitingForDelivery)))
+                addDTO(orderDTOS, order);
+            if(order.getDelivererId() !=null && order.getDelivererId().equals(user.getId()) &&(user.getRole().equals(UserRoles.Deliverer)))
                 addDTO(orderDTOS, order);
             else if(user.getRole().equals(UserRoles.Admin))
                 addDTO(orderDTOS, order);
