@@ -4,11 +4,11 @@
 			<button class="btn btn-light profile-container" @click="$emit('edit-profile')">
 				<div class="profile-conatiner-image">
 					<img class="rounded-image" :src="getImgUrl(user?.logo)" v-bind:alt="user.logo" v-if="!!user.logo" />
-					<i class="far fa-user user-icon fa-2x" v-if="!user.logo"></i>
+					<i class="far fa-user user-icon fa-2x" style="color: #1F1F43" v-if="!user.logo"></i>
 				</div>
 				<div class="user-info">
 					<h3>{{ user.firstName }} {{ user.lastName }}</h3>
-					<p class="info">Profile info</p>
+					<p class="info role">{{user.role}}</p>
 				</div>
 			</button>
 		</div>
@@ -135,16 +135,23 @@ export default {
 .user-icon {
 	width: 25px;
 	height: 20px;
-	color: black;
+	color: #1F1F43;
 	margin-bottom: 20px;
 	margin-top: 10px;
 	float: left;
 }
 .user-info {
 	margin-right: 100px;
+	color: #1F1F43;
+}
+.user-info > *{
+	margin-bottom: unset;
+	text-align: left;
 }
 .info {
 	margin-right: 50px;
+	font-weight: 500;
+	font-size: 14px;
 }
 .margin {
 	margin-bottom: 10px;
@@ -161,5 +168,9 @@ export default {
 }
 .btn-light {
 	background-color: #fddf6d;
+}
+.btn-components{
+	font-weight: 500;
+	color: #1F1F43 !important;
 }
 </style>
