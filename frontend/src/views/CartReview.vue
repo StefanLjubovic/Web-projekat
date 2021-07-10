@@ -34,8 +34,8 @@ export default {
 			return this.cart?.items?.length || '0';
 		},
         totalPrice(){
-            const discount = this?.user?.reward?.discount || 1;
-            return (this?.cart?.items?.reduce((a, b) => a + b.price, 0) * discount).toFixed(2) || "0.00";
+            const discount = this?.user?.reward?.discount || 0;
+            return (this?.cart?.items?.reduce((a, b) => a + b.price, 0) * (1 - discount)).toFixed(2) || "0.00";
         }
 	},
 
