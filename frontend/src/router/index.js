@@ -42,6 +42,11 @@ const routes = [
     component: CreateRestaurant
   },
   {
+    path: '/edit-restaurant',
+    name: 'EditRestaurant',
+    component: CreateRestaurant
+  },
+  {
     path: '/profile',
     name: 'EditProfile',
     component: EditProfile

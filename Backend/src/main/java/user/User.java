@@ -22,7 +22,23 @@ public class User{
     private String cartId;
     private Reward reward;
     private boolean status=true;
-    private Double collectedPoints=0.0;
+    private Double collectedPoints;
+
+    public Reward getReward() {
+        return reward;
+    }
+
+    public void setReward(Reward reward) {
+        this.reward = reward;
+    }
+
+    public Double getCollectedPoints() {
+        return collectedPoints;
+    }
+
+    public void setCollectedPoints(Double collectedPoints) {
+        this.collectedPoints = collectedPoints;
+    }
 
     public User(String id, String firstName, String lastName, String username, String password, String gender, Integer dateOfBirth, UserRoles role) {
         this.id = id;

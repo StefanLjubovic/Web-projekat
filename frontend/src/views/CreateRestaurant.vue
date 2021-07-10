@@ -201,7 +201,6 @@ export default {
         }
 
 	},
-
     async created() {
         server.getAllManagers().then(resp=>{
             console.log("Resp", resp.data);

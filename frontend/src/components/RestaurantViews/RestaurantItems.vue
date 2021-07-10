@@ -1,7 +1,7 @@
 <template>
 	<div style="width: 888px; margin: auto" class="header">
 		<h3>Items</h3>
-		<span class="header-new-item" @click="openEditModal(null)"> <i class="fas fa-plus"></i> New Item </span>
+		<span class="header-new-item" @click="openEditModal(null)" v-if="editEnabled"> <i class="fas fa-plus"></i> New Item </span>
 	</div>
 	<div class="items-list">
 		<div :key="index" v-for="(item, index) in availableItems(restaurant?.items)" class="item-wrapper">
@@ -24,7 +24,7 @@
 				</div>
 				
 			</div>
-			<div class="item-options">
+			<div class="item-options" v-if="editEnabled">
 					<div class="space"></div>
 					<div class="item-options-panel">
 						<div class="single-option" @click="openEditModal(item)">
@@ -39,7 +39,7 @@
 		<div class="empty-list" v-if="availableItems(restaurant.items).length == 0">
 			<p>This restaurant don't have any item yet</p>
 		</div>
-		<div class="new-item-placeholder" @click="openEditModal(null)">
+		<div class="new-item-placeholder" @click="openEditModal(null)" v-if="editEnabled">
 			<p class="new-item-placeholder-text">
 				Add new item
 			</p>
@@ -81,6 +81,9 @@ export default {
 				items: [],
 			},
 		},
+		editEnabled:{
+			type: Boolean
+		}
 	},
 	components: { RestaurantItemModal, EditItemModal },
 	emits:['refreshRestaurant'],
