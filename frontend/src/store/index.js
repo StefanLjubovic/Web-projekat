@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import server from '../server';
 // Vue.use(Vuex)
 
 export default createStore({
@@ -68,7 +69,16 @@ export default createStore({
   },
   actions: {
     //asyncronous
-    
+    async loadUser(state, token){
+      const resp = await server.getUserByToken(token);
+      if(resp.success){
+          const data = resp.data;
+          const user = JSON.parse(data['user'])
+          const token = data['loginToken']
+          localStorage.setItem("token", token);
+          state.user = user;
+      }
+    }
   },
   modules: {},
   getters: {
