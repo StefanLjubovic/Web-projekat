@@ -21,7 +21,7 @@ public class User{
     private String restaurantId;
     private String cartId;
     private Reward reward;
-    private boolean status;
+    private boolean status = true;
     private Double collectedPoints;
 
     public Reward getReward() {

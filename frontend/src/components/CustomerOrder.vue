@@ -5,15 +5,16 @@
         </div>
         <div class="restaurant-info">
             <h3>Customer: {{order.user.firstName}} {{order.user.lastName}}</h3>
-            <div v-if="order.deliverer !=null"><h5>Deliverer🚚:{{order.deliverer.firstName}} {{order.deliverer.lastName}}</h5></div> 
+            <div v-if="order.deliverer !=null"><h5>Deliverer🚚: {{order.deliverer.firstName}} {{order.deliverer.lastName}}</h5></div> 
             <label for="desctiption">Ordered food:&nbsp;</label>
             <label for="desctiption" v-for="article in articles" :key="article">{{article.name}} x{{article.count}}&nbsp;</label><br>
+            <p class="restaurant-name"><i class="fas fa-utensils"></i> {{order.restaurant.name}}</p>
         </div>
         <div class="restaurant-details">
             <div class="restaurant-location">
-                <p>Order status📍:{{order.order.status}} </p>
-                <p>Price💸:{{order.order.price}}</p>
-                <p>Date of order📆:{{order.order.date}} <b></b></p>
+                <p>Order status📍: {{order.order.status}} </p>
+                <p>Price💸: {{order.order.price}}</p>
+                <p>Date of order📆: {{order.order.date}} <b></b></p>
             </div>
         </div>
     </div>
@@ -37,13 +38,13 @@ export default {
     },
     created(){
         let ordersDict={}
-            for(const item of this.order.order.items){
-                if(!ordersDict[item.name])
-                    ordersDict[item.name]={count: 0,...item};
-                ordersDict[item.name].count++
-            }
-            this.articles=Object.values(ordersDict)
-            return Object.values(ordersDict)
+        for(const item of this.order.order.items){
+            if(!ordersDict[item.name])
+                ordersDict[item.name]={count: 0,...item};
+            ordersDict[item.name].count++
+        }
+        this.articles=Object.values(ordersDict)
+        console.log(this.order);
     }
 }
 </script>
@@ -107,5 +108,11 @@ export default {
         width: 100%;
         height: auto;
         border-radius: 10px;
+    }
+    .restaurant-name{
+        font-size: 14px;
+        font-weight: 500;
+        color: #8F8FA1;
+        margin-bottom: unset;
     }
 </style>

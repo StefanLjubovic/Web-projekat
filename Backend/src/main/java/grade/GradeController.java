@@ -41,6 +41,7 @@ public class GradeController {
         GradeDTO gradeDTO=gson.fromJson(reviewJson,GradeDTO.class);
         System.out.println(gradeDTO.grade.isApproved());
         gradeDao.UpdateGrade(gradeDTO.grade);
+        restaurantDAO.updateGrade(gradeDTO.grade.getRestaurantId());
         return true;
     };
 }

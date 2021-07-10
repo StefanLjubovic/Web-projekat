@@ -1,5 +1,6 @@
 package restaurant;
 
+import dto.GradeDTO;
 import user.User;
 import util.ModelDao;
 
@@ -9,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collector;
 
+import static server.Server.gradeDao;
 import static server.Server.restaurantDAO;
 
 public class RestaurantDao implements ModelDao<Restaurant> {
@@ -91,5 +93,25 @@ public class RestaurantDao implements ModelDao<Restaurant> {
                 return;
             }
         }
+    }
+
+    private Double calculateGrade(String restaurantId){
+        List<GradeDTO> grades =  gradeDao.getGradesForRestaurant(restaurantId);
+        Double sum = 0.0;
+        Integer count = 0;
+        for(GradeDTO grade: grades){
+            if(grade.grade.isApproved()){
+                sum += grade.grade.getGrade();
+                count++;
+            }
+        }
+        return sum / count;
+    }
+
+    public void updateGrade(String restaurantId) {
+        Restaurant restaurant = this.getOne(restaurantId);
+        Double grade = calculateGrade(restaurantId);
+        restaurant.setGrade(grade);
+        UpdateRestaurant(restaurant);
     }
 }
