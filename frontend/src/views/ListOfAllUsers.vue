@@ -91,8 +91,11 @@ export default {
 			}
 		},
 		applyFilters(filters) {
-			console.log(filters);
 			this.users = this.allUsers.filter((e) => e.role.toLowerCase().includes(filters.userRole.toLowerCase()));
+            console.log(filters.customerType);
+            console.log(this.users.filter(e => e?.reward));
+            if(!!filters.customerType)
+                this.users = this.users.filter(e => !!(e?.reward?.name == filters.customerType))
 			this.advancedSearch = false;
 			document.getElementById('appContainer').style.overflow = 'unset';
 			document.getElementById('appContainer').style.height = 'unset';

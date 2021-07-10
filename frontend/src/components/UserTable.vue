@@ -34,6 +34,9 @@
 					</tr>
 				</thead>
 				<tbody>
+          <tr v-if="users?.length == 0">
+            <td colspan="6" class="empty-table">You don't have any data for this filter...</td>
+          </tr>
 					<tr v-for="(user, i) in users" :key="i">
 						<td>{{ i + 1 }}</td>
 						<td>{{ user.firstName }}</td>
@@ -132,5 +135,10 @@ export default {
 }
 .down {
 	color: #fc4c59;
+}
+.empty-table{
+  text-align: center;
+  padding: 100px 0;
+  font-weight: 500;
 }
 </style>
