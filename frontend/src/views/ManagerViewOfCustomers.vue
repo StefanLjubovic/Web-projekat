@@ -32,11 +32,15 @@ export default {
             title: 'Change order status',
             description: 'Are you sure you want to change status from in preparation to waiting for delivery?',
             confirmModal:false,
-            user:{},
             modifiedOrder:{},
 
         }
     },
+    	computed: {
+		user() {
+			return this.$store.getters.getUser;
+		},
+	},
     components:{
         CustomerOrders,
         SearchBar,
@@ -46,24 +50,17 @@ export default {
         Comment,
         ConfirmModal
     },
-    created(){
+    mounted(){
         this.user=this.$store.getters.getUser;
-        Server.getAllOrders().then((resp) => {
+        const id=this.user.id
+        console.log(id);
+        Server.getAllOrders(id).then((resp) => {
 			console.log('Resp', resp.data);
 			if (resp.success) {
 				this.orders = resp.data;
 			}
 		});
         let sum=0;
-        /*
-        for(var i=0;i<this.orders.length;i++){
-            for(var j=0;j<this.orders[i].items.length;j++){
-                sum+=parseInt(this.users[i].items[j].price)
-            }
-            this.users[i].totalPrice=sum;
-            sum=0;
-        }
-        */
     },
     methods:{
         sortByName(i){
@@ -132,6 +129,7 @@ export default {
         },
 
         openDialog(order){
+            console.log(this.user)
             if(this.user.role=="Manager" && order.order.status=='InPreparation'){
             this.modifiedOrder=order;
             this.confirmModal=true

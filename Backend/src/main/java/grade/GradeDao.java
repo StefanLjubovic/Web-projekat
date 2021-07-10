@@ -63,11 +63,12 @@ public class GradeDao implements ModelDao<Grade> {
 
     public List<GradeDTO> getGradesForRestaurant(String restaurantId) {
         List<GradeDTO> retVal=new ArrayList<>();
-        GradeDTO dto=new GradeDTO();
         for(Grade grade: grades){
             if(grade.getRestaurantId().equals(restaurantId)){
+                GradeDTO dto=new GradeDTO();
                 dto.user=userDao.getOne(grade.getUserId());
                 dto.grade=grade;
+                System.out.println(grade.getComment());
                 retVal.add(dto);
             }
         }

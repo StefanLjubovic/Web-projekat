@@ -33,7 +33,8 @@ public class OrderController {
     };
 
     public static Route getAllOrders=(Request req,Response res)->{
-        List<OrderDTO> dtos=orderDao.fillDTO();
+        System.out.println(req.queryParams("id")+"aaaaa");
+        List<OrderDTO> dtos=orderDao.fillDTO(req.queryParams("id"));
         return gson.toJson(dtos);
     };
 

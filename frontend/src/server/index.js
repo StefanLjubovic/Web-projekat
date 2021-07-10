@@ -22,7 +22,7 @@ server.getAllRestaurants = () => {
 		.catch((error) => handleError(error));
 };
 
-server.getAllOrders = () => {
+server.getAllOrders = (id) => {
 	const token = localStorage.getItem('token');
 	const options = {
 		method: 'GET',
@@ -30,7 +30,7 @@ server.getAllOrders = () => {
 			'Content-Type': 'application/json;charset=UTF-8',
 			Accept: 'application/json',
 		},
-		url: `${baseUrl}/getOrders`,
+		url: `${baseUrl}/getOrders?id=${id}`,
 	};
 	return axios(options)
 		.then((response) => handleSuccess(response))

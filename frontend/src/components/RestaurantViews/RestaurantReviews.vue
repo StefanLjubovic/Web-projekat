@@ -46,37 +46,7 @@ export default {
             title: 'Approve review',
             description: 'If you approve review all customers will see it.',
             selectedReview: {},
-            reviews:[
-                // {
-                //     text:"Preporučio bih ga.",
-                //     date: 1624749081190,
-                //     username: 'Pera peric',
-                //     food: 'Riba',
-                //     image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
-                //     approved: true
-                // },{
-                //     text:"Predivan obrok. Brza dostava. Sviđa mi se.",
-                //     date: 1624749081190,
-                //     username: 'Predrag Stojacic',
-                //     food: 'Burger',
-                //     image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
-                //     approved: false
-                // },{
-                //     text:"Test",
-                //     date: 1624749081190,
-                //     username: 'Marko Markovic',
-                //     food: 'Burger',
-                //     image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
-                //     approved: true
-                // },{
-                //     text:"Najavili 71min. Stiglo za max 40min. Lepo, toplo, svi prilozi ispravni, dostavljač izašao u susret. 10/10",
-                //     date: 1624749081190,
-                //     username: 'Bosko Buha',
-                //     food: 'Testenine',
-                //     image: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
-                //     approved: false
-                // }
-            ]
+            reviews:[]
         }
     },
     props:["restaurant"],
@@ -94,7 +64,8 @@ export default {
           return review?.grade?.approved ? `Approved 👍🏼` : "Waiting approval 👎🏼"
       },
       checkReviewVisibility(review){
-          if(this.user.role=='Customer' && !review.grade.approved)
+          if(this.user.role=='Customer' && !review.grade.approved || 
+          (this.user.restaurantId != this.restaurant.id &&( this.user.role=='Manager' && !review.grade.approved )))
                 return false
           return true;
       },
@@ -127,7 +98,7 @@ export default {
       },
 
     },
-    created(){
+    mounted(){
         const id = this.$route.params.id;
         console.log(id);
         Server.getRestaurantReviews(id).then((resp)=>{
