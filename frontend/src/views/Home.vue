@@ -35,7 +35,7 @@ export default {
 	},
 	methods: {
 		filterRestaurants(text) {
-			this.restaurants = this.restaurants.filter(
+			this.restaurants = this.allRestaurants.filter(
 				(e) =>
 					e.name.toLowerCase().includes(text.toLowerCase()) ||
 					e.location.address.toLowerCase().includes(text.toLowerCase()) ||

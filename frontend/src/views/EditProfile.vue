@@ -150,22 +150,22 @@ export default {
 	font-size: 13px;
 }
 .profile-button {
-	background-color: #ffc312;
-	color: black;
+	background-color: #fddf6d;
+	color: #42405f;
 	box-shadow: none;
 	border: none;
 }
 .profile-button:hover {
-	background-color: #ffc312;
-	color: black;
+	background-color: #fddf6d;
+	color: #42405f;
 }
 .btn {
-	background-color: #ffc312;
-	color: black;
+	background-color: #fddf6d;
+	color: #42405f;
 }
 .profile-button:focus {
-	background-color: #ffc312;
-	color: black;
+	background-color: #fddf6d;
+	color: #42405f;
 }
 .alert-form {
 	margin-top: 10px;
@@ -173,8 +173,8 @@ export default {
 	width: 93%;
 }
 .profile-button:active {
-	background-color: #ffc312;
-	color: black;
+	background-color: #fddf6d;
+	color: #42405f;
 }
 
 .back:hover {
@@ -188,8 +188,8 @@ export default {
 }
 
 .add-experience:hover {
-	background-color: #ffc312;
-	color: black;
+	background-color: #fddf6d;
+	color: #42405f;
 	cursor: pointer;
 }
 .background {

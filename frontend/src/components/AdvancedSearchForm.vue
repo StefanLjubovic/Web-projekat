@@ -112,8 +112,8 @@ export default {
 
 }
 .combobox{
-    background: #FFC312;
-    color: black;
+    background-color: #FDDF6D;
+        color: #42405F;
 }
 .form-group > label {
 	color: white;
