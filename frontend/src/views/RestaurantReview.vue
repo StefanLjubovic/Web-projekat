@@ -2,10 +2,10 @@
 	<div class="home">
 		<!-- <Header @login-user="loginUser"/> -->
 		<RestaurantInfo :restaurant="restaurant"/>
-		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" :editEnabled="editPermission" />
+		<RestaurantNavigator @change-view="changeView" :selectedView="selectedView" :editEnabled="getPermission" />
 		<RestaurantLocation v-if="selectedView == 'informations'" :restaurant="restaurant"/>
-		<RestaurantReviews v-if="selectedView == 'reviews'" :restaurant="restaurant" :editEnabled="editPermission" @refreshRestaurant="refreshRestaurant" />
-		<RestaurantItems v-if="selectedView == 'items'" :restaurant="restaurant" @refreshRestaurant="refreshRestaurant" :editEnabled="editPermission"/>
+		<RestaurantReviews v-if="selectedView == 'reviews'" :restaurant="restaurant" :editEnabled="getPermission" @refreshRestaurant="refreshRestaurant" />
+		<RestaurantItems v-if="selectedView == 'items'" :restaurant="restaurant" @refreshRestaurant="refreshRestaurant" :editEnabled="getPermission"/>
 	</div>
 </template>
 <script>
@@ -38,6 +38,9 @@ export default {
 		user() {
 			return this.$store.getters.getUser;
 		},
+		getPermission(){
+			return this.restaurant.id == this.user.restaurantId || this.user.role == 'Admin'
+		}
 	},
 	methods:{
 		changeView(view){

@@ -67,7 +67,8 @@ export default {
         },
         decAmount(){
             this.amount--;
-        },submitOrder(){
+        },
+        submitOrder(){
             Swal.fire({ 
                 title: 'Items are added to your cart',
                 icon: 'success',
