@@ -59,14 +59,14 @@ const initMap = (_this) => {
 	var attribution = new Attribution({
 		collapsible: false,
 	});
-    const layer = createPoint(fromLonLat([19.845013, 45.255068]))
+    const layer = createPoint(_this.coordinates)
     previusLayer = layer;
     const map = new Map({
         controls: [attribution],
         target: target,
         layers: [initLayer, layer],
         view: new View({
-            center: fromLonLat([19.845013, 45.255068]),
+            center: _this.coordinates,
             zoom: 18,
         }),
     });
@@ -88,7 +88,7 @@ export default {
 			latitude: 45.255595,
 		};
 	},
-	props: ['restaurant'],
+	props: ['restaurant', 'coordinates'],
 	mounted() {
 		initMap(this);
 	},

@@ -15,6 +15,7 @@ public class UserController  {
 
 
     public static Gson gson=new Gson();
+
     private static Map<String, String> loginTrack = new HashMap<>();
     public static Route getAvailableManagers = (Request req, Response res)-> {
         res.type("application/json");
@@ -58,7 +59,16 @@ public class UserController  {
         user.setPassword(requestData.password);
         return userDao.update(user);
     };
-
+    public static Route getSingleManager = (Request req, Response res) -> {
+        Map<String, Object> model = new HashMap<>();
+        String id = req.queryParams("id");
+        User user = userDao.getOne(id);
+        res.status(200);
+        if(user.equals(null)){
+            halt(400,"This user doesn't exist");
+        }
+        return gson.toJson(user);
+    };
     public static Route getUserByToken = (Request req, Response res) -> {
         Map<String, Object> model = new HashMap<>();
         String token = req.queryParams("token");

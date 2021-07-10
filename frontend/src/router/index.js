@@ -42,7 +42,7 @@ const routes = [
     component: CreateRestaurant
   },
   {
-    path: '/edit-restaurant',
+    path: '/edit-restaurant/:id',
     name: 'EditRestaurant',
     component: CreateRestaurant
   },

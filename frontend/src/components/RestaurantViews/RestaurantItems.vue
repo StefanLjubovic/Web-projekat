@@ -135,7 +135,7 @@ export default {
 			}
 		},
 		availableItems(list){
-			return list.filter(e => !e.deleted)
+			return list?.filter(e => !e.deleted)
 		}
 	},
 };

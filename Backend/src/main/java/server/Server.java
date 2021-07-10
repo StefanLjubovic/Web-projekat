@@ -51,6 +51,7 @@ public class Server {
         post(Path.Web.CREATE_RESTAURANT, RestaurantController.createRestaurant);
         get(Path.Web.GET_AVAILABLE_MANAGERS, UserController.getAvailableManagers);
         get(Path.Web.GET_SINGLE_RESTAURANT, RestaurantController.getSingleRestaurant);
+        get(Path.Web.GET_SINGLE_MANAGER, UserController.getSingleManager);
         post(Path.Web.CREATE_USER, UserController.createUser);
         post(Path.Web.UPDATE_RESTAURANT, RestaurantController.updateRestaurant);
         post(Path.Web.CREATE_ORDER, OrderController.createOrder);

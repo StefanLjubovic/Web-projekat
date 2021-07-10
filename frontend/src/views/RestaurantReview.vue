@@ -50,7 +50,8 @@ export default {
 				Server.getRestaurantById(id).then(resp => {
 					if(resp.success){
 						this.restaurant = resp.data;
-						this.editPermission = this.restaurant.id == this.user.restaurantId || this.user.role == 'Admin'
+						this.editPermission = this.restaurant.id == this.user.restaurantId || this.user.role == 'Admin';
+						console.log(this.editPermission);
 						console.log(this.restaurant)
 					}
 				})

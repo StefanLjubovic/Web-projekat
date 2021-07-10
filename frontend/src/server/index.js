@@ -91,6 +91,15 @@ server.getRestaurantById = (id) => {
 		.then((response) => handleSuccess(response))
 		.catch((error) => handleError(error));
 };
+server.getManager = (id) => {
+	const options = {
+		method: 'GET',
+		url: `${baseUrl}/getManagerById?id=${id}`,
+	};
+	return axios(options)
+		.then((response) => handleSuccess(response))
+		.catch((error) => handleError(error));
+};
 
 server.saveItem = (item, restaurantId) => {
 	const options = {
