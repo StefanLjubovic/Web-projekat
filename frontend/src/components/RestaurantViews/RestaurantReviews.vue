@@ -69,7 +69,7 @@ export default {
 				(this.user.role == 'Customer' && !review.grade.approved) ||
 				(this.user.restaurantId != this.restaurant.id && this.user.role == 'Manager' && !review.grade.approved) ||
 				(!this.user.firstName && !review.grade.approved)
-
+				|| (this.user.role == 'Deliverer' && !review.grade.approved)
 			)
 				return false;
 			return true;
