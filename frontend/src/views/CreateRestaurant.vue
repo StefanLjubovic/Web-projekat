@@ -15,7 +15,9 @@
 					</div>
 				</div>
 				<div class="right-side-container">
-					<h3 class="title">Create a restaurant</h3>
+					<div class="header">
+						<button class="back" v-if="!!id" @click="$router.back"><i class="fas fa-chevron-left"></i></button> <h3 class="title">  Create a restaurant</h3>
+					</div>
 					<div class="restaurant-info-body">
 						<div class="restaurant-info-body-part">
 							<div class="form-group ">
@@ -477,7 +479,7 @@ export default {
 	z-index: 0;
 	position: relative;
 	min-height: 300px;
-    max-height: calc(100vh - 400px);
+    height: calc(100vh - 400px);
 }
 .restaurant-info-card {
 	padding: 17px;
@@ -652,5 +654,23 @@ export default {
 	border: unset;
 	outline: unset;
 	border-radius: 100px;
+}
+.header{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.back{
+	background-color: transparent;
+	border: unset;
+	font-size: 15px;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #FFFFFF66;
+	margin-top: -5px;
+	margin-right: 10px;
+	border-radius: 100px;
+	cursor: pointer;
 }
 </style>
