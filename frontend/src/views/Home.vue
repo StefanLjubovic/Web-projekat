@@ -35,7 +35,7 @@ export default {
 	},
 	methods: {
 		filterRestaurants(text) {
-			this.restaurants = this.restaurants.filter(
+			this.restaurants = this.allRestaurants.filter(
 				(e) =>
 					e.name.toLowerCase().includes(text.toLowerCase()) ||
 					e.location.address.toLowerCase().includes(text.toLowerCase()) ||
@@ -88,7 +88,11 @@ export default {
 			document.getElementById('appContainer').style.overflow = 'unset';
 			document.getElementById('appContainer').style.height = 'unset';
 		},
-		sortAverageGrade(i) {},
+		sortAverageGrade(i) {
+			const correct = i == 1 ? 1 : -1;
+			const incorrect = i == 1 ? -1 : 1;
+			this.restaurants.sort((a, b) => (a.grade > b.grade ? correct : incorrect));
+		},
 	},
 	async created() {
 		// this.restaurants = allRestaurants;

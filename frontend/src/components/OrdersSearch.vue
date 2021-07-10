@@ -344,8 +344,8 @@ label {
 	border: none;
 	border-radius: 1.5rem;
 	padding: 2%;
-	background-color: #ffc312;
-	color: black;
+	background-color: #FDDF6D;
+        color: #42405F;
 	font-weight: 600;
 	width: 50%;
 	cursor: pointer;

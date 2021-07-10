@@ -30,6 +30,7 @@ public class GradeController {
         Grade grade=gson.fromJson(reviewJson,Grade.class);
         Date date=new Date();
         grade.setDate(date.getTime());
+        grade.setApproved(Status.WaitingForApproval);
         String uniqueID = UUID.randomUUID().toString();
         grade.setId(uniqueID);
         return gradeDao.create(grade);

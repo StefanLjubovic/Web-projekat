@@ -9,7 +9,7 @@ public class Grade {
     private String comment;
     private int grade;
     private Long date;
-    private boolean approved=false;
+    private Status approved;
 
     public Long getDate() {
         return date;
@@ -24,23 +24,29 @@ public class Grade {
         this.restaurantId = restaurantId;
         this.comment = comment;
         this.grade = grade;
+        approved=Status.WaitingForApproval;
     }
 
-    public Grade(String id, String userId, String restaurantId, String comment, int grade, Long date, boolean approved) {
+    public Grade(String id, String userId, String restaurantId, String comment, int grade, Long date, String approved) {
         this.id = id;
         this.userId = userId;
         this.restaurantId = restaurantId;
         this.comment = comment;
         this.grade = grade;
         this.date = date;
-        this.approved = approved;
+        if(approved =="Approved")
+            this.approved=Status.Approved;
+        else if(approved=="Rejected")
+            this.approved=Status.Rejected;
+        else
+            this.approved=Status.WaitingForApproval;
     }
 
-    public boolean isApproved() {
+    public Status isApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(Status approved) {
         this.approved = approved;
     }
 

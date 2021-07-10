@@ -1,6 +1,7 @@
 package restaurant;
 
 import dto.GradeDTO;
+import grade.Status;
 import user.User;
 import util.ModelDao;
 
@@ -100,7 +101,7 @@ public class RestaurantDao implements ModelDao<Restaurant> {
         Double sum = 0.0;
         Integer count = 0;
         for(GradeDTO grade: grades){
-            if(grade.grade.isApproved()){
+            if(grade.grade.isApproved().equals(Status.Approved)){
                 sum += grade.grade.getGrade();
                 count++;
             }
