@@ -150,6 +150,8 @@ export default {
 
 .item-image{
     width: 100%;
+    max-height: 400px;
+    object-fit: contain;
 }
 
 .modal-close{
