@@ -100,6 +100,8 @@ export default {
     }
     .picture{
         width: 200px;
+        max-height: 100px;
+        text-align: center;
     }
     .restaurant-info{
         flex: 1;
@@ -143,8 +145,8 @@ export default {
         font-weight: 600;
     }
     .rounded-image{
-        width: 100%;
-        height: auto;
+        max-width: 200px;
+        max-height: 100px;
         border-radius: 10px;
     }
 </style>

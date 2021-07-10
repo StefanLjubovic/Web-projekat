@@ -292,7 +292,7 @@ export default {
 			});
 		},
 		getImage(image) {
-			return !!this.id ? server.getImage(image) : image;
+			return !!this.id && !image.includes('data:image') ? server.getImage(image) : image;
 		},
 		async loadManager(id) {
 			const resp = await server.getManager(id);

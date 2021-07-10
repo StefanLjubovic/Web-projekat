@@ -85,13 +85,16 @@ export default {
     }
     .restaurant-image-container{
         max-width: 200px;
+        max-height: 150px;
         border-radius: 12px;
         overflow: hidden;
     }
     .rounded-image{
-        object-fit: contain;
-        width: 100%;
+        /* object-fit: contain; */
+        /* width: 100%; */
         /* height: 100%; */
+        max-height: 150px;
+        max-width: 200px;
     }
 
     .restaurant-info-header > label{
