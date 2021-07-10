@@ -26,7 +26,7 @@ public class RestaurantController {
       System.out.println(restaurantJson);
       Restaurant restaurant = gson.fromJson(restaurantJson,Restaurant.class);
       System.out.println(restaurant.getName());
-      restaurant.setStatus(true);
+      restaurant.setOpened(true);
       restaurant.setItems(new ArrayList<>());
       restaurant.setGrade(0.0);
       restaurant.setId(restaurantDAO.generateId());

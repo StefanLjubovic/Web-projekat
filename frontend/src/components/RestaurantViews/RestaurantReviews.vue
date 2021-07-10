@@ -120,10 +120,12 @@ export default {
 .reviews-list {
 	display: flex;
 	flex-wrap: wrap;
-	padding: 10px 40px;
+	padding: 10px 20px;
 	position: relative;
 	width: 100%;
-	justify-content: center;
+    width: 888px;
+    margin: auto;
+	/* justify-content: center; */
 }
 .review {
 	cursor: pointer;
