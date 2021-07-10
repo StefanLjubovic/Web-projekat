@@ -265,9 +265,8 @@ export default {
 .home{
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
+	min-height: calc(100vh - 70px);
 	
-	/* max-height: 100vh; */
 	position: relative;
 	background-color: #D7E2F8;
 	/* overflow: hidden; */

@@ -1,21 +1,19 @@
 <template>
 	<div class="container">
-		<div class="row">
-			<div class="fraction ">
-				<label for="" class="label href">Name</label>
-				<a href="#" class="href" @click="$emit('sortName', 1)"><i class="fas fa-chevron-up"></i></a>
-				<a href="#" class="href down" @click="$emit('sortName', -1)"><i class="fas fa-chevron-down"></i></a>
-			</div>
-			<div class="fraction ">
-				<label for="" class="label href">Price</label>
-				<a href="#" class="href" @click="$emit('sortPrice', 1)"><i class="fas fa-chevron-up"></i></a>
-				<a href="#" class="href down" @click="$emit('sortPrice', -1)"><i class="fas fa-chevron-down"></i></a>
-			</div>
-			<div class="fraction ">
-				<label for="" class="label href">Date</label>
-				<a href="#" class="href" @click="$emit('sortDate', 1)"><i class="fas fa-chevron-up"></i></a>
-				<a href="#" class="href down" @click="$emit('sortDate', -1)"><i class="fas fa-chevron-down"></i></a>
-			</div>
+		<div class="fraction ">
+			<label for="" class="label href">Name</label>
+			<a href="#" class="href" @click="$emit('sortName', 1)"><i class="fas fa-chevron-up"></i></a>
+			<a href="#" class="href down" @click="$emit('sortName', -1)"><i class="fas fa-chevron-down"></i></a>
+		</div>
+		<div class="fraction ">
+			<label for="" class="label href">Price</label>
+			<a href="#" class="href" @click="$emit('sortPrice', 1)"><i class="fas fa-chevron-up"></i></a>
+			<a href="#" class="href down" @click="$emit('sortPrice', -1)"><i class="fas fa-chevron-down"></i></a>
+		</div>
+		<div class="fraction ">
+			<label for="" class="label href">Date</label>
+			<a href="#" class="href" @click="$emit('sortDate', 1)"><i class="fas fa-chevron-up"></i></a>
+			<a href="#" class="href down" @click="$emit('sortDate', -1)"><i class="fas fa-chevron-down"></i></a>
 		</div>
 	</div>
 </template>
@@ -32,7 +30,7 @@ export default {
 <style scoped>
 .container {
 	position: absolute;
-	width: 100%;
+	width: 80%;
 	left: 10%;
 	right: 10%;
 	top: 10px;
@@ -66,7 +64,6 @@ export default {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-right: 30px;
 }
 .fraction > label{
     color: #1F1F43;
@@ -75,8 +72,5 @@ export default {
 
 .down{
     color: #FC4C59;
-}
-.row{
-    width: 100%;
 }
 </style>
