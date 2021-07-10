@@ -82,7 +82,7 @@ export default {
 			if (filters.openRestaurants != 'Open') {
 				this.restaurants = this.allRestaurants.filter((e) => e.type.toLowerCase().includes(filters.restaurantType.toLowerCase()));
 			} else {
-				this.restaurants = this.allRestaurants.filter((e) => e.type.toLowerCase().includes(filters.restaurantType.toLowerCase()) && !e.status);
+				this.restaurants = this.allRestaurants.filter((e) => e.type.toLowerCase().includes(filters.restaurantType.toLowerCase()) && e.opened);
 			}
 			this.advancedSearch = false;
 			document.getElementById('appContainer').style.overflow = 'unset';

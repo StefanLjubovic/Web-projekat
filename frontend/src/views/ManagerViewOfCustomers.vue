@@ -64,26 +64,33 @@ export default {
 	methods: {
 		sortByName(i) {
 			const correct = i == 1 ? 1 : -1;
-			const incorrect = i != 1 ? -1 : 1;
-			this.orders.sort((a, b) => (a.order.user.firstName > b.order.user.firstName ? correct : incorrect));
+			const incorrect = i == 1 ? -1 : 1;
+			this.orders.sort((a, b) => (a.user?.firstName > b.user?.firstName ? correct : incorrect));
 		},
 		sortByPrice(i) {
 			const correct = i == 1 ? 1 : -1;
-			const incorrect = i != 1 ? -1 : 1;
+			const incorrect = i == 1 ? -1 : 1;
 			this.orders.sort((a, b) => (a.order.price > b.order.price ? correct : incorrect));
 		},
 		sortByDate(i) {
-			// TODO
+			const correct =   i == 1 ?  1 : -1;
+			const incorrect = i == 1 ? -1 :  1;
+			this.orders.sort((a, b) => (new Date(a.order.date) > new Date(b.order.date) ? correct : incorrect));
 		},
 		applyFilters(filters, search) {
 			this.filters = filters;
+            console.log("search", filters);
             const maxPrice = !!search.priceTo ? parseInt(search.priceTo) : Number.MAX_SAFE_INTEGER;
             const minPrice = !!search.priceFrom ? parseInt(search.priceFrom) : Number.MIN_SAFE_INTEGER;
+
+            const minDate = !!filters.startDate ? (new Date(filters.startDate)).setHours(0,0,0,0) : new Date(0);
+            const maxDate = !!filters.endDate ? (new Date(filters.endDate)).setHours(23,59,59,0) : new Date();
 			this.orders = this.allOrders.filter(
 				(e) =>
 					e.restaurant.type.toLowerCase().includes(filters.restaurantType.toLowerCase()) &&
 					e.order.status.toLowerCase().includes(filters.orderStatus.toLowerCase()) &&
-                    e.order.price < maxPrice && e.order.price > minPrice
+                    e.order.price < maxPrice && e.order.price > minPrice && 
+                    minDate < new Date(e.order.date) && new Date(e.order.date) < maxDate
 			);
 			this.showModal = false;
 			document.getElementById('appContainer').style.overflow = 'unset';
@@ -235,10 +242,11 @@ export default {
 <style scoped>
 .home-container {
 	/* padding-top: 10px; */
-	position: relative;
-	flex: 1;
 	display: flex;
 	flex-direction: column;
+	min-height: calc(100vh - 70px);
+	position: relative;
+	background-color: #d7e2f8;
 	/* width: 80%; */
 	/* margin: auto; */
 	/* overflow: auto; */

@@ -66,7 +66,7 @@
 																	<label for="start" class="text-light">Start date:</label>
 																</div>
 																<div class="col">
-																	<input type="date" id="start" name="trip-start" class="widthDate" />
+																	<input type="date" id="start" name="trip-start" class="widthDate" v-model="filters.startDate" />
 																</div>
 															</div>
 
@@ -75,7 +75,7 @@
 																	<label for="start" class="text-light">End date:</label>
 																</div>
 																<div class="col">
-																	<input type="date" class="widthDate" id="start" name="trip-start" min="2018-01-01" />
+																	<input type="date" class="widthDate" id="start" name="trip-start" min="2018-01-01" v-model="filters.endDate" />
 																</div>
 															</div>
 														</div>

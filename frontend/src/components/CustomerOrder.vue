@@ -12,15 +12,17 @@
         </div>
         <div class="restaurant-details">
             <div class="restaurant-location">
-                <p>Order status📍: {{order.order.status}} </p>
-                <p>Price💸: {{order.order.price}}</p>
-                <p>Date of order📆: {{order.order.date}} <b></b></p>
+                <p>📍 Order status: {{order.order.status}} </p>
+                <p>💸 Price: <b>{{order.order.price}} RSD</b></p>
+                <p>📆 Date of order: <b>{{getDate(order.order.date)}}</b></p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
     name: 'CustomerOrder',
      props:{
@@ -35,6 +37,9 @@ export default {
     },
     emits:['openDialog'],
     methods:{
+        getDate(date){
+            return moment(String(date))?.format('DD.MM.YYYY.')
+        }
     },
     created(){
         let ordersDict={}
@@ -67,7 +72,14 @@ export default {
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
     }
     .picture{
-        width: 200px;
+        width: 160px;
+        vertical-align: middle;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .picture  * {
+        display: block;
     }
     .restaurant-info{
         flex: 1;
