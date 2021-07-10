@@ -8,7 +8,7 @@
 				</div>
 				<div class="user-info">
 					<h3>{{ user.firstName }} {{ user.lastName }}</h3>
-					<p class="info role">{{ user.role }}</p>
+					<p class="info role"><span style="font-weight: bold;">{{user?.reward?.name}} </span> {{ user.role }} </p>
 				</div>
 			</button>
 		</div>
@@ -92,6 +92,7 @@ export default {
 		signout() {
 			localStorage.clear();
 			this.$store.commit('setUser', {});
+			this.$store.commit('setCart', {});
 			this.$emit('hideDialog');
 			this.$router.push('/');
 		},

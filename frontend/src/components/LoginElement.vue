@@ -72,8 +72,8 @@ import store from '../store/index'
 export default {
   data() {
     return {
-      username: "pera",
-      password: "123",
+      username: "",
+      password: "",
       errorMessage: ''
     };
   },

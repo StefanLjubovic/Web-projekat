@@ -3,6 +3,9 @@
 		<h3>Reviews</h3>
 	</div>
 	<div class="reviews-list">
+        <div class="empty-reviews" v-if="reviews.length == 0">
+            There aren't any review for this restaurant....
+        </div>
 		<div :key="review.username" v-for="review in reviews">
 			<div class="review" v-if="checkReviewVisibility(review)" v-bind:class="{ selected: !checkUser(review) }" @click="approveReview(review)">
 				<div class="review-message">
@@ -214,5 +217,12 @@ export default {
 	color: #8f8fa1;
 	font-size: 14px;
 	font-weight: 600;
+}
+.empty-reviews{
+    color: #8f8fa1;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+    padding: 10%;
 }
 </style>

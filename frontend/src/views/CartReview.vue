@@ -59,6 +59,8 @@ export default {
                 localStorage.removeItem("cart");
                 this.$store.commit("clearCart");
                 this.$router.push("/");
+                const token = localStorage.getItem("token");
+                this.$store.dispatch("loadUser",token)
             }
         }
     },
