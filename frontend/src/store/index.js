@@ -42,6 +42,9 @@ export default createStore({
       console.log(`Total size is ${state.cart.items.length} items...`);
       localStorage.setItem('cart', JSON.stringify(state.cart))
     },
+    removeItems(state,item){
+      state.cart.items = state.cart.items.filter(e=> e.name != item.name);
+    },
     removeItem(state,item){
       let index = -1;
       const list = state.cart.items;
