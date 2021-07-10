@@ -132,4 +132,9 @@ public class UserController  {
         return gson.toJson(user);
     };
 
+    public static Route getAllSuspiciousUsers=(Request req,Response res)->{
+        List<User> users=userDao.getAllSuspiciousUsers();
+        return gson.toJson(users);
+    };
+
 }

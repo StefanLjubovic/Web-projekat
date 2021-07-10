@@ -2,6 +2,7 @@ package user;
 
 import order.Order;
 import order.OrderDao;
+import order.OrderStatus;
 import util.ModelDao;
 import util.Serialization;
 
@@ -123,9 +124,12 @@ public class UserDao extends Serialization<User> implements ModelDao<User> {
         cal.add(Calendar.MONTH, -1);
         Date result = cal.getTime();
         List<Order> orders=orderDao.getAll();
-        long count=orders.stream()
-                .filter(o-> o.getBuyerId().equals(user.getUsername()) && compare(o.getDate(),result) )
-                .count();
+        long count=0;
+        for(Order order: orders){
+            if(order.getBuyerId().equals(user.getId()) && compare(order.getDate(),result)
+                    && order.getStatus().equals(OrderStatus.Canceled))
+                System.out.println(count++);
+        }
         if(count>=5)
             return true;
         return false;

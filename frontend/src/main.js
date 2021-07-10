@@ -10,6 +10,9 @@ import { Map, TileLayer, OsmSource, Geoloc } from 'vuelayers'
 import 'vuelayers/lib/style.css' // needs css-loader
 import VTooltip from 'v-tooltip'
 
+import ToggleButton from 'vue-js-toggle-button'
+ 
+Vue.use(ToggleButton)
 Vue.use(VTooltip)
 
 import Swal from 'sweetalert2'

@@ -68,6 +68,7 @@ public class Server {
         post(Path.Web.SAVE_REVIEW, GradeController.saveReview);
         get(Path.Web.GET_RESTAURANT_REVIEWS,GradeController.getRestuarantGrades);
         put(Path.Web.UPDATE_RESTAURANT_REVIEW, GradeController.updateReview);
+        get(Path.Web.SUSPICIOUS_USERS,UserController.getAllSuspiciousUsers);
 
 //        after((request, response) -> response.type("application/json"));
     }

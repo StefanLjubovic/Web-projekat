@@ -25,7 +25,9 @@
 															</select>
 														</div>
 													</div>
+										
 												</div>
+												
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
@@ -64,7 +66,7 @@ export default {
 			},
 		};
 	},
-	emits: ['close-modal'],
+	emits: ['close-modal','applyFilters'],
 	components: {
 		Datepicker,
 	},
@@ -100,6 +102,11 @@ export default {
 	transition: all 0.3s ease;
 	/* display: flex; */
 	/* flex-direction: column; */
+}
+
+.check{
+	margin-left:250px;
+	margin-top: 5px;
 }
 
 .modal-item-image {

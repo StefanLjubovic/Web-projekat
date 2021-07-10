@@ -51,6 +51,21 @@ server.getRestaurantReviews = (id) => {
 		.catch((error) => handleError(error));
 };
 
+server.getSuspiciousUsers = () => {
+	const token = localStorage.getItem('token');
+	const options = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json;charset=UTF-8',
+			Accept: 'application/json',
+		},
+		url: `${baseUrl}/userList/suspicious`,
+	};
+	return axios(options)
+		.then((response) => handleSuccess(response))
+		.catch((error) => handleError(error));
+};
+
 server.getImage = (image) => {
 	if (image?.includes(baseUrl)) return image;
 	return !!image ? `${baseUrl}/${image}` : '';

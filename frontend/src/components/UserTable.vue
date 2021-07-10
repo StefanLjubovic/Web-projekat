@@ -21,10 +21,10 @@
        <td>{{user.username}}</td>
        <td>{{user.role}}</td>
        <td>{{user.collectedPoints}}</td>
-       <div v-if="user.status && user.role!='Admin'">
+       <div v-if="!user.status && user.role!='Admin'">
         <td><button type="button" @click="changeText(i)" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger btn-circle btn-sm"></button></td>
        </div>
-       <div  v-if="!user.status && user.role!='Admin'"> 
+       <div  v-if="user.status && user.role!='Admin'"> 
             <td><button type="button" @click="changeText(i)" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-circle btn-sm"></button></td>
        </div>
     </tr>

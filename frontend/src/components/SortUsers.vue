@@ -20,8 +20,12 @@
             <label for="" class="label href">Points colected</label>
             <a href="#" class="href"  @click="$emit('sortPoints',1)"><i class="fas fa-chevron-up"></i></a>
             <a href="#" class="href down" @click="$emit('sortPoints',-1)"><i class="fas fa-chevron-down"></i></a>
-            </div>
-            
+            </div>   
+             <div class="fraction ">
+            <label for="" class="label href">Suspicious users</label>
+            <a href="#" class="href"  @click="$emit('suspiciousUsers', 1)"><i class="fas fa-check"></i></a>
+            <a href="#" class="href down" @click="$emit('suspiciousUsers',-1)"><i class="fas fa-times"></i></a>
+            </div>         
         </div>
     </div>
 </template>
@@ -32,9 +36,7 @@ export default {
         return{
         }
     },
-    methods:{
-
-    }
+    emits:['suspiciousUsers','sortPoints','sortUsername','sortSurname','sortName']
 }
 </script>
 
@@ -70,7 +72,7 @@ export default {
 .fraction {
 	background: #fddf6d;
 	/* width: 380px; */
-	width: 22%;
+	width: 17%;
 	border-radius: 10px;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     align-items: center;
@@ -85,6 +87,7 @@ export default {
 
 .down{
     color: #FC4C59;
+    margin-left: 3px;
 }
 .row{
     width: 100%;

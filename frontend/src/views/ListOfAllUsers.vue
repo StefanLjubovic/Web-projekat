@@ -1,7 +1,7 @@
 <template>
 <div class="bcg-color">
     <SearchBar :advanced-filter="advancedFilter" @search="searchUsers" class="search" @restaurantSearch="filterUsers"/>
-    <SortUsers class="sort" @sortName="sortName" @sortSurname="sortSurname" @sortUsername="sortUsername"/>
+    <SortUsers class="sort" @sortName="sortName" @sortSurname="sortSurname" @sortUsername="sortUsername" @suspiciousUsers="suspiciousUsers"/>
         <AdvancedUsersSearch v-if="advancedSearch" @close-modal="closeModal" @applyFilters="applyFilters"/>
     <UserTable class="tables" :users="users"/>
 </div>
@@ -63,13 +63,25 @@ export default {
            document.getElementById('appContainer').style.overflow = 'unset';
           document.getElementById('appContainer').style.height = 'unset'; 
         },
+        suspiciousUsers(i){
+            if(i==1){
+                Server.getSuspiciousUsers().then((resp) => {
+			    console.log('Resp', resp.data);
+			    if (resp.success) {
+				    this.users = resp.data;
+			    }
+		        });
+            }else{
+                this.users=this.allUsers;
+            }
+        },
         applyFilters(filters){
-
+            console.log(filters)
             this.users = this.allUsers.filter((e) => e.role.toLowerCase().includes(filters.userRole.toLowerCase()));
             this.advancedSearch = false;
-           document.getElementById('appContainer').style.overflow = 'unset';
-          document.getElementById('appContainer').style.height = 'unset';
-        }
+            document.getElementById('appContainer').style.overflow = 'unset';
+            document.getElementById('appContainer').style.height = 'unset';
+        },
     },
     async created() {
         Server.getAllUsers().then(resp=>{
@@ -97,5 +109,10 @@ export default {
     }
     .sort{
         margin-top: 130px;
+    }
+
+    .toggle{
+        width:100px;
+        height: 100px;
     }
 </style>
