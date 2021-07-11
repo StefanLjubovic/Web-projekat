@@ -47,7 +47,10 @@
 							</div>
                             <div class="form-group ">
 								<label for="nameInput" v-bind:class="{ error: error['price'] }">Price:</label>
+								<div class="item-size-container">
 								<input type="number" class="form-control" placeholder="Enter price*" v-model="item.price" />
+								<span> RSD</span>
+								</div>
 							</div>
 						</div>
 					</div>
