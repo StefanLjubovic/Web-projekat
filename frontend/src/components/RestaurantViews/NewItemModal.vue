@@ -116,6 +116,21 @@ export default {
             this.error['price'] = !this.item.price;
             this.error['size'] = !this.item.size;
             this.error['logo'] = !this.item.image;
+			this.nameError = false;
+			const sameNameItem = this.restaurant.items.findIndex(e => e.name == this.item.name)
+			if(sameNameItem > -1 && this.restaurant.items[sameNameItem].id != this.item.id){ // Izmena postojeceg {
+				this.error['name'] = true;
+				this.nameError = true;
+				Swal.fire({
+					title: 'Error!',
+					text: "Item with that name already exists...",
+					icon: 'error',
+					confirmButtonText: 'Okay',
+					timer: 3000,
+					timerProgressBar: true
+				})
+			}
+
             return !this.containesError();
         },
         showErrorMessage(){
@@ -143,14 +158,16 @@ export default {
                 icon: 'success',
                 confirmButtonText: 'Okay',
                 timer: 3000,
-                timerProgressBar: true
+                timerProgressBar: true,
+				nameError: false
             })
         },
 		async submitItem(event) {
             event.preventDefault();
             const valid = this.checkValid();
             if(!valid){
-                this.showErrorMessage();
+				if(!this.nameError)
+                	this.showErrorMessage();
                 return;
             }
 			let image = this.item.image;
